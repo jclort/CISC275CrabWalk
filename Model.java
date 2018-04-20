@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+
+
+
 public class Model{
     // This is where all of our logic is going to go for the game
     // This will also be where our game state is handled
@@ -11,11 +15,13 @@ public class Model{
     int frameHeight;
     int imgWidth;
     int imgHeight;
+    ArrayList<InterObj> objects;
 
     public Model(int frameWidth, int frameHeight, int imgWidth, int imgHeight){
         left = objXIncr;
         picNum = 0;
         picDir = 0;
+
           }
 
 }
