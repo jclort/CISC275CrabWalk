@@ -17,7 +17,7 @@ abstract class Crawler{
 		return yloc;
 	}
 	// move() will be implemented differently for InterObj and Crab
-	public void move() {	}
+	public abstract void move();
 
 
 
