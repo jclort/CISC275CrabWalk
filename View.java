@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class View extends JFrame{
     private int score;
     private int lives;
-    //private Crab player;
+    private Crab player;
     private ArrayList<InterObj> stuff;
     private DrawPanel drawPanel;
     private StartButton startButton;
@@ -24,11 +24,12 @@ public class View extends JFrame{
     final static int imgWidth = 165;//165
 	final static int imgHeight = 165;
     
-    public View(){    
+    public View(Crab p, ArrayList<InterObj> s){    
         drawPanel = new DrawPanel();
         score = 0;
         lives = 3;
-        stuff = null;
+        player = p;
+        stuff = s;
         startButton = new StartButton();
         crabPic = createImage("images/crab");
     }
@@ -119,9 +120,5 @@ public class View extends JFrame{
     		}
     		return null;
 	}
-
-    public static void main(String[] args){
-        View v = new View();
-    }
 
 }
