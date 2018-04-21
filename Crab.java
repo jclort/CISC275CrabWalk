@@ -6,20 +6,14 @@ class Crab extends Crawler {
 	public Crab() {
 		xIncr = 0;
 		yIncr = 0;
-		yloc = view.getframeSize()/2;
-		xloc = view.getframeSize()/2;
+		//@Jeffrey, go ahead and put getFrameSize() in view plz
+		//yloc = view.getframeSize()/2;
+		//xloc = view.getframeSize()/2;
 	}
 
 	public void move() {
 		yloc += yIncr;
 		xloc += xIncr;
-	}
-
-	public int getYloc() {
-		return yloc;
-	}
-	public int getXloc() {
-		return xloc;
 	}
 
 	public void addScore() {
@@ -38,7 +32,7 @@ class Crab extends Crawler {
 		return score+(lives*5);
 	}
 
-	public void powerUp(boolean enable) {
+	public void setPowerUp(boolean enable) {
 		if (enable) {
 			xIncr += 10;
 			yIncr += 10;
@@ -49,12 +43,4 @@ class Crab extends Crawler {
 		powerUp = enable;
 	}
 
-	public void disappear() {
-		//Should we have this code implemented in view, 
-		//so that I can set the image visibility to false, 
-		//reset the location of the crab, and make image visible again?
-	}
-
-
-		
 }

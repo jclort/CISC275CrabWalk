@@ -1,5 +1,7 @@
 abstract class InterObj extends Crawler {
 	
-	public abstract void onCollision(Crab crab);
+	public abstract boolean onCollision(Crab crab);
+
+	public abstract int getIncr();
 
 }
