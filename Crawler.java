@@ -23,6 +23,7 @@ abstract class Crawler{
 	public abstract void move();
 
 
+<<<<<<< HEAD
 
 
 
@@ -57,4 +58,6 @@ abstract class Crawler{
 //	}
 //
 >>>>>>> 2ce471109ff2313b0a42d57c6dc8f792c5d373c6
+=======
+>>>>>>> b767b367e0739e28edf13b1b113b1d4b106afef2
 }
