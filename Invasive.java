@@ -5,7 +5,7 @@ public class Invasive extends InterObj {
 	private int max = 3;
 	final private int GLOBAL = 5;
 
-	public boolean onCollision(Crab crab) {
+	public void onCollision(Crab crab) {
 		this.collisionBool = true;
 	}
 

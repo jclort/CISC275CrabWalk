@@ -4,7 +4,7 @@ public class PowerUp extends InterObj {
 	final private int GLOBAL = 6;
 
 
-	public boolean onCollision(Crab crab) {
+	public void onCollision(Crab crab) {
 		this.collisionBool = true;
 	}
 	

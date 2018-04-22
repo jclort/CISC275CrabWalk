@@ -6,7 +6,7 @@ abstract class InterObj extends Crawler {
 		return this.collisionBool;
 	}
 	
-	public abstract boolean onCollision(Crab crab);
+	public abstract void onCollision(Crab crab);
 
 	public abstract int getIncr();
 
