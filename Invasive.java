@@ -6,12 +6,7 @@ public class Invasive extends InterObj {
 	final private int GLOBAL = 5;
 
 	public boolean onCollision(Crab crab) {
-		if (crab.getXLoc() == this.getXLoc()) {
-			reurn true;
-		}
-		else {
-			return false;
-		}
+		this.collisionBool = true;
 	}
 
 	public void move() {

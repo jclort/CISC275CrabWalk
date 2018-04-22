@@ -5,12 +5,7 @@ public class PowerUp extends InterObj {
 
 
 	public boolean onCollision(Crab crab) {
-		if (crab.getXLoc() == this.getXLoc()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		this.collisionBool = true;
 	}
 	
 	public void move() {
