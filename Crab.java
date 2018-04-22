@@ -7,8 +7,8 @@ class Crab extends Crawler {
 		xIncr = 0;
 		yIncr = 0;
 		//@Jeffrey, go ahead and put getFrameSize() in view plz
-		//yloc = view.getframeSize()/2;
-		//xloc = view.getframeSize()/2;
+		this.setYLoc(view.getFrameSize()/2);
+		this.setXLoc(view.getFrameSize()/2);
 	}
 
 	public void move() {
