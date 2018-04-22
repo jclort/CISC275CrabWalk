@@ -21,13 +21,30 @@ public class Model{
         player = new Crab();
     }
 
-    public boolean crash(InterObj object){
-        // tells whether the player has hit this object
+    public boolean crash(InterObj object){ // tells whether the player has hit this object
+        return (player.getXloc() == object.getXloc() && player.getYloc() == object.getYloc());
     }
 
-    public void handleCollisions(){
+    public void handleCollisions(ArrayList<InterObj> objects){
         // checks each InterObj whether the player has hit it
         // if it has, it calls the object's onCollision method
+        // This method largely depends on other collision methods already being created
+        for(InterObj o : objects){
+            if(crash(object)){
+                if(object instanceof Invasive){
+                    (Invasive)object.onCollision(player);
+                }
+                else if(object instanceof Native){
+                    (Native)object.onCollision(player);
+                }
+                else if(object instanceof PowerUp){
+                    (PowerUp)object.onCollision(player);
+                }
+                else{
+                    (Trash)object.onCollision(player);
+                }
+            }
+        }
     }
 
     public void update(Direction dir){

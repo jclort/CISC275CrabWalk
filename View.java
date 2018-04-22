@@ -15,6 +15,7 @@ public class View extends JFrame{
     //private Crab player;
     private ArrayList<InterObj> stuff;
     private DrawPanel drawPanel;
+    private StartButton startButton;
     private BufferedImage crabPic;
 
     final int frameStartSize = 800;
@@ -22,14 +23,37 @@ public class View extends JFrame{
    	final static int frameHeight = 800;//300
     final static int imgWidth = 165;//165
 	final static int imgHeight = 165;
+<<<<<<< HEAD
 
     public View(ArrayList<InterObj> s){
+=======
+    
+    public View(){    
+>>>>>>> 2ce471109ff2313b0a42d57c6dc8f792c5d373c6
         drawPanel = new DrawPanel();
         score = 0;
         lives = 3;
-        stuff = s;
+        stuff = null;
+        startButton = new StartButton();
         crabPic = createImage("images/crab");
     }
+
+    public DrawPanel getDrawPanel(){
+        return drawPanel;
+    }
+
+    public int getScore(){
+        return score;
+    }
+
+    public int getLives(){
+        return lives;
+    }
+
+    public ArrayList<InterObj> getStuff(){
+        return stuff;
+    }
+
 
     @SuppressWarnings("serial")
 	private class DrawPanel extends JPanel {
@@ -78,6 +102,14 @@ public class View extends JFrame{
         }
     }
 
+    private class StartButton{
+        //Code for a button that starts the game
+    }
+
+    public void update(Game model){
+        // sets the view properties to their model counterparts
+    }
+
     private BufferedImage createImage(String fname){
 
 		BufferedImage bufferedImage;
@@ -92,5 +124,9 @@ public class View extends JFrame{
     		}
     		return null;
 	}
+
+    public static void main(String[] args){
+        View v = new View();
+    }
 
 }
