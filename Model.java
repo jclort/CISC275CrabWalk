@@ -52,8 +52,16 @@ public class Model{
         // deals with collisions
         // moves the InterObjs
         // deals with collisions again
-
         // Will Be Called From Controller With The Dir From View
+
+        /* The following is pseudocode that will be implemented tomorrow for this method
+
+           First thing that should be done is a check to see the directions that we are going
+           to go in. The result of each case will set the xIncr and the yIncr to either
+           positive or negative numbers. Afterwards, the crab's location will increment
+           by xIncr, and yIncr. We will then check and see if a collision has occurred, and
+           handle it accordingly. Once it is dealt with, we will then increment the
+           Interactive Objects locations, and check for collisions, and handle them accordingly
     }
 
 
