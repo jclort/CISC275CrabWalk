@@ -1,3 +1,4 @@
+
 abstract class Crawler{
 	protected int xloc;
 	protected int yloc;
@@ -24,6 +25,4 @@ abstract class Crawler{
 	}
 	// move() will be implemented differently for InterObj and Crab
 	public abstract void move();
-
-
 }
