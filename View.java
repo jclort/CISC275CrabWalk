@@ -31,8 +31,14 @@ public class View extends JFrame{
         lives = 3;
         player = p;
         stuff = s;
+        add(drawPanel);
         startButton = new StartButton();
-        crabPic = createImage("images/ocean.png");
+        crabPic = createImage("images/crab.png");
+        setBackground(Color.gray);                 
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
+	    setSize(getWidth(), getHeight());
+	    setVisible(true);
+        pack();	
     }
 
     public DrawPanel getDrawPanel(){
