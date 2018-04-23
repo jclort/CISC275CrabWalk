@@ -35,18 +35,7 @@ public class Model{
         // This method largely depends on other collision methods already being created
         for(InterObj o : objects){
             if(crash(object)){
-                if(object instanceof Invasive){
-                    (Invasive)object.onCollision(player);
-                }
-                else if(object instanceof Native){
-                    (Native)object.onCollision(player);
-                }
-                else if(object instanceof PowerUp){
-                    (PowerUp)object.onCollision(player);
-                }
-                else{
-                    (Trash)object.onCollision(player);
-                }
+                object.onCollision(player);
             }
         }
     }
