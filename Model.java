@@ -14,6 +14,7 @@ public class Model{
     private final int WESTSTEP = 10;
     int frameHeight;
     int imgSize;
+    private int noIncr = 0;
     ArrayList<InterObj> stuff; // all of the objects with their methods and properties
     Crab player;               // the player with all his methods and properties
 
@@ -48,18 +49,27 @@ public class Model{
         }
     }
 
-    public void update(){
+    public void update(Crab newPlayer){
         // moves the player in the specified direction
         // deals with collisions
         // moves the InterObjs
         // deals with collisions again
         // Will Be Called From Controller With The Dir From View
-
+	player = newPlayer;
         switch(player.getDir()){
-        case NORTH: player.setYIncr(NORTHSTEP); break;
-        case SOUTH: player.setYIncr(SOUTHSTEP); break;
-        case EAST: player.setXIncr(EASTSTEP); break;
-        case WEST: player.setXIncr(WESTSTEP); break;
+        case NORTH:	 
+			player.setYIncr(NORTHSTEP);
+			player.setXIncr(noIncr);
+		    	break;
+        case SOUTH: player.setYIncr(SOUTHSTEP);
+		    player.setXIncr(noIncr);
+		    break;
+        case EAST: player.setXIncr(EASTSTEP);
+		   player.setYIncr(noIncr);
+		   break;
+        case WEST: player.setXIncr(WESTSTEP);
+		   player.setYIncr(noIncr);
+		   break;
         }
         player.move();
         handleCollisions(stuff);

@@ -37,6 +37,10 @@ class Crab extends Crawler {
         return dir;
     }
 
+    public void setDir(Direction newDir) {
+	    dir = newDir;
+    }
+
 	public void setPowerUp(boolean enable) {
 		if (enable) {
 			xIncr += 10;

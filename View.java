@@ -21,8 +21,8 @@ public class View extends JFrame{
     final static int frameStartSize = 800;
     final static int frameWidth = 800;//500
    	final static int frameHeight = 800;//300
-    final static int imgWidth = 240;//165
-	final static int imgHeight = 230;
+    final static int imgWidth = 72;//165
+	final static int imgHeight = 72;
 
 	final int frameCount = 8;
 	private int picNum = 0;
@@ -59,7 +59,9 @@ public class View extends JFrame{
 	    setVisible(true);
         pack();	
     }
-
+	public Crab getPlayer() {
+		return player;
+	}
     public DrawPanel getDrawPanel(){
         return drawPanel;
     }
@@ -98,15 +100,19 @@ public class View extends JFrame{
                 	public void keyPressed(KeyEvent e){
                     		if (e.getKeyCode() == KeyEvent.VK_UP){
                         		//crab direction is up
+					player.setDir(Direction.NORTH);
                     		}
 					        else if (e.getKeyCode() == KeyEvent.VK_DOWN){
 						        //crab direction is down
+							player.setDir(Direction.SOUTH);
 					        }
 					        else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 						        //crab direction is right
+							player.setDir(Direction.EAST);
 					        }
 					        else if (e.getKeyCode() == KeyEvent.VK_LEFT){
 						        //crab direction is left
+							player.setDir(Direction.WEST);
 					        }
                 	}
             	});

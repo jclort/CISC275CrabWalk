@@ -21,7 +21,7 @@ class Controller{
 		view = new View(model.getPlayer(), model.getStuff());
 		drawAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				model.update();
+				model.update(view.getPlayer());
 				view.drawPanel();
                 // something interacting with the view's startButton
 			}
