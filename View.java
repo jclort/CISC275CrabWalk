@@ -23,6 +23,7 @@ public class View extends JFrame{
    	final static int frameHeight = 800;//300
     final static int imgWidth = 165;//165
 	final static int imgHeight = 165;
+
     
     public View(Crab p, ArrayList<InterObj> s){    
         drawPanel = new DrawPanel();
@@ -87,7 +88,7 @@ public class View extends JFrame{
             drawCrab();
             drawInterObjs();
 		}
-        
+
         @Override
 		public Dimension getPreferredSize() {
 			return new Dimension(frameStartSize, frameStartSize);
@@ -121,9 +122,9 @@ public class View extends JFrame{
 
 
     private BufferedImage createImage(String fname){
-    		
+
 		BufferedImage bufferedImage;
-    		
+
     		try {
     			// Method now takes a String (fname) in order to get the 
 			// right image to load for all the images passed through
