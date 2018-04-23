@@ -1,6 +1,6 @@
 abstract class InterObj extends Crawler {
 
-	private boolean collisionBool = false;
+	protected boolean collisionBool = false;
 
 	public boolean getCollisionBool() {
 		return this.collisionBool;
