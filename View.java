@@ -23,17 +23,9 @@ public class View extends JFrame{
    	final static int frameHeight = 800;//300
     final static int imgWidth = 165;//165
 	final static int imgHeight = 165;
-<<<<<<< HEAD
 
-    public View(ArrayList<InterObj> s){
-=======
     
-<<<<<<< HEAD
-    public View(){    
->>>>>>> 2ce471109ff2313b0a42d57c6dc8f792c5d373c6
-=======
     public View(Crab p, ArrayList<InterObj> s){    
->>>>>>> f20509134965277616df46baf96c1c74c78351fb
         drawPanel = new DrawPanel();
         score = 0;
         lives = 3;
