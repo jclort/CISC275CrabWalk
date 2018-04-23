@@ -22,11 +22,11 @@ public class Model{
         this.frameHeight = frameHeight;
         this.imgSize = imgSize;
         stuff = new ArrayList<InterObj>();
-        player = new Crab();
+        player = new Crab(frameWidth);
     }
 
     public boolean crash(InterObj object){ // tells whether the player has hit this object
-        return (player.getXloc() == object.getXloc() && player.getYloc() == object.getYloc());
+        return (player.getXLoc() == object.getXLoc() && player.getYLoc() == object.getYLoc());
     }
 
     public void handleCollisions(ArrayList<InterObj> objects){
@@ -34,8 +34,8 @@ public class Model{
         // if it has, it calls the object's onCollision method
         // This method largely depends on other collision methods already being created
         for(InterObj o : objects){
-            if(crash(object)){
-                object.onCollision(player);
+            if(crash(o)){
+                o.onCollision(player);
             }
         }
     }
@@ -54,11 +54,11 @@ public class Model{
         case WEST: player.setXIncr(WESTSTEP); break;
         }
         player.move();
-        player.handleCollisions(stuff);
+        handleCollisions(stuff);
         for(InterObj o : stuff){
             o.move();
         }
-        player.handleCollisions(stuff);
+        handleCollisions(stuff);
 
         /* The following is pseudocode that will be implemented tomorrow for this method
 
