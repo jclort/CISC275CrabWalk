@@ -18,7 +18,7 @@ public class View extends JFrame{
     private StartButton startButton;
     private BufferedImage crabPic;
 
-    final int frameStartSize = 800;
+    final static int frameStartSize = 800;
     final static int frameWidth = 800;//500
    	final static int frameHeight = 800;//300
     final static int imgWidth = 165;//165
