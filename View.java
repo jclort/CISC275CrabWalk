@@ -119,9 +119,6 @@ public class View extends JFrame{
     	 }
     }
 
-    public void update(Game model){
-        // sets the view properties to their model counterparts
-    }
 
     private BufferedImage createImage(String fname){
     		
