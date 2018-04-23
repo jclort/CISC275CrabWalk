@@ -3,18 +3,22 @@ class Crab extends Crawler {
 	private boolean powerUp = false;
 	private int score = 0;
 	private int lives = 4;
+    private int boundary;
 	
 	public Crab(int frameSize) {
 		xIncr = 0;
 		yIncr = 0;
-		this.setYLoc(frameSize/2);
-		this.setXLoc(frameSize/2);
-        dir = Direction.WEST;
+        boundary = frameSize/2;
+		this.setYLoc(boundary);
+		this.setXLoc(boundary);
+        dir = Direction.STILL;
 	}
 
 	public void move() {
-		yloc += yIncr;
-		xloc += xIncr;
+        if (xloc <= boundary-xIncr){
+		    yloc += yIncr;
+		    xloc += xIncr;
+        }
 	}
 
 	public void addScore() {

@@ -8,10 +8,10 @@ public class Model{
     private int objXIncr; // All objects will only move left, not up or down
     static int left; // Again, object is only moving left
     int frameWidth;
-    private final int NORTHSTEP = 10;
-    private final int SOUTHSTEP = -10;
-    private final int EASTSTEP = -10;
-    private final int WESTSTEP = 10;
+    private final int NORTHSTEP = -10;
+    private final int SOUTHSTEP = 10;
+    private final int EASTSTEP = 10;
+    private final int WESTSTEP = -10;
     int frameHeight;
     int imgSize;
     private int noIncr = 0;
@@ -70,6 +70,8 @@ public class Model{
         case WEST: player.setXIncr(WESTSTEP);
 		   player.setYIncr(noIncr);
 		   break;
+        default: player.setXIncr(noIncr);
+                   player.setYIncr(noIncr);
         }
         player.move();
         handleCollisions(stuff);
@@ -77,6 +79,7 @@ public class Model{
             o.move();
         }
         handleCollisions(stuff);
+        player.setDir(Direction.STILL);
 
         /* The following is pseudocode that will be implemented tomorrow for this method
 
