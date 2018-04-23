@@ -36,6 +36,10 @@ public class View extends JFrame{
     public DrawPanel getDrawPanel(){
         return drawPanel;
     }
+    
+    public int getFrameSize() {
+    	return StartFrameSize;
+    }
 
     public int getScore(){
         return score;
@@ -99,6 +103,18 @@ public class View extends JFrame{
 
     private class StartButton{
         //Code for a button that starts the game
+    	TextField text = new TextField(20);
+    	Button b;
+    	 public StartButton() {
+    		 b = new Button("Start Game");
+    		 add(b);
+    		 add(text);
+    		 b.addActionListener(this);
+    	 }
+    	 
+    	 public void actionPerformed(ActionEvent e) {
+    		 
+    	 }
     }
 
     public void update(Game model){
