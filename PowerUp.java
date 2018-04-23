@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class PowerUp extends InterObj {
 	Random rand = new Random();
 	private int max = 3;

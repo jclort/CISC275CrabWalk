@@ -1,9 +1,9 @@
 
 abstract class Crawler{
-	private int xloc;
-	private int yloc;
-	private int xIncr;
-	private int yIncr;
+	protected int xloc;
+	protected int yloc;
+	protected int xIncr;
+	protected int yIncr;
 
 	public void setXLoc(int newX) {
 		xloc = newX;

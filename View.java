@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionEvent; 
@@ -10,128 +11,180 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
 public class View extends JFrame{
-    private int score;
-    private int lives;
-    private Crab player;
-    private ArrayList<InterObj> stuff;
-    private DrawPanel drawPanel;
-    private StartButton startButton;
-    private BufferedImage crabPic;
+    	private int score;
+    	private int lives;
+    	private Crab player;
+    	private ArrayList<InterObj> stuff;
+    	private StartButton startButton;
+    	private BufferedImage crabPic;
+    	private BufferedImage trashPic;
 
-    final static int frameStartSize = 800;
-    final static int frameWidth = 800;//500
+    	final static int frameStartSize = 800;
+    	final static int frameWidth = 800;//500
    	final static int frameHeight = 800;//300
-    final static int imgWidth = 165;//165
-	final static int imgHeight = 165;
-<<<<<<< HEAD
+    	final static int imgWidth = 72;//165
+	final static int imgHeight = 72;
 
-    public View(ArrayList<InterObj> s){
-=======
+	final int frameCount = 8;
+	private int picNum = 0;
+	
+	private BufferedImage[][] pics;
+	
+	private DrawPanel drawPanel= new DrawPanel();
+   	private Integer time; 
     
-<<<<<<< HEAD
-    public View(){    
->>>>>>> 2ce471109ff2313b0a42d57c6dc8f792c5d373c6
-=======
-    public View(Crab p, ArrayList<InterObj> s){    
->>>>>>> f20509134965277616df46baf96c1c74c78351fb
-        drawPanel = new DrawPanel();
-        score = 0;
-        lives = 3;
-        player = p;
-        stuff = s;
-        startButton = new StartButton();
-        crabPic = createImage("images/crab");
-    }
+    	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
+    		String[] picNames = {"images/crab.png"};
+    		pics = new BufferedImage[picNames.length][frameCount];
+    		for(int j = 0; j < picNames.length; j++) {
+			// load the image
+			BufferedImage img = createImage(picNames[j]);
+    	
+			for(int i = 0; i < frameCount; i++) {
+				// all of the different movements of that image
+				pics[j][i] = img.getSubimage(imgWidth*i, 0, imgWidth, imgHeight);
+			}
+    		}
+        	time = startTime;
+        	trashPic = createImage("images/trash1.png");
+        	score = 0;
+        	lives = 3;
+        	player = p;
+        	stuff = s;
+        	startButton = new StartButton();
+        	add(drawPanel);
+        
 
-    public DrawPanel getDrawPanel(){
-        return drawPanel;
-    }
+        	setBackground(Color.gray);                 
+	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
+	    	setSize(getWidth(), getHeight());
+	    	setVisible(true);
+        	drawPanel.requestFocusInWindow();
+        	pack();	
+    	}
+
+	public Crab getPlayer() {
+		return player;
+	}
+    	public DrawPanel getDrawPanel(){
+        	return drawPanel;
+    	}
     
-    public int getFrameSize() {
-    	return StartFrameSize;
-    }
+    	public static int getFrameSize() {
+    		return frameStartSize;
+    	}
 
-    public int getScore(){
-        return score;
-    }
+     	public void paint(Graphics g) {
+		g.drawString(this.time.toString(),player.getXLoc()+(imgWidth*2/5),player.getYLoc()+(imgHeight-4));
+    		g.drawImage(crabPic, player.getXLoc(), player.getYLoc(), this);
+		for (InterObj o : stuff) {
+			g.drawImage(trashPic, o.getXLoc(), o.getYLoc(), this);
+		}
+	}
+	
+    	public int getScore(){
+        	return score;
+    	}
 
-    public int getLives(){
-        return lives;
-    }
+    	public int getLives(){
+        	return lives;
+    	}
 
-    public ArrayList<InterObj> getStuff(){
-        return stuff;
-    }
+    	public ArrayList<InterObj> getStuff(){
+        	return stuff;
+    	}
+
+    	public void drawPanel() {
+		drawPanel.repaint();
+	}
+
+	public void setTime(Integer time) {
+		this.time = time;
+	}
 
 
-    @SuppressWarnings("serial")
+    	@SuppressWarnings("serial")
 	private class DrawPanel extends JPanel {
 
-        public DrawPanel(){
-            	super();
-            	setFocusable(true);
-            	addKeyListener(new KeyAdapter(){
-                	@Override
-                	public void keyPressed(KeyEvent e){
-                    		if (e.getKeyCode() == KeyEvent.VK_UP){
-                        		//crab direction is up
-                    		}
-					        else if (e.getKeyCode() == KeyEvent.VK_DOWN){
-						        //crab direction is down
-					        }
-					        else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
-						        //crab direction is right
-					        }
-					        else if (e.getKeyCode() == KeyEvent.VK_LEFT){
-						        //crab direction is left
-					        }
-                	}
-            	});
-        }
+        	public DrawPanel(){
+        	    	super();
+        	        System.out.println("key");
+            		setFocusable(true);
+            		addKeyListener(new KeyAdapter(){
+                		@Override
+                		public void keyPressed(KeyEvent e){
+                            	
+                    			if (e.getKeyCode() == KeyEvent.VK_UP){
+                        			//crab direction is up
+					        player.setDir(Direction.NORTH);
+                    			}
+					else if (e.getKeyCode() == KeyEvent.VK_DOWN){
+						//crab direction is down
+						player.setDir(Direction.SOUTH);
+					}
+					else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+						//crab direction is right
+						player.setDir(Direction.EAST);
+					}
+					else if (e.getKeyCode() == KeyEvent.VK_LEFT){
+						//crab direction is left
+						player.setDir(Direction.WEST);
+					}
+                		}
+            		});
+        	}
 
-        @Override
-        protected void paintComponent(Graphics g) {
+        	@Override
+        	protected void paintComponent(Graphics g) {
+			
 			super.paintComponent(g);
-			g.setColor(new Color(0, 0, 0, 0));
-            drawCrab();
-            drawInterObjs();
+			setBackground(Color.cyan);
+			//g.setColor(new Color(0, 0, 0, 0));
+            		drawCrab(g);
+            		drawInterObjs(g);
+			drawTime(g);
 		}
 
-        @Override
+        	@Override
 		public Dimension getPreferredSize() {
 			return new Dimension(frameStartSize, frameStartSize);
 		}
 
-        public void drawCrab(){
-            System.out.println("Crab appears!");    //STUB
-        }
+        	public void drawCrab(Graphics g){
+        		super.paintComponent(g);
+        		g.setColor(Color.gray);
+        		picNum = (picNum + 1) % 8;
+        		g.drawImage(pics[0][picNum], player.getXLoc(), player.getYLoc(), this);
+        	}
 
-        public void drawInterObjs(){
-            System.out.println("Objects appear!");  //STUB
-        }
-    }
+        	public void drawInterObjs(Graphics g){
+            		for (InterObj object: stuff){
+	            		g.drawImage(trashPic, object.getXLoc(), object.getYLoc(), this);
+            		}
+        	}
+		public void drawTime(Graphics g) {
+			g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
+		}
+	}	
 
-    private class StartButton{
-        //Code for a button that starts the game
-    	TextField text = new TextField(20);
-    	Button b;
-    	 public StartButton() {
-    		 b = new Button("Start Game");
-    		 add(b);
-    		 add(text);
-    		 b.addActionListener(this);
-    	 }
+    	private class StartButton{
+        	//Code for a button that starts the game
+    		TextField text = new TextField(20);
+    		Button b;
+    		public StartButton() {
+    			b = new Button("Start Game");
+    			add(b);
+    			add(text);
+    			//b.addActionListener(this);
+    	 	}
     	 
-    	 public void actionPerformed(ActionEvent e) {
+    	 	public void actionPerformed(ActionEvent e) {
     		 
-    	 }
-    }
+    	 	}
+    	}
 
-    public void update(Game model){
-        // sets the view properties to their model counterparts
-    }
 
-    private BufferedImage createImage(String fname){
+    	private BufferedImage createImage(String fname){
 
 		BufferedImage bufferedImage;
 
