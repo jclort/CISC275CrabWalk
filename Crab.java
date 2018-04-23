@@ -1,4 +1,5 @@
 class Crab extends Crawler {
+    private Direction dir;
 	private boolean powerUp = false;
 	private int score = 0;
 	private int lives = 4;
@@ -8,6 +9,7 @@ class Crab extends Crawler {
 		yIncr = 0;
 		this.setYLoc(frameSize/2);
 		this.setXLoc(frameSize/2);
+        dir = Direction.WEST;
 	}
 
 	public void move() {
@@ -30,6 +32,10 @@ class Crab extends Crawler {
 	public int getTotalScore() {
 		return score+(lives*5);
 	}
+
+    public Direction getDir(){
+        return dir;
+    }
 
 	public void setPowerUp(boolean enable) {
 		if (enable) {
