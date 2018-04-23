@@ -31,8 +31,8 @@ public class View extends JFrame{
         lives = 3;
         player = p;
         stuff = s;
+	startButton = new StartButton();
         add(drawPanel);
-        startButton = new StartButton();
         crabPic = createImage("images/crab.png");
         setBackground(Color.gray);                 
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
@@ -64,7 +64,9 @@ public class View extends JFrame{
     public void drawPanel() {
 		drawPanel.repaint();
 	}
-
+    public void paint(Graphics g) {
+	    g.drawImage(crabPic, player.getXLoc(), player.getYLoc(), Color.gray, this);
+    }
 
     @SuppressWarnings("serial")
 	private class DrawPanel extends JPanel {
