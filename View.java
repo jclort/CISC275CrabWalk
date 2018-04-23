@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionEvent; 
@@ -14,26 +15,44 @@ public class View extends JFrame{
     private int lives;
     private Crab player;
     private ArrayList<InterObj> stuff;
-    private DrawPanel drawPanel;
     private StartButton startButton;
     private BufferedImage crabPic;
 
     final static int frameStartSize = 800;
     final static int frameWidth = 800;//500
    	final static int frameHeight = 800;//300
-    final static int imgWidth = 165;//165
-	final static int imgHeight = 165;
+    final static int imgWidth = 240;//165
+	final static int imgHeight = 230;
 
+	final int frameCount = 8;
+	private int picNum = 0;
+	
+	private BufferedImage[][] pics;
+	
+	private DrawPanel drawPanel= new DrawPanel();
     
-    public View(Crab p, ArrayList<InterObj> s){    
-        drawPanel = new DrawPanel();
+    
+    public View(Crab p, ArrayList<InterObj> s){  
+    	String[] picNames = {"images/crab.png"};
+    	pics = new BufferedImage[picNames.length][frameCount];
+    	for(int j = 0; j < picNames.length; j++) {
+			// load the image
+			BufferedImage img = createImage(picNames[j]);
+    	
+			for(int i = 0; i < frameCount; i++) {
+				// all of the different movements of that image
+				pics[j][i] = img.getSubimage(imgWidth*i, 0, imgWidth, imgHeight);
+			}
+    	}
+    
         score = 0;
         lives = 3;
         player = p;
         stuff = s;
-	startButton = new StartButton();
+        startButton = new StartButton();
         add(drawPanel);
-        crabPic = createImage("images/crab.png");
+        
+
         setBackground(Color.gray);                 
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    setSize(getWidth(), getHeight());
@@ -48,7 +67,9 @@ public class View extends JFrame{
     public static int getFrameSize() {
     	return frameStartSize;
     }
-
+     public void paint(Graphics g) {
+    		    g.drawImage(crabPic, player.getXLoc(), player.getYLoc(), Color.gray, this);
+       }
     public int getScore(){
         return score;
     }
@@ -64,9 +85,7 @@ public class View extends JFrame{
     public void drawPanel() {
 		drawPanel.repaint();
 	}
-    public void paint(Graphics g) {
-	    g.drawImage(crabPic, player.getXLoc(), player.getYLoc(), Color.gray, this);
-    }
+
 
     @SuppressWarnings("serial")
 	private class DrawPanel extends JPanel {
@@ -107,12 +126,16 @@ public class View extends JFrame{
 		}
 
         public void drawCrab(Graphics g){
-            g.drawImage(crabPic, player.getXLoc(), player.getYLoc(), new Color(0, 0, 0, 0), this);
+        	super.paintComponent(g);
+        	g.setColor(Color.gray);
+        	picNum = (picNum + 1) % 8;
+        	g.drawImage(pics[0][picNum], player.getXLoc(), player.getYLoc(), new Color(0, 0, 0, 0), this);
             // System.out.println("Crab appears!");    //STUB
         }
 
         public void drawInterObjs(Graphics g){
-            System.out.println("Objects appear!");  //STUB
+	 
+        	System.out.println("Objects appear!");  //STUB
         }
     }
 
