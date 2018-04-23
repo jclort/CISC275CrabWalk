@@ -49,6 +49,10 @@ public class Model{
         }
     }
 
+    public void generateNewStuff(){
+        stuff.add(new Trash(frameHeight));
+    }
+
     public void update(Crab newPlayer){
         // moves the player in the specified direction
         // deals with collisions
@@ -80,6 +84,7 @@ public class Model{
         }
         handleCollisions(stuff);
         player.setDir(Direction.STILL);
+        generateNewStuff();
 
         /* The following is pseudocode that will be implemented tomorrow for this method
 
