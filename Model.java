@@ -21,7 +21,7 @@ public class Model{
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
         this.imgSize = imgSize;
-        stuff = new ArrayList<InterObj>;
+        stuff = new ArrayList<InterObj>();
         player = new Crab();
     }
 
