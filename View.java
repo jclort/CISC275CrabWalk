@@ -17,6 +17,7 @@ public class View extends JFrame{
     private ArrayList<InterObj> stuff;
     private StartButton startButton;
     private BufferedImage crabPic;
+    private BufferedImage trashPic;
 
     final static int frameStartSize = 800;
     final static int frameWidth = 800;//500
@@ -44,7 +45,8 @@ public class View extends JFrame{
 				pics[j][i] = img.getSubimage(imgWidth*i, 0, imgWidth, imgHeight);
 			}
     	}
-    
+        
+        trashPic = createImage("images/trash1.png");
         score = 0;
         lives = 3;
         player = p;
@@ -143,8 +145,9 @@ public class View extends JFrame{
         }
 
         public void drawInterObjs(Graphics g){
-	 
-        	System.out.println("Objects appear!");  //STUB
+            for (InterObj object: stuff){
+	            g.drawImage(trashPic, object.getXLoc(), object.getYLoc(), Color.gray, this);
+            }
         }
     }
 
