@@ -32,8 +32,8 @@ class Controller{
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             	public void run() {
                 	Controller ctrllr = new Controller();
-			        timer = new Timer(ctrllr.drawDelay, ctrllr.drawAction);
-                	timer.start();
+			        ctrllr.timer = new Timer(ctrllr.drawDelay, ctrllr.drawAction);
+                	ctrllr.timer.start();
             	}
         });
 	}

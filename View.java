@@ -31,7 +31,7 @@ public class View extends JFrame{
         player = p;
         stuff = s;
         startButton = new StartButton();
-        crabPic = createImage("images/crab");
+        crabPic = createImage("images/ocean.png");
     }
 
     public DrawPanel getDrawPanel(){
@@ -93,11 +93,12 @@ public class View extends JFrame{
 			return new Dimension(frameStartSize, frameStartSize);
 		}
 
-        public void drawCrab(){
-            System.out.println("Crab appears!");    //STUB
+        public void drawCrab(Graphics g){
+            g.drawImage(crabPic, player.getXloc(), player.getYloc(), new Color(0, 0, 0, 0), this);
+            // System.out.println("Crab appears!");    //STUB
         }
 
-        public void drawInterObjs(){
+        public void drawInterObjs(Graphics g){
             System.out.println("Objects appear!");  //STUB
         }
     }
@@ -118,9 +119,6 @@ public class View extends JFrame{
     	 }
     }
 
-    public void update(Game model){
-        // sets the view properties to their model counterparts
-    }
 
     private BufferedImage createImage(String fname){
     		
