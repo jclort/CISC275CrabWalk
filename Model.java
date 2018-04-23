@@ -8,6 +8,10 @@ public class Model{
     private int objXIncr; // All objects will only move left, not up or down
     static int left; // Again, object is only moving left
     int frameWidth;
+    private final int NORTHSTEP = 10;
+    private final int SOUTHSTEP = -10;
+    private final int EASTSTEP = -10;
+    private final int WESTSTEP = 10;
     int frameHeight;
     int imgSize;
     ArrayList<InterObj> stuff; // all of the objects with their methods and properties
@@ -54,6 +58,19 @@ public class Model{
         // deals with collisions again
         // Will Be Called From Controller With The Dir From View
 
+        switch(dir){
+        case NORTH: player.setYIncr(NORTHSTEP); break;
+        case SOUTH: player.setYIncr(SOUTHSTEP); break;
+        case EAST: player.setXIncr(EASTSTEP); break;
+        case WEST: player.setXIncr(WESTSTEP); break;
+        }
+        player.move();
+        player.handleCollisions(stuff);
+        for(InterObj o : stuff){
+            o.move();
+        }
+        player.handleCollisions(stuff);
+
         /* The following is pseudocode that will be implemented tomorrow for this method
 
            First thing that should be done is a check to see the directions that we are going
@@ -61,7 +78,7 @@ public class Model{
            positive or negative numbers. Afterwards, the crab's location will increment
            by xIncr, and yIncr. We will then check and see if a collision has occurred, and
            handle it accordingly. Once it is dealt with, we will then increment the
-           Interactive Objects locations, and check for collisions, and handle them accordingly
+           Interactive Objects locations, and check for collisions, and handle them accordingly*/
     }
 
 

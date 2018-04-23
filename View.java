@@ -12,13 +12,13 @@ import java.util.ArrayList;
 public class View extends JFrame{
     private int score;
     private int lives;
-    //private Crab player;
+    private Crab player;
     private ArrayList<InterObj> stuff;
     private DrawPanel drawPanel;
     private StartButton startButton;
     private BufferedImage crabPic;
 
-    final int frameStartSize = 800;
+    final static int frameStartSize = 800;
     final static int frameWidth = 800;//500
    	final static int frameHeight = 800;//300
     final static int imgWidth = 165;//165
@@ -28,18 +28,27 @@ public class View extends JFrame{
     public View(ArrayList<InterObj> s){
 =======
     
+<<<<<<< HEAD
     public View(){    
 >>>>>>> 2ce471109ff2313b0a42d57c6dc8f792c5d373c6
+=======
+    public View(Crab p, ArrayList<InterObj> s){    
+>>>>>>> f20509134965277616df46baf96c1c74c78351fb
         drawPanel = new DrawPanel();
         score = 0;
         lives = 3;
-        stuff = null;
+        player = p;
+        stuff = s;
         startButton = new StartButton();
         crabPic = createImage("images/crab");
     }
 
     public DrawPanel getDrawPanel(){
         return drawPanel;
+    }
+    
+    public int getFrameSize() {
+    	return StartFrameSize;
     }
 
     public int getScore(){
@@ -104,6 +113,18 @@ public class View extends JFrame{
 
     private class StartButton{
         //Code for a button that starts the game
+    	TextField text = new TextField(20);
+    	Button b;
+    	 public StartButton() {
+    		 b = new Button("Start Game");
+    		 add(b);
+    		 add(text);
+    		 b.addActionListener(this);
+    	 }
+    	 
+    	 public void actionPerformed(ActionEvent e) {
+    		 
+    	 }
     }
 
     public void update(Game model){
@@ -124,9 +145,5 @@ public class View extends JFrame{
     		}
     		return null;
 	}
-
-    public static void main(String[] args){
-        View v = new View();
-    }
 
 }
