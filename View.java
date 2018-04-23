@@ -39,8 +39,8 @@ public class View extends JFrame{
         return drawPanel;
     }
     
-    public int getFrameSize() {
-    	return StartFrameSize;
+    public static int getFrameSize() {
+    	return frameStartSize;
     }
 
     public int getScore(){
@@ -54,6 +54,10 @@ public class View extends JFrame{
     public ArrayList<InterObj> getStuff(){
         return stuff;
     }
+
+    public void drawPanel() {
+		drawPanel.repaint();
+	}
 
 
     @SuppressWarnings("serial")
@@ -85,8 +89,8 @@ public class View extends JFrame{
         protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			g.setColor(new Color(0, 0, 0, 0));
-            drawCrab();
-            drawInterObjs();
+            drawCrab(g);
+            drawInterObjs(g);
 		}
 
         @Override
@@ -95,7 +99,7 @@ public class View extends JFrame{
 		}
 
         public void drawCrab(Graphics g){
-            g.drawImage(crabPic, player.getXloc(), player.getYloc(), new Color(0, 0, 0, 0), this);
+            g.drawImage(crabPic, player.getXLoc(), player.getYLoc(), new Color(0, 0, 0, 0), this);
             // System.out.println("Crab appears!");    //STUB
         }
 
@@ -112,7 +116,7 @@ public class View extends JFrame{
     		 b = new Button("Start Game");
     		 add(b);
     		 add(text);
-    		 b.addActionListener(this);
+    		 //b.addActionListener(this);
     	 }
     	 
     	 public void actionPerformed(ActionEvent e) {

@@ -17,7 +17,7 @@ class Controller{
     private Timer timer;
 
     public Controller(){
-        model = new Model();
+        model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
 		view = new View(model.getPlayer(), model.getStuff());
 		drawAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
@@ -32,7 +32,7 @@ class Controller{
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             	public void run() {
                 	Controller ctrllr = new Controller();
-			        ctrllr.timer = new Timer(ctrllr.drawDelay, ctrllr.drawAction);
+			        ctrllr.timer = new Timer(ctrllr.DRAW_DELAY, ctrllr.drawAction);
                 	ctrllr.timer.start();
             	}
         });

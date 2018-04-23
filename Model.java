@@ -25,6 +25,14 @@ public class Model{
         player = new Crab(frameWidth);
     }
 
+    public Crab getPlayer(){
+        return player;
+    }
+
+    public ArrayList<InterObj> getStuff(){
+        return this.stuff;
+    }
+
     public boolean crash(InterObj object){ // tells whether the player has hit this object
         return (player.getXLoc() == object.getXLoc() && player.getYLoc() == object.getYLoc());
     }
@@ -40,14 +48,14 @@ public class Model{
         }
     }
 
-    public void update(Direction dir){
+    public void update(){
         // moves the player in the specified direction
         // deals with collisions
         // moves the InterObjs
         // deals with collisions again
         // Will Be Called From Controller With The Dir From View
 
-        switch(dir){
+        switch(player.getDir()){
         case NORTH: player.setYIncr(NORTHSTEP); break;
         case SOUTH: player.setYIncr(SOUTHSTEP); break;
         case EAST: player.setXIncr(EASTSTEP); break;
