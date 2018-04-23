@@ -3,7 +3,7 @@ import java.util.Random;
 public class Trash extends InterObj {
 	Random rand = new Random();
 	private int max = 3;
-	final private int GLOBAL = 7;
+	final private int GLOBAL = 6;
 	int ctr = 0;
 	
     	public Trash(int frameSize){

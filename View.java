@@ -76,9 +76,9 @@ public class View extends JFrame{
 
      	public void paint(Graphics g) {
 		g.drawString(this.time.toString(),player.getXLoc()+(imgWidth*2/5),player.getYLoc()+(imgHeight-4));
-    		g.drawImage(crabPic, player.getXLoc(), player.getYLoc(), Color.gray, this);
+    		g.drawImage(crabPic, player.getXLoc(), player.getYLoc(), this);
 		for (InterObj o : stuff) {
-			g.drawImage(trashPic, o.getXLoc(), o.getYLoc(), Color.gray, this);
+			g.drawImage(trashPic, o.getXLoc(), o.getYLoc(), this);
 		}
 	}
 	
@@ -154,12 +154,12 @@ public class View extends JFrame{
         		super.paintComponent(g);
         		g.setColor(Color.gray);
         		picNum = (picNum + 1) % 8;
-        		g.drawImage(pics[0][picNum], player.getXLoc(), player.getYLoc(), new Color(0, 0, 0, 0), this);
+        		g.drawImage(pics[0][picNum], player.getXLoc(), player.getYLoc(), this);
         	}
 
         	public void drawInterObjs(Graphics g){
             		for (InterObj object: stuff){
-	            		g.drawImage(trashPic, object.getXLoc(), object.getYLoc(), Color.gray, this);
+	            		g.drawImage(trashPic, object.getXLoc(), object.getYLoc(), this);
             		}
         	}
 		public void drawTime(Graphics g) {
