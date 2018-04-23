@@ -3,8 +3,6 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JFrame; 
-import javax.swing.JPanel; 
 import javax.swing.Timer;
 
 

@@ -1,8 +1,10 @@
 public enum Direction{
+    STILL("not moving"),
     NORTH("north"),
     SOUTH("south"),
     EAST("east"),
     WEST("west");
+    
 
     private String name = null;
 

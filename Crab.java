@@ -9,7 +9,7 @@ class Crab extends Crawler {
 		yIncr = 0;
 		this.setYLoc(frameSize/2);
 		this.setXLoc(frameSize/2);
-        dir = Direction.WEST;
+        dir = Direction.STILL;
 	}
 
 	public void move() {

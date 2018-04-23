@@ -57,6 +57,7 @@ public class View extends JFrame{
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    setSize(getWidth(), getHeight());
 	    setVisible(true);
+        drawPanel.requestFocusInWindow();
         pack();	
     }
 	public Crab getPlayer() {
@@ -94,25 +95,27 @@ public class View extends JFrame{
 
         public DrawPanel(){
             	super();
+                System.out.println("key");
             	setFocusable(true);
             	addKeyListener(new KeyAdapter(){
                 	@Override
                 	public void keyPressed(KeyEvent e){
+                            System.out.println("key");
                     		if (e.getKeyCode() == KeyEvent.VK_UP){
                         		//crab direction is up
-					player.setDir(Direction.NORTH);
+					            player.setDir(Direction.NORTH);
                     		}
 					        else if (e.getKeyCode() == KeyEvent.VK_DOWN){
 						        //crab direction is down
-							player.setDir(Direction.SOUTH);
+							    player.setDir(Direction.SOUTH);
 					        }
 					        else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 						        //crab direction is right
-							player.setDir(Direction.EAST);
+							    player.setDir(Direction.EAST);
 					        }
 					        else if (e.getKeyCode() == KeyEvent.VK_LEFT){
 						        //crab direction is left
-							player.setDir(Direction.WEST);
+							    player.setDir(Direction.WEST);
 					        }
                 	}
             	});
