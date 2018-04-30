@@ -13,7 +13,7 @@ class Controller{
 	private View view;
     	private Action drawAction;
     	private Timer timer;
-    	int timerCtr = 500;
+    	int timerCtr = 1000;
 
     	public Controller(){
         	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
