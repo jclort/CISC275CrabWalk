@@ -1,8 +1,11 @@
 import java.io.Serializable;
+import java.util.Random;
 
 public abstract class InterObj extends Crawler implements Serializable {
 
 	protected boolean collisionBool = false;
+	Random rand = new Random();
+	
 	
 	/**
 	 * This method returns the collisionBool for the InterObj(Interactive Object), which describes whether the Crawlwer has collided with a Crab.
@@ -21,10 +24,15 @@ public abstract class InterObj extends Crawler implements Serializable {
 	public abstract void onCollision(Crab crab);
 	
 	/**
-	 * This method will return the random increment for each different InterObj and be implemented in their own class.
+	 * This method will return the random increment for each different InterObj and will consider the parameters of max and global integers for returning an integer between the range of (-max)-global to (+max)-global.  This ensures a global moveent of the InterObj, however, encourages local movement by varying its speed.
 	 *
-	 * @return int
+	 * @param max An integer that initally determines the range from -max to +max
+	 * @param global An integer that ensures the InterObj is moving to the left for each and every time the move method is called.  Must be greater than max to ensure this global movement. 
+	 *
+	 * @return int - The random integer generated between the range desired as a result of the passed parameters.
 	 **/
-	public abstract int getIncr();
+	public int getIncr(int max, int global) {
+		return rand.nextInt(max + 1 + max) - max -global;
+	}
 
 }

@@ -22,7 +22,7 @@ class Controller{
 			public void actionPerformed(ActionEvent e){
 				model.update(view.getPlayer());
 				view.setTime(timerCtr);
-				view.drawPanel();
+				view.drawLayeredPane();
 				if (timerCtr-- == 0) {
 					timer.stop();
 				}

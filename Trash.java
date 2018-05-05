@@ -1,11 +1,8 @@
-import java.util.Random;
 import java.io.Serializable;
 
 public class Trash extends InterObj implements Serializable {
-	Random rand = new Random();
 	private int max = 3;
-	final private int GLOBAL = 6;
-	int ctr = 0;
+	private int global = 6;
 	
 	/**
 	 * This constructor will create an instance of Trash with a random spawn from the right hand side moving left towards a Crab.
@@ -30,16 +27,6 @@ public class Trash extends InterObj implements Serializable {
 	 *
 	 **/	
 	public void move() {
-		this.setXLoc(this.getXLoc() + getIncr());
-	}
-
-	/**
-	 * This method creates a random integer that ensures a negative int increment between the range of (-max)-GLOBAL to (+max)-GLOBAL
-	 *
-	 * @return int - The value of the random negative increment
-	 **/  
-	public int getIncr() {
-		return rand.nextInt(max + 1 + max) - max - GLOBAL;
+		this.setXLoc(this.getXLoc() + getIncr(max, global));
 	}
 }
-

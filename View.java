@@ -30,8 +30,10 @@ public class View extends JFrame{
 	
 	private BufferedImage[][] pics;
 	
-	private DrawPanel drawPanel= new DrawPanel();
-   	private Integer time; 
+	//private DrawPanel drawPanel= new DrawPanel();
+	private LayeredPane layeredPane = new LayeredPane();
+   	private Integer time;
+
     
     	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
     		String[] picNames = {"images/crab.png"};
@@ -51,24 +53,46 @@ public class View extends JFrame{
         	lives = 3;
         	player = p;
         	stuff = s;
-        	startButton = new StartButton();
-        	add(drawPanel);
-        
 
-        	setBackground(Color.gray);                 
+		JLabel baseLabel = new JLabel("Test Label");
+		baseLabel.setBackground(Color.cyan);
+
+        	startButton = new StartButton();
+        	
+		layeredPane.setPreferredSize(getPreferredSize());
+		layeredPane.setBorder(BorderFactory.createTitledBorder("Just a test"));
+		layeredPane.setBackground(Color.cyan);
+		baseLabel.setBounds(0,0,getWidth(),getHeight());
+
+		layeredPane.add(baseLabel,0);
+		//add(layeredPane);
+		//setBackground(Color.cyan);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setVisible(true);
+		//setSize(getWidth(), getHeight());
+		//layeredPane.requestFocusInWindow();
+		//pack();
+		
+		JPanel jPanel = new JPanel();
+		jPanel.add(layeredPane);
+		add(jPanel);
+               	setBackground(Color.cyan);                 
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    	setSize(getWidth(), getHeight());
 	    	setVisible(true);
-        	drawPanel.requestFocusInWindow();
+        	layeredPane.requestFocusInWindow();
         	pack();	
     	}
 
 	public Crab getPlayer() {
 		return player;
 	}
-    	public DrawPanel getDrawPanel(){
-        	return drawPanel;
-    	}
+    	//public DrawPanel getDrawPanel(){
+        //	return drawPanel;
+    	//}
+	public JLayeredPane getLayeredPane() {
+		return layeredPane;
+	}
     
     	public static int getFrameSize() {
     		return frameStartSize;
@@ -94,8 +118,11 @@ public class View extends JFrame{
         	return stuff;
     	}
 
-    	public void drawPanel() {
-		drawPanel.repaint();
+    	//public void drawPanel() {
+	//	drawPanel.repaint();
+	//}
+	public void drawLayeredPane() {
+		layeredPane.repaint();
 	}
 
 	public void setTime(Integer time) {
@@ -104,11 +131,10 @@ public class View extends JFrame{
 
 
     	@SuppressWarnings("serial")
-	private class DrawPanel extends JPanel {
+	private class LayeredPane extends JLayeredPane {
 
-        	public DrawPanel(){
+        	public LayeredPane(){
         	    	super();
-        	        System.out.println("key");
             		setFocusable(true);
             		addKeyListener(new KeyAdapter(){
                 		@Override

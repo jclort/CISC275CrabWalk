@@ -90,7 +90,7 @@ public class Model{
         	}
         	handleCollisions(stuff);
         	player.setDir(Direction.STILL);
-        	if (trashCtr++ %20 == 0) {
+        	if (trashCtr++ %10 == 0) {
 			generateNewStuff();
 		}
         /* The following is pseudocode that will be implemented tomorrow for this method
