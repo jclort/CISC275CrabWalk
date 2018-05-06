@@ -27,6 +27,7 @@ public class View extends JFrame{
 
 	final int frameCount = 8;
 	private int picNum = 0;
+	private JPanel jPanel;
 	
 	private BufferedImage[][] pics;
 	
@@ -73,7 +74,7 @@ public class View extends JFrame{
 		//layeredPane.requestFocusInWindow();
 		//pack();
 		
-		JPanel jPanel = new JPanel();
+		jPanel = new JPanel();
 		jPanel.add(layeredPane);
 		add(jPanel);
                	setBackground(Color.cyan);                 
@@ -87,6 +88,29 @@ public class View extends JFrame{
 	public Crab getPlayer() {
 		return player;
 	}
+	public void tutorialJPanel() {
+		add(new JPanel());
+		//Add logic here to add to the new JPanel for the tutorial, and then when it's all done, 
+		//close the tutorial JPanel, and the Menu panel should still be running.
+	}
+	public void menuJPanel() {
+		add(new JPanel());
+		//Add logic here to just have a JPanel that doesn't close like the others.
+		//This is the menu so it only has buttons and the Game title, and when a button is pressed 
+		//then another jpanel is created and added on top, deleted, and then the menu jpanel remains
+	}
+	public void highScoreJPanel() {
+		add(new JPanel());
+		//Add logic here to have a panel pop up and just display a list of top scores that will be saved by a 2-d array, two columns
+		//One column for the name, one for the score, and display the table? maybe not even an ArrayList, just a hash table of some sort
+	}
+	public void gameJPanel() {
+		add(new JPanel());
+		//this will just be the logic that is currently in the View constructor and call this method
+		//however, now we will need to close this JPanel when the game ends and a name is recorded for the highscore table,
+		//then close the panel, a new game will be created when the new game button is pressed in the menu panel
+	}
+
     	//public DrawPanel getDrawPanel(){
         //	return drawPanel;
     	//}
