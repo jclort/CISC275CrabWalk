@@ -10,19 +10,20 @@ class Controller{
 	final int DRAW_DELAY = 75; //msec
 
     	private Model model;
-	private View view;
+    	private View view;
     	private Action drawAction;
     	private Timer timer;
     	int timerCtr = 500;
 
     	public Controller(){
         	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
-		view = new View(model.getPlayer(), model.getStuff(), timerCtr);
-		drawAction = new AbstractAction(){
+        	view = new View(model.getPlayer(), model.getStuff(), timerCtr);
+        	drawAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				model.update(view.getPlayer());
 				view.setTime(timerCtr);
 				view.drawPanel();
+				
 				if (timerCtr-- == 0) {
 					timer.stop();
 				}
@@ -35,7 +36,7 @@ class Controller{
         	javax.swing.SwingUtilities.invokeLater(new Runnable() {
             		public void run() {
                 		Controller ctrllr = new Controller();
-			        ctrllr.timer = new Timer(ctrllr.DRAW_DELAY, ctrllr.drawAction);
+			            ctrllr.timer = new Timer(ctrllr.DRAW_DELAY, ctrllr.drawAction);
                 		ctrllr.timer.start();
             		}
         	});

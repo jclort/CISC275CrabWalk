@@ -9,16 +9,24 @@ abstract class Crawler{
 		xloc = newX;
 	}
 	public void setYLoc(int newY) {
+		if (newY > 200){
 		yloc = newY;
+		}else{
+			return;
+		}
+		
+		//System.out.println(yloc);
 	}
 	public int getXLoc() {
 		return xloc;
 	}
 	public int getYLoc() {
 		return yloc;
+		
 	}
 	public void setYIncr(int newYIncr) {
 		yIncr = newYIncr;
+		
 	}
 	public void setXIncr(int newXIncr) {
 		xIncr = newXIncr;

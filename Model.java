@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-
+import java.util.Random;
 
 public class Model{
     	// This is where all of our logic is going to go for the game
@@ -18,14 +18,15 @@ public class Model{
     	ArrayList<InterObj> stuff; // all of the objects with their methods and properties
     	Crab player;               // the player with all his methods and properties
 	int trashCtr = 0;
-
+	Random rand = new Random();
+	int randnum;
 
     	public Model(int frameWidth, int frameHeight, int imgSize){
         	this.frameWidth = frameWidth;
         	this.frameHeight = frameHeight;
         	this.imgSize = imgSize;
         	stuff = new ArrayList<InterObj>();
-        	player = new Crab(frameWidth);
+        	player = new Crab(frameWidth); 
     	}
 
     	public Crab getPlayer(){
@@ -52,7 +53,34 @@ public class Model{
     	}
 
     	public void generateNewStuff(){
-        	stuff.add(new Trash(frameHeight));
+    		randnum = rand.nextInt(7);
+    		switch (randnum) {
+            case 0: 
+            	stuff.add(new Trash(frameHeight,1));
+            	break;
+            case 1: 
+            	stuff.add(new Trash(frameHeight,2));
+            	break;
+            case 2: 
+            	stuff.add(new Trash(frameHeight,3));
+            	break;
+            case 3: 
+            	stuff.add(new Trash(frameHeight,4));
+            	break;
+            case 4: 
+            	if (rand.nextInt(10) > 6){
+            	stuff.add(new Trash(frameHeight,5));
+            	}
+            	break;
+            case 5: 
+            	stuff.add(new Invasive(frameHeight,6));
+            	break;
+            case 6: 
+            	stuff.add(new Invasive(frameHeight,7));
+            	break;
+    		}
+        	
+        	
     	}
 
     	public void update(Crab newPlayer){
@@ -90,7 +118,7 @@ public class Model{
         	}
         	handleCollisions(stuff);
         	player.setDir(Direction.STILL);
-        	if (trashCtr++ %20 == 0) {
+        	if (trashCtr++ %15 == 0) {
 			generateNewStuff();
 		}
         /* The following is pseudocode that will be implemented tomorrow for this method
