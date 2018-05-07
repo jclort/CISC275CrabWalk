@@ -16,7 +16,7 @@ public class View extends JFrame{
     	private int lives;
     	private Crab player;
     	private ArrayList<InterObj> stuff;
-    	private StartButton startButton;
+    	//private StartButton startButton;
     	private BufferedImage crabPic;
     	private BufferedImage trashPic;
     	private BufferedImage trashPic1;
@@ -85,7 +85,7 @@ public class View extends JFrame{
         	lives = 3;
         	player = p;
         	stuff = s;
-        	startButton = new StartButton();
+        	//startButton = new StartButton();
         	add(drawPanel);
         
 
@@ -232,7 +232,7 @@ public class View extends JFrame{
 		}
 	}	
 
-    	private class StartButton{
+    	/*private class StartButton{
         	//Code for a button that starts the game
     		TextField text = new TextField(20);
     		JButton b;
@@ -295,14 +295,14 @@ public class View extends JFrame{
     	
     	
     	}
-
+*/
     	private BufferedImage createImage(String fname){
 
 		BufferedImage bufferedImage;
 
     		try {
     			// Method now takes a String (fname) in order to get the 
-			// right image to load for all the images passed through
+			    // right image to load for all the images passed through
     			bufferedImage = ImageIO.read(new File(fname));
     			return bufferedImage;
     		} catch (IOException e) {
