@@ -1,5 +1,5 @@
 import java.io.Serializable;
-
+import java.util.Random;
 public class PowerUp extends InterObj implements Serializable {
 	private int max = 3;
 	private int global = 6;
@@ -9,6 +9,18 @@ public class PowerUp extends InterObj implements Serializable {
 	 **/
 	public void onCollision(Crab crab) {
 		this.collisionBool = true;
+	}
+
+
+	@Override
+	public boolean equals(Object other){
+		if (!(other instanceof PowerUp)){
+			return false;
+		}
+		else{
+			PowerUp o = (PowerUp)other;
+			return super.equals(o);
+		}
 	}
 	
 	/**

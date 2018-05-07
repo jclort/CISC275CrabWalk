@@ -10,6 +10,17 @@ public class Invasive extends InterObj implements Serializable {
 	public void onCollision(Crab crab) {
 		this.collisionBool = true;
 	}
+
+	@Override
+	public boolean equals(Object other){
+		if (!(other instanceof Invasive)){
+			return false;
+		}
+		else{
+			Invasive o = (Invasive)other;
+			return super.equals(o);
+		}
+	}
 	
 	/**
 	 * This method will change the location of the Invasive object by a random increment that ensures global movement to the left, however, provides a varying local speed produced by the getIncr() method.

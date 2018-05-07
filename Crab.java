@@ -1,5 +1,5 @@
 class Crab extends Crawler {
-    	private Direction dir;
+    private Direction dir;
 	private boolean powerUp = false;
 	private int score = 0;
 	private int lives = 4;
@@ -12,6 +12,20 @@ class Crab extends Crawler {
 		this.setYLoc(boundary);
 		this.setXLoc(boundary);
         	dir = Direction.STILL;
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if (!(other instanceof Crab)){
+			return false;
+		}
+		else{
+			Crab o = (Crab)other;
+			return super.equals(o) &&
+					(getDir() == o.getDir()) &&
+					(getPowerUp() == o.getPowerUp()) &&
+					(getTotalScore() == o.getTotalScore());
+		}
 	}
 
 	public void move() {
@@ -54,6 +68,10 @@ class Crab extends Crawler {
 			yIncr -= 20;
 		}
 		powerUp = enable;
+	}
+	
+	public boolean getPowerUp(){
+		return this.powerUp;
 	}
 
 }

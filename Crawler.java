@@ -71,3 +71,28 @@ public abstract class Crawler{
 	 **/
 	public abstract void move();
 }
+	
+	public int getXIncr() {
+		return xIncr;
+	}
+	public int getYIncr() {
+		return yIncr;
+	}
+	
+	// move() will be implemented differently for InterObj and Crab
+	public abstract void move();
+	
+	@Override
+	public boolean equals(Object other){
+		if (!(other instanceof Crawler)){
+			return false;
+		}
+		else{
+			Crawler o = (Crawler)other;
+			return (getXLoc() == o.getXLoc()) &&
+					(getYLoc() == o.getYLoc()) &&
+					(getXIncr() == o.getXIncr()) &&
+					(getYIncr() == o.getYIncr());
+		}
+	}
+}

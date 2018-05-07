@@ -6,9 +6,20 @@ public class Native extends InterObj implements Serializable {
 	
 	/**
 	 * This method implements onCollision method from InterObj that will set the collisionBool to true when the image outline of the crab intersects the image outline of the Native Object.
-	 **/	
+	 **/
 	public void onCollision(Crab crab) {
 		this.collisionBool = true;
+	}
+
+	@Override
+	public boolean equals(Object other){
+		if (!(other instanceof Native)){
+			return false;
+		}
+		else{
+			Native o = (Native)other;
+			return super.equals(o);
+		}
 	}
 	
 	/**
