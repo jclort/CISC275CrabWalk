@@ -42,8 +42,10 @@ class Controller{
 			timer.start();
 		}
 		public static void restart(){
+            View v = view;
             model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
         	view = new View(model.getPlayer(), model.getStuff(), timerCtr);
+            v.dispose();
 			timer.start();
 			timerCtr = 500;
 		}
