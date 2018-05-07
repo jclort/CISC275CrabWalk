@@ -19,7 +19,6 @@ public class Model{
     	Crab player;               // the player with all his methods and properties
     	int trashCtr = 0;
 
-<<<<<<< HEAD
     /**
      * Constructor for the Model
      @param frameWidth The width of the frame that is going to be used
@@ -60,7 +59,6 @@ public class Model{
     		return this.imgSize;
     	}
 
->>>>>>> JeffreyLort
     	public Model(int frameWidth, int frameHeight, int imgSize){
         	this.frameWidth = frameWidth;
         	this.frameHeight = frameHeight;

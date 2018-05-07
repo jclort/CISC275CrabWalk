@@ -21,7 +21,7 @@ class Crab extends Crawler {
 		this.setXLoc(boundary);
         	dir = Direction.STILL;
 	}
-<<<<<<< HEAD
+
     /**
      * This will be responsible for moving the crab across the screen
      *@param None
@@ -43,7 +43,6 @@ class Crab extends Crawler {
 		}
 	}
 
->>>>>>> JeffreyLort
 	public void move() {
         	if (xloc <= boundary-xIncr){
 			yloc += yIncr;
