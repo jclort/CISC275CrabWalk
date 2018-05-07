@@ -13,13 +13,11 @@ public class Invasive extends InterObj {
 	private int sign = 0; 
 
 	public void onCollision(Crab crab) {
-<<<<<<< HEAD
       this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
-=======
+
       //this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
 		Controller.stop();
 		View.quiztime();
->>>>>>> JeffreyLort
 	}
 
 	public void move() {
