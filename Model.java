@@ -14,11 +14,12 @@ public class Model{
     	private final int WESTSTEP = -20;
     	int frameHeight;
     	int imgSize;
-    	private int noIncr = 0;
+    	private static int noIncr = 0;
     	ArrayList<InterObj> stuff; // all of the objects with their methods and properties
     	Crab player;               // the player with all his methods and properties
-	int trashCtr = 0;
+    	int trashCtr = 0;
 
+<<<<<<< HEAD
     /**
      * Constructor for the Model
      @param frameWidth The width of the frame that is going to be used
@@ -26,6 +27,40 @@ public class Model{
      @param imgSize The size of the images that are going to be input
      @return Nothing. It is simply a constructor
     */
+=======
+    	@Override
+    	public boolean equals(Object other){
+    		if (!(other instanceof Model)){
+    			return false;
+    		}
+    		else{
+    			Model o = (Model)other;
+    			return (getXIncr() == o.getXIncr()) &&
+    					(getFrameWidth() == o.getFrameWidth()) &&
+    					(getFrameHeight() == o.getFrameHeight()) &&
+    					(getImgSize() == o.getImgSize()) &&
+    					(getStuff().equals(o.getStuff())) &&
+    					(getPlayer().equals(o.getPlayer()));
+    		}
+    	}
+    	
+    	public int getXIncr(){
+    		return this.objXIncr;
+    	}
+    	
+    	public int getFrameWidth(){
+    		return this.frameWidth;
+    	}
+    	
+    	public int getFrameHeight(){
+    		return this.frameHeight;
+    	}
+    	
+    	public int getImgSize(){
+    		return this.imgSize;
+    	}
+
+>>>>>>> JeffreyLort
     	public Model(int frameWidth, int frameHeight, int imgSize){
         	this.frameWidth = frameWidth;
         	this.frameHeight = frameHeight;
@@ -68,26 +103,26 @@ public class Model{
         	// moves the InterObjs
         	// deals with collisions again
         	// Will Be Called From Controller With The Dir From View
-		player = newPlayer;
+    		player = newPlayer;
         	switch(player.getDir()){
-        	case NORTH:	 
-			player.setYIncr(NORTHSTEP);
-			player.setXIncr(noIncr);
-		    	break;
-       		case SOUTH: 
-			player.setYIncr(SOUTHSTEP);
-		    	player.setXIncr(noIncr);
-		    	break;
-        	case EAST:
-			player.setXIncr(EASTSTEP);
-		   	player.setYIncr(noIncr);
-		   	break;
-        	case WEST:
-			player.setXIncr(WESTSTEP);
-		   	player.setYIncr(noIncr);
-		   	break;
-        	default:
-			player.setXIncr(noIncr);
+        		case NORTH:	 
+        			player.setYIncr(NORTHSTEP);
+        			player.setXIncr(noIncr);
+        			break;
+        		case SOUTH: 
+        			player.setYIncr(SOUTHSTEP);
+        			player.setXIncr(noIncr);
+        			break;
+        		case EAST:
+        			player.setXIncr(EASTSTEP);
+        			player.setYIncr(noIncr);
+        			break;
+        		case WEST:
+        			player.setXIncr(WESTSTEP);
+        			player.setYIncr(noIncr);
+        			break;
+        		default:
+        			player.setXIncr(noIncr);
                    	player.setYIncr(noIncr);
         	}
         	player.move();

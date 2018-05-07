@@ -5,6 +5,17 @@ public class Native extends InterObj {
 	private int max = 3;
 	final private int GLOBAL = 5;
 	
+	@Override
+	public boolean equals(Object other){
+		if (!(other instanceof Native)){
+			return false;
+		}
+		else{
+			Native o = (Native)other;
+			return super.equals(o);
+		}
+	}
+	
 	public void onCollision(Crab crab) {
       this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
 	}

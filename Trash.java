@@ -6,6 +6,17 @@ public class Trash extends InterObj {
 	final private int GLOBAL = 6;
 	int ctr = 0;
 	
+	@Override
+	public boolean equals(Object other){
+		if (!(other instanceof Trash)){
+			return false;
+		}
+		else{
+			Trash o = (Trash)other;
+			return super.equals(o);
+		}
+	}
+	
     	public Trash(int frameSize){
         	this.setYLoc(rand.nextInt()%frameSize);
         	this.setXLoc(frameSize);

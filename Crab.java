@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 public class Crab extends Crawler {
     	private Direction dir;
+=======
+class Crab extends Crawler {
+    private Direction dir;
+>>>>>>> JeffreyLort
 	private boolean powerUp = false;
 	private int score = 0;
 	private int lives = 4;
@@ -12,16 +17,33 @@ public class Crab extends Crawler {
 	public Crab(int frameSize) {
 		xIncr = 0;
 		yIncr = 0;
-        	boundary = frameSize/2;
-    this.setYLoc(boundary); // These two set the location to be the middle of the screen
+   		this.setYLoc(boundary); // These two set the location to be the middle of the screen
 		this.setXLoc(boundary);
         	dir = Direction.STILL;
 	}
+<<<<<<< HEAD
     /**
      * This will be responsible for moving the crab across the screen
      *@param None
      *@return None
      */
+=======
+	
+	@Override
+	public boolean equals(Object other){
+		if (!(other instanceof Crab)){
+			return false;
+		}
+		else{
+			Crab o = (Crab)other;
+			return super.equals(o) &&
+					(getDir() == o.getDir()) &&
+					(getPowerUp() == o.getPowerUp()) &&
+					(getTotalScore() == o.getTotalScore());
+		}
+	}
+
+>>>>>>> JeffreyLort
 	public void move() {
         	if (xloc <= boundary-xIncr){
 			yloc += yIncr;
@@ -71,6 +93,10 @@ public class Crab extends Crawler {
 			yIncr -= 20;
 		}
 		powerUp = enable;
+	}
+	
+	public boolean getPowerUp(){
+		return this.powerUp;
 	}
 
 }
