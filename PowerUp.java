@@ -5,8 +5,8 @@ public class PowerUp extends InterObj {
 
 
 	public void onCollision(Crab crab) {
-		this.collisionBool = true;
-	}
+      this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
+        }
 	
 	public void move() {
 		this.setXLoc(this.getXLoc() + getIncr());

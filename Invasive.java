@@ -6,7 +6,7 @@ public class Invasive extends InterObj {
 	final private int GLOBAL = 5;
 
 	public void onCollision(Crab crab) {
-		this.collisionBool = true;
+      this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
 	}
 
 	public void move() {

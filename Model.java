@@ -25,7 +25,7 @@ public class Model{
         	this.frameHeight = frameHeight;
         	this.imgSize = imgSize;
         	stuff = new ArrayList<InterObj>();
-        	player = new Crab(frameWidth);
+        	player = new Crab(frameWidth); 
     	}
 
     	public Crab getPlayer(){
