@@ -70,7 +70,7 @@ public abstract class Crawler{
 	 * @see PowerUp
 	 **/
 	public abstract void move();
-}
+
 	
 	public int getXIncr() {
 		return xIncr;
@@ -79,9 +79,6 @@ public abstract class Crawler{
 		return yIncr;
 	}
 	
-	// move() will be implemented differently for InterObj and Crab
-	public abstract void move();
-	
 	@Override
 	public boolean equals(Object other){
 		if (!(other instanceof Crawler)){
@@ -89,10 +86,10 @@ public abstract class Crawler{
 		}
 		else{
 			Crawler o = (Crawler)other;
-			return (getXLoc() == o.getXLoc()) &&
-					(getYLoc() == o.getYLoc()) &&
-					(getXIncr() == o.getXIncr()) &&
-					(getYIncr() == o.getYIncr());
+			return (this.getXLoc() == o.getXLoc()) &&
+				(this.getYLoc() == o.getYLoc()) && 
+				(this.getXIncr() == o.getXIncr()) && 
+				(this.getYIncr() == o.getYIncr());
 		}
 	}
 }
