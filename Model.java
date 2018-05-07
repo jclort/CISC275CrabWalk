@@ -142,7 +142,7 @@ public class Model{
         	player.setDir(Direction.STILL);
         	
         	if (trashCtr++ %15 == 0) {
-			generateNewStuff();
+			   generateNewStuff();
 		}
         /* The following is pseudocode that will be implemented tomorrow for this method
 

@@ -13,7 +13,7 @@ class Controller{
     	private View view;
     	private Action drawAction;
     	private static Timer timer;
-    	int timerCtr = 500;
+    	static int timerCtr = 500;
     	
     	
     	public Controller(){
@@ -27,8 +27,12 @@ class Controller{
 				view.drawPanel();
 				//System.out.println(model.getCrash());
 				if (timerCtr-- == 0) {
-					timer.stop();
+					Controller.stop();
+					view.quiztime();
+					view.ifwin = true;
 				}
+					
+				
                 // something interacting with the view's startButton
 			}
 		};
@@ -40,10 +44,15 @@ class Controller{
 		public static void start(){
 			timer.start();
 		}
+		public static void restart(){
+			timer.start();
+			timerCtr = 500;
+		}
     	public static void main(String[] args) {
         	javax.swing.SwingUtilities.invokeLater(new Runnable() {
             		public void run() {
                 		Controller ctrllr = new Controller();
+                		
 			            ctrllr.timer = new Timer(ctrllr.DRAW_DELAY, ctrllr.drawAction);
                 		ctrllr.timer.start();
             		}
