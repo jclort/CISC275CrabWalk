@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 
 import java.awt.*;
@@ -9,6 +8,8 @@ import java.io.File;
 import java.io.IOException; 
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
+import java.util.Random;
+
 
 public class View extends JFrame{
     	private int score;
@@ -18,10 +19,20 @@ public class View extends JFrame{
     	private StartButton startButton;
     	private BufferedImage crabPic;
     	private BufferedImage trashPic;
-
-    	final static int frameStartSize = 800;
-    	final static int frameWidth = 800;//500
-   	final static int frameHeight = 800;//300
+    	private BufferedImage trashPic1;
+    	private BufferedImage trashPic2;
+    	private BufferedImage trashPic3;
+    	private BufferedImage trashPic4;
+    	private BufferedImage[] invaPic1;
+    	private BufferedImage[] invaPic2;
+    	Random rand = new Random();
+    	int randnum;
+    	private BufferedImage bgp;
+        
+    	static boolean ifquiz;
+    	//final static int frameStartSize = 1280;
+    	final static int frameWidth = 1280;//500
+   	final static int frameHeight = 720;//300
     	final static int imgWidth = 72;//165
 	final static int imgHeight = 72;
 
@@ -29,10 +40,13 @@ public class View extends JFrame{
 	private int picNum = 0;
 	
 	private BufferedImage[][] pics;
+	private BufferedImage quiz;
 	
 	private DrawPanel drawPanel= new DrawPanel();
    	private Integer time; 
     
+   	static int crashlesstime = 0;
+   	
     	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
     		String[] picNames = {"images/crab.png"};
     		pics = new BufferedImage[picNames.length][frameCount];
@@ -45,8 +59,28 @@ public class View extends JFrame{
 				pics[j][i] = img.getSubimage(imgWidth*i, 0, imgWidth, imgHeight);
 			}
     		}
+    		
+    		
         	time = startTime;
         	trashPic = createImage("images/trash1.png");
+        	trashPic1 = createImage("images/trash2.png");
+        	trashPic2 = createImage("images/trash3.png");
+        	trashPic3 = createImage("images/trash4.png");
+        	trashPic4 = createImage("images/trash5.png");
+        	quiz = createImage("images/trashquiz1.png");
+        	
+        	invaPic1 = new BufferedImage[3];
+        	for(int i = 0; i < 3; i++) {
+        		invaPic1[i] = createImage("images/creature1.png").getSubimage(imgWidth*i, 0, 72, 61);
+			}
+        	
+        	invaPic2 = new BufferedImage[3];
+        	for(int i = 0; i < 3; i++) {
+        		invaPic2[i] = createImage("images/creature2.png").getSubimage(90*i+17, 0, 90, 90);
+			}
+        	
+        	
+        	bgp =createImage("images/background.png");
         	score = 0;
         	lives = 3;
         	player = p;
@@ -55,7 +89,7 @@ public class View extends JFrame{
         	add(drawPanel);
         
 
-        	setBackground(Color.gray);                 
+        	               
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    	setSize(getWidth(), getHeight());
 	    	setVisible(true);
@@ -70,18 +104,10 @@ public class View extends JFrame{
         	return drawPanel;
     	}
     
-    	public static int getFrameSize() {
-    		return frameStartSize;
-    	}
+    	//public static int getFrameSize() {
+    		//return frameStartSize;
+    //	}
 
-     	public void paint(Graphics g) {
-		g.drawString(this.time.toString(),player.getXLoc()+(imgWidth*2/5),player.getYLoc()+(imgHeight-4));
-    		g.drawImage(crabPic, player.getXLoc(), player.getYLoc(), this);
-		for (InterObj o : stuff) {
-			g.drawImage(trashPic, o.getXLoc(), o.getYLoc(), this);
-		}
-	}
-	
     	public int getScore(){
         	return score;
     	}
@@ -114,7 +140,7 @@ public class View extends JFrame{
                 		@Override
                 		public void keyPressed(KeyEvent e){
                             	
-                    			if (e.getKeyCode() == KeyEvent.VK_UP){
+                    if (e.getKeyCode() == KeyEvent.VK_UP){
                         			//crab direction is up
 					        player.setDir(Direction.NORTH);
                     			}
@@ -129,6 +155,9 @@ public class View extends JFrame{
 					else if (e.getKeyCode() == KeyEvent.VK_LEFT){
 						//crab direction is left
 						player.setDir(Direction.WEST);
+					}else if (e.getKeyCode() == KeyEvent.VK_Y){
+						Controller.start();
+						notquiztime();
 					}
                 		}
             		});
@@ -137,33 +166,69 @@ public class View extends JFrame{
         	@Override
         	protected void paintComponent(Graphics g) {
 			
-			super.paintComponent(g);
-			setBackground(Color.cyan);
+			
+			//setBackground(Color.cyan);
 			//g.setColor(new Color(0, 0, 0, 0));
-            		drawCrab(g);
-            		drawInterObjs(g);
+			drawbgp(g);
+			drawCrab(g);
+            drawInterObjs(g);
 			drawTime(g);
+			if (ifquiz){
+				drawquiz(g);
+			}
 		}
 
         	@Override
 		public Dimension getPreferredSize() {
-			return new Dimension(frameStartSize, frameStartSize);
+			return new Dimension(frameWidth, frameHeight);
 		}
-
-        	public void drawCrab(Graphics g){
-        		super.paintComponent(g);
-        		g.setColor(Color.gray);
+        	
+       
+        public void drawquiz(Graphics g){
+        	g.drawImage(quiz, 400,300 , this);
+        }
+        
+        public void drawCrab(Graphics g){
+ 
         		picNum = (picNum + 1) % 8;
         		g.drawImage(pics[0][picNum], player.getXLoc(), player.getYLoc(), this);
         	}
 
         	public void drawInterObjs(Graphics g){
-            		for (InterObj object: stuff){
-	            		g.drawImage(trashPic, object.getXLoc(), object.getYLoc(), this);
-            		}
+        			picNum = (picNum + 1) % 3;
+        			for (InterObj object: stuff){
+            			int objname = object.name;
+            			BufferedImage objp = null;
+            			
+            			
+            			switch (objname) {
+            	            case 1:  objp = trashPic;
+            	                     break;
+            	            case 2:  objp = trashPic1;
+            	            		 break;
+            	            case 3:  objp = trashPic2;
+   	            		 			 break;
+            	            case 4:  objp = trashPic3;
+   	            		 			 break;
+            	            case 5:  objp = trashPic4;
+   	            		 			 break;   
+            	            case 6:  g.drawImage(invaPic1[picNum], object.getXLoc(), object.getYLoc(), this);
+            	            		 break;
+   	            		 			 
+            	            case 7:  g.drawImage(invaPic2[picNum], object.getXLoc(), object.getYLoc(), this);
+            	            		 break; 	            		 			 
+            	            		 
+            		    }
+	            		g.drawImage(objp, object.getXLoc(), object.getYLoc(), this);
+            			}
+	            	
+            		
         	}
 		public void drawTime(Graphics g) {
 			g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
+		}
+		public void drawbgp(Graphics g){
+			g.drawImage(bgp, 0, 0, this);
 		}
 	}	
 
@@ -245,5 +310,15 @@ public class View extends JFrame{
     		}
     		return null;
 	}
+
+	
+		 public static void quiztime(){
+	        	ifquiz = true;
+	        }
+	        public void notquiztime(){
+	        	ifquiz = false;
+	        	crashlesstime = 20;
+	        }
+	 
 
 }
