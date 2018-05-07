@@ -13,7 +13,8 @@ public class Invasive extends InterObj implements Serializable {
 	/**
 	 * This method is implemented from InterObj, and when called, sets te value of collisionBool to true when the image outline of the passed Crab intersects with the image outline of the Invasive object.
 	 **/
-	public void onCollision(Crab crab) {         
+	public void onCollision(Crab crab) {
+       		this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());		
 		Controller.stop();         
 		View.quiztime();
 	}
@@ -39,6 +40,10 @@ public class Invasive extends InterObj implements Serializable {
 	}
 	
 
+	/**
+	 * This tells us how fast the y incrementor is moving
+	 * @return The Y incrementor
+	 */
 	public int getyIncr() {
 		
 		if (sign == 0 & counter > -10){

@@ -24,11 +24,23 @@ public class View extends JFrame{
     	private BufferedImage trashPic4;
     	private BufferedImage[] invaPic1;
     	private BufferedImage[] invaPic2;
+    	private BufferedImage title;
+    	private BufferedImage win;
+    	private BufferedImage replay;
+    	private BufferedImage gameover;
+    	
     	Random rand = new Random();
+    	
     	int randnum;
     	private BufferedImage bgp;
         
+    	int starttime = 50;
+
     	static boolean ifquiz;
+    	static boolean ifstart = false;
+    	static boolean iflose = false;
+    	boolean ifwin = false;
+    	
     	//final static int frameStartSize = 1280;
     	final static int frameWidth = 1280;//500
    	final static int frameHeight = 720;//300
@@ -44,12 +56,11 @@ public class View extends JFrame{
 	private BufferedImage[][] pics;
 	private BufferedImage quiz;
 	
-	//private DrawPanel drawPanel= new DrawPanel();
-   	private Integer time;
-	private boolean menuBoolean = true;
-	private boolean gameBoolean = false;	
-    	
-   	static int crashlesstime = 0;
+	private DrawPanel drawPanel= new DrawPanel();
+   	private Integer time; 
+    	int titlex = 0;
+   	
+	static int crashlesstime = 0;
    	
     	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
     		String[] picNames = {"images/crab.png"};
@@ -72,6 +83,10 @@ public class View extends JFrame{
         	trashPic3 = createImage("images/trash4.png");
         	trashPic4 = createImage("images/trash5.png");
         	quiz = createImage("images/trashquiz1.png");
+        	title = createImage("images/startwords.png");
+        	win = createImage("images/win.jpg");
+        	replay = createImage("images/replay.png");
+        	gameover = createImage("images/gameover.png");
         	
         	invaPic1 = new BufferedImage[3];
         	for(int i = 0; i < 3; i++) {
@@ -222,8 +237,27 @@ public class View extends JFrame{
 						//crab direction is left
 						player.setDir(Direction.WEST);
 					}else if (e.getKeyCode() == KeyEvent.VK_Y){
+						if (ifquiz){
 						Controller.start();
 						notquiztime();
+						}
+					}else if (e.getKeyCode() == KeyEvent.VK_N){
+						if (ifquiz){
+							iflose = true;
+							Controller.start();
+							notquiztime();
+							
+						}
+					}else if (e.getKeyCode() == KeyEvent.VK_R){
+							if (iflose == true | ifwin == true){
+							iflose = false;
+							ifwin = false;
+							Controller.restart();
+							player.setXLoc(400);
+							player.setYLoc(400);
+							}
+							
+							
 					}
                 		}
             		});
@@ -235,12 +269,30 @@ public class View extends JFrame{
 			
 			//setBackground(Color.cyan);
 			//g.setColor(new Color(0, 0, 0, 0));
+        	if (ifstart == false){
+        		drawbgp(g);	
+        		drawtitle(g);
+        	}else{
+        		if (iflose == false & ifwin == false){
 			drawbgp(g);
 			drawCrab(g);
             		drawInterObjs(g);
 			drawTime(g);
+        		}else{
+        			if (iflose){
+        				setBackground(Color.black);
+        				drawgameover(g);
+        				Controller.stop();
+        			}else if(ifwin & ifquiz==false){
+        				setBackground(Color.white);
+        				drawwin(g);
+        				drawreplay(g);
+        				Controller.stop();
+        			}
+        		}
 			if (ifquiz){
 				drawquiz(g);
+			}
 			}
 		}
 
@@ -251,15 +303,29 @@ public class View extends JFrame{
         	
        
         	public void drawquiz(Graphics g){
-        		g.drawImage(quiz, 400,300 , this);
+        		g.drawImage(quiz, 400,250 , this);
         	}
-        
+        	public void drawgameover(Graphics g){
+        		g.drawImage(gameover, 300,175 , this);
+        	}
+        	public void drawwin(Graphics g){
+        		g.drawImage(win, 200,150 , this);
+        	}
+        	public void drawreplay(Graphics g){
+        		g.drawImage(replay, 500,550 , this);
+        	}
         	public void drawCrab(Graphics g){
- 
   	      		picNum = (picNum + 1) % 8;
         		g.drawImage(pics[0][picNum], player.getXLoc(), player.getYLoc(), this);
         	}
-
+        public void drawtitle(Graphics g){
+        		if (titlex<300){
+        			titlex = titlex + 20;
+        		}else{
+        			ifstart = true;
+        		}
+        	   g.drawImage(title, titlex, 10, this);
+        }
         	public void drawInterObjs(Graphics g){
         			picNum = (picNum + 1) % 3;
         			for (InterObj object: stuff){
@@ -303,16 +369,12 @@ public class View extends JFrame{
         	//Code for a button that starts the game
     		TextField text = new TextField(20);
     		JButton b;
-		boolean pressed = true;
     		public StartButton() {
     			b = new JButton("Start Game");
     			add(b);
     			add(text);
     			//b.addActionListener(this);
     	 	}
-		public boolean getPressed() {
-			return pressed;
-		}
     	 
     	 	public void actionPerformed(ActionEvent e) {
     	 		pressed = false;

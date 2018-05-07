@@ -28,8 +28,12 @@ public class Trash extends InterObj implements Serializable {
 	 *
 	 * @param crab the Crab that will be passed to the method and determine if its outline intersects the outline of the InterObj.
 	 **/
-	
 	public void onCollision(Crab crab) {
+      		this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
+		if(this.collisionBool){
+			System.out.println("Crashed!");
+		}
+
 		Controller.stop();
 		View.quiztime();
         	gone = true;

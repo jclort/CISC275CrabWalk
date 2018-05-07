@@ -21,12 +21,52 @@ public class Model{
     	ArrayList<InterObj> stuff; // all of the objects with their methods and properties
     	Crab player;               // the player with all his methods and properties
     	int trashCtr = 0;
-    	Random rand = new Random();
-    	int randnum;
-    	boolean crash;
-    	
+        Random rand = new Random();
+        int randnum;
+        boolean crash;
 
-	
+
+    /**
+     * Checks if one object is equal to another
+     * @param other The object that is being compared to
+     * @return Whether or not the two objects are equal
+    */
+
+    	/*@Override
+    	public boolean equals(Object other){
+    		if (!(other instanceof Model)){
+    			return false;
+    		}
+    		else{
+    			Model o = (Model)other;
+    			return (getXIncr() == o.getXIncr()) &&
+    					(getFrameWidth() == o.getFrameWidth()) &&
+    					(getFrameHeight() == o.getFrameHeight()) &&
+    					(getImgSize() == o.getImgSize()) &&
+    					(getStuff().equals(o.getStuff())) &&
+    					(getPlayer().equals(o.getPlayer()));
+    		}
+    	}*/
+    	/**
+		 * This gives us how fast the objects and player are moving at
+		 * @return The x incrementor
+		 */
+    	public int getXIncr(){
+    		return this.objXIncr;
+    	}
+    	/**
+		 * This tells us how wide the game frame is
+		 * @return The width of the frame
+		 */
+    	public int getFrameWidth(){
+    		return this.frameWidth;
+		}
+    /**
+     *Implementation of the Model Constructor
+     * @param frameWidth This is the width of the playable frame
+     * @param frameHeight This is the height of the playable frame
+     * @param imgSize This is the size of the images that will be in play
+    */
     	public Model(int frameWidth, int frameHeight, int imgSize){
         	this.frameWidth = frameWidth;
         	this.frameHeight = frameHeight;
@@ -34,32 +74,51 @@ public class Model{
         	stuff = new ArrayList<InterObj>();
         	player = new Crab(frameWidth); 
     	}
-
+    /**
+     * Returns the player. Meant for using the Crab at various times
+     * @return A Crab
+    */
     	public Crab getPlayer(){
         	return player;
     	}
-
+    /**
+     * Meant for determining where the Crab crashed into
+     * @return A boolean that says whether or not a crash has occurred
+    */
     	public boolean getCrash(){
         	return crash;
     	}
+    /**
+     * Meant to change the crash boolean
+     *  @param y Whether or not a crash occurs
+    */
     	public void setCrash(boolean y){
         	crash = y;
     	}
-    	
+    /**
+     * Gets the array of interactive objects
+     * @return An ArrayList of Interactive Objects
+    */
     	public ArrayList<InterObj> getStuff(){
-        	return this.stuff;
+        	return this.stuff; 
     	}
-
+    /**
+     * Determines whether a crash has occurred between a player and a given object
+     * @param object The object that we are checking to see if there is a crash between it and the player
+     * @return A boolean that says whether or not the crash happened
+     */
     	public boolean crash(InterObj object){ // tells whether the player has hit this object
         	
     		return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
     	}
-
+    /**
+     * Checks the crash method, and if a collision happens, then it handles it accordingly
+     * @param objects The array of interactive objects
+     */
     	public void handleCollisions(ArrayList<InterObj> objects){
         	// checks each InterObj whether the player has hit it
         	// if it has, it calls the object's onCollision method
         	// This method largely depends on other collision methods already being created
-
             Iterator it = stuff.iterator();
         	while(it.hasNext()){
                     InterObj o = (InterObj)it.next();
@@ -69,9 +128,12 @@ public class Model{
                             it.remove();
                         }
             	    }
-        	}
-    	}
 
+        	}
+        }
+    /**
+     * Creates a new set of interactive objects for the game
+     */
     	public void generateNewStuff(){
     		randnum = rand.nextInt(7);
     		switch (randnum) {
@@ -102,7 +164,10 @@ public class Model{
         	
         	
     	}
-
+    /**
+     * This is the method that moves the player in the desired direction
+     * @param newPlayer This is the crab that is being moved
+     */
     	public void update(Crab newPlayer){
         	// moves the player in the specified direction
         	// deals with collisions
@@ -149,7 +214,7 @@ public class Model{
         	player.setDir(Direction.STILL);
 
         	if (trashCtr++ %15 == 0) {
-			generateNewStuff();
+			   generateNewStuff();
 		}
         /* The following is pseudocode that will be implemented tomorrow for this method
 

@@ -7,19 +7,17 @@ public abstract class InterObj extends Crawler implements Serializable {
 	Random rand = new Random();
 	int name;
 	int randnum;
-	
-	/**
-	 * This method returns the collisionBool for the InterObj(Interactive Object), which describes whether the Crawlwer has collided with a Crab.
-	 *
-	 * @return boolean - the boolean value of collisionBool
-	 **/
+    	/**
+	 * This is the constructor for the Interactive Object
+	 * @param frameSize This is the size of the playable frame
+	 * @param name This will be the determinant of the type of object that the Interactive Object will be
+	 */
 	public InterObj(int frameSize, int name){
 		randnum = rand.nextInt(frameSize-700);
     		this.setYLoc(randnum+200);
     		this.setXLoc(frameSize);
     		this.name = name;
 	}
-
 	/**
 	 * This method returns the collisionBool for the InterObj(Interactive Object), which describes whether the Crawler has collided with a Crab.
 	 * 
