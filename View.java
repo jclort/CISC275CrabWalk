@@ -44,7 +44,7 @@ public class View extends JFrame{
 	private BufferedImage quiz;
 	
 	//private DrawPanel drawPanel= new DrawPanel();
-	private LayeredPane layeredPane = new LayeredPane();
+	private LayeredPane layeredPane;
    	private Integer time;
 
     
@@ -89,35 +89,8 @@ public class View extends JFrame{
         	player = p;
         	stuff = s;
 
-		JLabel baseLabel = new JLabel("Test Label");
-		baseLabel.setBackground(Color.cyan);
-
         	startButton = new StartButton();
-        	
-		layeredPane.setPreferredSize(getPreferredSize());
-		layeredPane.setBorder(BorderFactory.createTitledBorder("Just a test"));
-		layeredPane.setBackground(Color.cyan);
-		baseLabel.setBounds(0,0,getWidth(),getHeight());
-
-		layeredPane.add(baseLabel,0);
-		//add(layeredPane);
-		//setBackground(Color.cyan);
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setVisible(true);
-		//setSize(getWidth(), getHeight());
-		//layeredPane.requestFocusInWindow();
-		//pack();
-		
-		jPanel = new JPanel();
-		jPanel.add(layeredPane);
-		add(jPanel);
-               	setBackground(Color.cyan);                 
-        	               
-	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
-	    	setSize(getWidth(), getHeight());
-	    	setVisible(true);
-        	layeredPane.requestFocusInWindow();
-        	pack();	
+        	gameJPanel();
     	}
 
 	public Crab getPlayer() {
@@ -140,15 +113,27 @@ public class View extends JFrame{
 		//One column for the name, one for the score, and display the table? maybe not even an ArrayList, just a hash table of some sort
 	}
 	public void gameJPanel() {
-		add(new JPanel());
+		JLabel baseLabel = new JLabel("Test Label");
+		baseLabel.setBackground(Color.cyan);
+		layeredPane = new LayeredPane();
+		layeredPane.setPreferredSize(getPreferredSize());
+		layeredPane.setBackground(Color.cyan);
+	       	baseLabel.setBounds(0,0,getWidth(),getHeight()); 
+	       	layeredPane.add(baseLabel,0);
+		jPanel = new JPanel();
+	       	jPanel.add(layeredPane);
+	       	add(jPanel); 
+		setBackground(Color.cyan); 
+	       	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	       	setSize(getWidth(), getHeight()); 
+		setVisible(true);
+	       	layeredPane.requestFocusInWindow();
+	       	pack();
 		//this will just be the logic that is currently in the View constructor and call this method
 		//however, now we will need to close this JPanel when the game ends and a name is recorded for the highscore table,
 		//then close the panel, a new game will be created when the new game button is pressed in the menu panel
 	}
 
-    	//public DrawPanel getDrawPanel(){
-        //	return drawPanel;
-    	//}
 	public JLayeredPane getLayeredPane() {
 		return layeredPane;
 	}
