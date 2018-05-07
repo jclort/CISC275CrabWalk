@@ -13,7 +13,7 @@ public class Crab extends Crawler {
 		xIncr = 0;
 		yIncr = 0;
         	boundary = frameSize/2;
-		this.setYLoc(boundary);
+    this.setYLoc(boundary); // These two set the location to be the middle of the screen
 		this.setXLoc(boundary);
         	dir = Direction.STILL;
 	}

@@ -19,7 +19,13 @@ public class Model{
     	Crab player;               // the player with all his methods and properties
 	int trashCtr = 0;
 
-
+    /**
+     * Constructor for the Model
+     @param frameWidth The width of the frame that is going to be used
+     @param frameHeight The height of the frame that is going to be used
+     @param imgSize The size of the images that are going to be input
+     @return Nothing. It is simply a constructor
+    */
     	public Model(int frameWidth, int frameHeight, int imgSize){
         	this.frameWidth = frameWidth;
         	this.frameHeight = frameHeight;
@@ -46,6 +52,7 @@ public class Model{
         	// This method largely depends on other collision methods already being created
         	for(InterObj o : objects){
             		if(crash(o)){
+                    System.out.println("We crashed!");
                 	o.onCollision(player);
             		}
         	}

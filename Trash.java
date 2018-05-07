@@ -12,7 +12,10 @@ public class Trash extends InterObj {
     	}
 
 	public void onCollision(Crab crab) {
-      this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
+      		this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
+		if(this.collisionBool){
+			System.out.println("Crashed!");
+		}
 	}
 
 	public void move() {
