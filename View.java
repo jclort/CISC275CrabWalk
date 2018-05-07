@@ -188,8 +188,6 @@ public class View extends JFrame{
 							iflose = false;
 							ifwin = false;
 							Controller.restart();
-							player.setXLoc(400);
-							player.setYLoc(400);
 							}
 							
 							
