@@ -22,11 +22,7 @@ class Controller{
 			public void actionPerformed(ActionEvent e){	
 				model.update(view.getPlayer());
 				view.setTime(timerCtr);
-				if (view.getMenuBoolean()) {
-					view.drawLayeredPane(view.getMenuLayeredPane());
-				} else if (view.getGameBoolean()) {
-					view.drawLayeredPane(view.getGameLayeredPane());
-				}
+				view.drawPanel();
 				if (timerCtr-- == 0) {
 					Controller.stop();
 					view.quiztime();
