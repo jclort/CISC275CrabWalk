@@ -15,17 +15,14 @@ public class Trash extends InterObj {
 
 
 	public void onCollision(Crab crab) {
-<<<<<<< HEAD
       		this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
 		if(this.collisionBool){
 			System.out.println("Crashed!");
 		}
-=======
       //this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
 		Controller.stop();
 		View.quiztime();
         gone = true;
->>>>>>> JeffreyLort
 	}
 
 	public void move() {

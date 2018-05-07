@@ -1,9 +1,3 @@
-
-public class Crab extends Crawler {
-    	private Direction dir;
-
-class Crab extends Crawler {
-    private Direction dir;
 public class Crab extends Crawler {
     	private Direction dir;
 	private boolean powerUp = false;
@@ -22,8 +16,6 @@ public class Crab extends Crawler {
    		this.setYLoc(boundary); // These two set the location to be the middle of the screen
 		this.setXLoc(boundary);
         	dir = Direction.STILL;
-	}
-
         boundary = 800;
 		this.setYLoc(400);
 		this.setXLoc(400);

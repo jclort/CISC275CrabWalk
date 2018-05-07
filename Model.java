@@ -21,6 +21,9 @@ public class Model{
     	ArrayList<InterObj> stuff; // all of the objects with their methods and properties
     	Crab player;               // the player with all his methods and properties
     	int trashCtr = 0;
+        Random rand = new Random();
+        int randnum;
+        boolean crash;
 
 
     /**
@@ -52,9 +55,7 @@ public class Model{
     	public int getFrameWidth(){
     		return this.frameWidth;
     	}
-    	Random rand = new Random();
-    	int randnum;
-    	boolean crash;
+
     	
 
     /**
@@ -115,14 +116,6 @@ public class Model{
         	// checks each InterObj whether the player has hit it
         	// if it has, it calls the object's onCollision method
         	// This method largely depends on other collision methods already being created
-
-        	for(InterObj o : objects){
-            		if(crash(o)){
-                    System.out.println("We crashed!");
-                	o.onCollision(player);
-            		}
-=======
-
             Iterator it = stuff.iterator();
         	while(it.hasNext()){
                     InterObj o = (InterObj)it.next();
@@ -134,7 +127,7 @@ public class Model{
             	    }
 
         	}
-    	}
+        }
     /**
      * Creates a new set of interactive objects for the game
      */
