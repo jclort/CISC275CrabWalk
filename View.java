@@ -28,7 +28,8 @@ public class View extends JFrame{
     	Random rand = new Random();
     	int randnum;
     	private BufferedImage bgp;
-
+        
+    	static boolean ifquiz;
     	//final static int frameStartSize = 1280;
     	final static int frameWidth = 1280;//500
    	final static int frameHeight = 720;//300
@@ -39,11 +40,13 @@ public class View extends JFrame{
 	private int picNum = 0;
 	
 	private BufferedImage[][] pics;
-	
+	private BufferedImage quiz;
 	
 	private DrawPanel drawPanel= new DrawPanel();
    	private Integer time; 
     
+   	static int crashlesstime = 0;
+   	
     	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
     		String[] picNames = {"images/crab.png"};
     		pics = new BufferedImage[picNames.length][frameCount];
@@ -64,6 +67,7 @@ public class View extends JFrame{
         	trashPic2 = createImage("images/trash3.png");
         	trashPic3 = createImage("images/trash4.png");
         	trashPic4 = createImage("images/trash5.png");
+        	quiz = createImage("images/trashquiz1.png");
         	
         	invaPic1 = new BufferedImage[3];
         	for(int i = 0; i < 3; i++) {
@@ -136,7 +140,7 @@ public class View extends JFrame{
                 		@Override
                 		public void keyPressed(KeyEvent e){
                             	
-                    			if (e.getKeyCode() == KeyEvent.VK_UP){
+                    if (e.getKeyCode() == KeyEvent.VK_UP){
                         			//crab direction is up
 					        player.setDir(Direction.NORTH);
                     			}
@@ -151,6 +155,9 @@ public class View extends JFrame{
 					else if (e.getKeyCode() == KeyEvent.VK_LEFT){
 						//crab direction is left
 						player.setDir(Direction.WEST);
+					}else if (e.getKeyCode() == KeyEvent.VK_Y){
+						Controller.start();
+						notquiztime();
 					}
                 		}
             		});
@@ -166,14 +173,22 @@ public class View extends JFrame{
 			drawCrab(g);
             drawInterObjs(g);
 			drawTime(g);
+			if (ifquiz){
+				drawquiz(g);
+			}
 		}
 
         	@Override
 		public Dimension getPreferredSize() {
 			return new Dimension(frameWidth, frameHeight);
 		}
-
-        	public void drawCrab(Graphics g){
+        	
+       
+        public void drawquiz(Graphics g){
+        	g.drawImage(quiz, 400,300 , this);
+        }
+        
+        public void drawCrab(Graphics g){
  
         		picNum = (picNum + 1) % 8;
         		g.drawImage(pics[0][picNum], player.getXLoc(), player.getYLoc(), this);
@@ -248,5 +263,15 @@ public class View extends JFrame{
     		}
     		return null;
 	}
+
+	
+		 public static void quiztime(){
+	        	ifquiz = true;
+	        }
+	        public void notquiztime(){
+	        	ifquiz = false;
+	        	crashlesstime = 20;
+	        }
+	 
 
 }

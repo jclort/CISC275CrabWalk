@@ -8,19 +8,22 @@ public class Model{
     	private int objXIncr; // All objects will only move left, not up or down
     	static int left; // Again, object is only moving left
     	int frameWidth;
-    	private final int NORTHSTEP = -20;
-    	private final int SOUTHSTEP = 20;
-    	private final int EASTSTEP = 20;
-    	private final int WESTSTEP = -20;
+    	private final int NORTHSTEP = -30;
+    	private final int SOUTHSTEP = 30;
+    	private final int EASTSTEP = 30;
+    	private final int WESTSTEP = -30;
     	int frameHeight;
     	int imgSize;
     	private int noIncr = 0;
     	ArrayList<InterObj> stuff; // all of the objects with their methods and properties
     	Crab player;               // the player with all his methods and properties
-	int trashCtr = 0;
-	Random rand = new Random();
-	int randnum;
+    	int trashCtr = 0;
+    	Random rand = new Random();
+    	int randnum;
+    	boolean crash;
+    	
 
+	
     	public Model(int frameWidth, int frameHeight, int imgSize){
         	this.frameWidth = frameWidth;
         	this.frameHeight = frameHeight;
@@ -33,12 +36,20 @@ public class Model{
         	return player;
     	}
 
+    	public boolean getCrash(){
+        	return crash;
+    	}
+    	public void setCrash(boolean y){
+        	crash = y;
+    	}
+    	
     	public ArrayList<InterObj> getStuff(){
         	return this.stuff;
     	}
 
     	public boolean crash(InterObj object){ // tells whether the player has hit this object
-        	return (player.getXLoc() == object.getXLoc() && player.getYLoc() == object.getYLoc());
+        	
+    		return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
     	}
 
     	public void handleCollisions(ArrayList<InterObj> objects){
@@ -46,8 +57,9 @@ public class Model{
         	// if it has, it calls the object's onCollision method
         	// This method largely depends on other collision methods already being created
         	for(InterObj o : objects){
-            		if(crash(o)){
+            		if(crash(o) & View.crashlesstime == 0 ){
                 	o.onCollision(player);
+                	
             		}
         	}
     	}
@@ -109,15 +121,26 @@ public class Model{
 		   	break;
         	default:
 			player.setXIncr(noIncr);
-                   	player.setYIncr(noIncr);
+                player.setYIncr(noIncr);
         	}
+        	
+        	
         	player.move();
         	handleCollisions(stuff);
+        	
         	for(InterObj o : stuff){
             	o.move();
         	}
+        	
         	handleCollisions(stuff);
+        	
+        	if (View.crashlesstime != 0){
+        		View.crashlesstime --;
+        	}
+        	//System.out.println(crash);
+        	
         	player.setDir(Direction.STILL);
+        	
         	if (trashCtr++ %15 == 0) {
 			generateNewStuff();
 		}
