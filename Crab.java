@@ -28,7 +28,7 @@ public class Crab extends Crawler {
      *@return None
      */
 	
-	@Override
+	/*@Override
 	public boolean equals(Object other){
 		if (!(other instanceof Crab)){
 			return false;
@@ -40,7 +40,7 @@ public class Crab extends Crawler {
 					(getPowerUp() == o.getPowerUp()) &&
 					(getTotalScore() == o.getTotalScore());
 		}
-	}
+	}*/
 
 
 	public void move() {
@@ -74,15 +74,24 @@ public class Crab extends Crawler {
 	public int getTotalScore() {
 		return score+(lives*5);
 	}
-
+		/**
+		 * This returns the direction the player is currently going in
+		 * @return The direction the crab is going in
+		 */
     	public Direction getDir(){
         	return dir;
     	}
-
+		/**
+		 * This changes the direction that the player is going in
+		 * @param newDir This is the new direction that the crab will be going in
+		 */
     	public void setDir(Direction newDir) {
 		dir = newDir;
     	}
-
+	/**
+	 * This changes the power up
+	 * @param enable This is whether or not the powerup has been enabled
+	 */
 	public void setPowerUp(boolean enable) {
 		if (enable) {
 			xIncr += 20;

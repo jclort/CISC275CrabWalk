@@ -32,7 +32,7 @@ public class Model{
      * @return Whether or not the two objects are equal
     */
 
-    	@Override
+    	/*@Override
     	public boolean equals(Object other){
     		if (!(other instanceof Model)){
     			return false;
@@ -46,18 +46,21 @@ public class Model{
     					(getStuff().equals(o.getStuff())) &&
     					(getPlayer().equals(o.getPlayer()));
     		}
-    	}
-    	
+    	}*/
+    	/**
+		 * This gives us how fast the objects and player are moving at
+		 * @return The x incrementor
+		 */
     	public int getXIncr(){
     		return this.objXIncr;
     	}
-    	
+    	/**
+		 * This tells us how wide the game frame is
+		 * @return The width of the frame
+		 */
     	public int getFrameWidth(){
     		return this.frameWidth;
-    	}
-
-    	
-
+		}
     /**
      *Implementation of the Model Constructor
      * @param frameWidth This is the width of the playable frame
@@ -97,7 +100,7 @@ public class Model{
      * @return An ArrayList of Interactive Objects
     */
     	public ArrayList<InterObj> getStuff(){
-        	return this.stuff;
+        	return this.stuff; 
     	}
     /**
      * Determines whether a crash has occurred between a player and a given object
