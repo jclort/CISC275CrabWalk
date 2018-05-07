@@ -235,19 +235,66 @@ public class View extends JFrame{
     	private class StartButton{
         	//Code for a button that starts the game
     		TextField text = new TextField(20);
-    		Button b;
+    		JButton b;
     		public StartButton() {
-    			b = new Button("Start Game");
+    			b = new JButton("Start Game");
     			add(b);
     			add(text);
     			//b.addActionListener(this);
     	 	}
     	 
     	 	public void actionPerformed(ActionEvent e) {
-    		 
+    	 		
     	 	}
     	}
-
+    	
+    	private class TutorialButton {
+    		//two buttons, giving the player the option to start the tutorial or go back to the loading screen
+    		//playing around with the idea of making this and the retry button their own separate windows rather 
+    		//than part of the main jframe
+    		public static void main(String[] args) {
+    			JFrame tutorial = new
+    		}
+    		TextField tutStart = new TextField(20);
+    		TextField tutBack = new TextField(20);
+    		JButton a;
+    		JButton b;
+    		public TutorialButton() {
+    			a = new JButton("Start Tutorial");
+    			add(a);
+    			add(tutStart);
+    			b = new JButton("Back");
+    			add(b);
+    			add(tutBack);
+    			//a.addActionListener(this);
+    			//b.addActionListener(this);
+    		}
+    		public void actionPerformed(ActionEvent e) {
+    			
+    		}
+    	}
+    	
+    	private class RetryButton {
+    		TextField retry = new TextField(20);
+    		TextField backToMain = new TextField(20);
+    		JButton a;
+    		JButton b;
+    		public RetryButton() {
+    			a = new JButton("Retry?");
+    			add(a);
+    			add(retry);
+    			b = new JButton("Back to Main Menu");
+    			add(b);
+    			add(backToMain);
+    			//a.addActionListener(this);
+    			//b.addActionListener(this);
+    		}
+    		public void actionPerformed(ActionEvent e) {
+    			
+    		}
+    	
+    	
+    	}
 
     	private BufferedImage createImage(String fname){
 
