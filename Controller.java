@@ -10,16 +10,17 @@ class Controller{
 	final int DRAW_DELAY = 75; //msec
 
     	private Model model;
-	private View view;
+    	private View view;
     	private Action drawAction;
-    	private Timer timer;
-    	int timerCtr = 1000;
-
-    	public Controller(){
+    	private static Timer timer;
+    	int timerCtr = 500;
+    	
+	public Controller(){
         	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
-		view = new View(model.getPlayer(), model.getStuff(), timerCtr);
-		drawAction = new AbstractAction(){
+        	view = new View(model.getPlayer(), model.getStuff(), timerCtr);
+        	drawAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
+				
 				model.update(view.getPlayer());
 				view.setTime(timerCtr);
 				view.drawLayeredPane();
@@ -29,8 +30,14 @@ class Controller{
                 // something interacting with the view's startButton
 			}
 		};
+
 	}
-    
+		public static void stop(){
+			timer.stop();
+		}
+		public static void start(){
+			timer.start();
+		}
     	public static void main(String[] args) {
         	javax.swing.SwingUtilities.invokeLater(new Runnable() {
             		public void run() {

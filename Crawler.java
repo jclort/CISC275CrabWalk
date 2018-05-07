@@ -4,7 +4,7 @@ public abstract class Crawler{
 	protected int yloc;
 	protected int xIncr;
 	protected int yIncr;
-	
+    	public boolean gone;
 
 	/**
 	 * This method will set the value of xloc
@@ -22,7 +22,13 @@ public abstract class Crawler{
 	 *
 	 **/
 	public void setYLoc(int newY) {
+		if (newY > 200){
 		yloc = newY;
+		}else{
+			return;
+		}
+		
+		//System.out.println(yloc);
 	}
 	/**
 	 * This method will get the value of the Crawler's xloc
@@ -41,6 +47,7 @@ public abstract class Crawler{
 	 **/
 	public int getYLoc() {
 		return yloc;
+		
 	}
 	/**
 	 * This method will set the Incrementor of the y location of the Crawler
@@ -50,6 +57,7 @@ public abstract class Crawler{
 	 **/
 	public void setYIncr(int newYIncr) {
 		yIncr = newYIncr;
+		
 	}
 	/**
 	 * This method will set the Incrementor of the x location of the Crawler

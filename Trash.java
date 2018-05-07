@@ -9,10 +9,10 @@ public class Trash extends InterObj implements Serializable {
 	 *
 	 * @param frameSize This int will contribute to the randomization of the location along the right wall.
 	 **/
-	public Trash(int frameSize){
-		this.setYLoc(rand.nextInt()%frameSize);
-		this.setXLoc(frameSize);
+	public Trash(int frameSize, int name){
+		super(frameSize, name);
 	}
+
 	@Override
 	public boolean equals(Object other){
 		if (!(other instanceof Trash)){
@@ -28,8 +28,11 @@ public class Trash extends InterObj implements Serializable {
 	 *
 	 * @param crab the Crab that will be passed to the method and determine if its outline intersects the outline of the InterObj.
 	 **/
+	
 	public void onCollision(Crab crab) {
-		this.collisionBool = true;
+		Controller.stop();
+		View.quiztime();
+        	gone = true;
 	}
 	
 	/**
