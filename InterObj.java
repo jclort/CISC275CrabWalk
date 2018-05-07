@@ -5,6 +5,9 @@ abstract class InterObj extends Crawler {
 	int name;
 	int randnum;
 	protected boolean collisionBool = false;
+
+    
+    
 	public InterObj(int frameSize, int name){
 		randnum = rand.nextInt(frameSize-700);
 		
