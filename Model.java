@@ -2,6 +2,9 @@ import java.util.ArrayList;
 
 import java.util.Random;
 
+import java.util.Iterator;
+
+
 public class Model{
     	// This is where all of our logic is going to go for the game
     	// This will also be where our game state is handled
@@ -56,11 +59,16 @@ public class Model{
         	// checks each InterObj whether the player has hit it
         	// if it has, it calls the object's onCollision method
         	// This method largely depends on other collision methods already being created
-        	for(InterObj o : objects){
+
+            Iterator it = stuff.iterator();
+        	while(it.hasNext()){
+                    InterObj o = (InterObj)it.next();
             		if(crash(o) & View.crashlesstime == 0 ){
-                	o.onCollision(player);
-                	
-            		}
+                	    o.onCollision(player);
+                	    if (o.gone){
+                            it.remove();
+                        }
+            	    }
         	}
     	}
 
