@@ -1,18 +1,24 @@
-import java.util.Random;
+
 
 public class Trash extends InterObj {
-	Random rand = new Random();
+	
+	public Trash(int frameSize, int name) {
+		super(frameSize, name);
+		// TODO Auto-generated constructor stub
+	}
+
+
 	private int max = 3;
 	final private int GLOBAL = 6;
 	int ctr = 0;
 	
-    	public Trash(int frameSize){
-        	this.setYLoc(rand.nextInt()%frameSize);
-        	this.setXLoc(frameSize);
-    	}
+
 
 	public void onCollision(Crab crab) {
-		this.collisionBool = true;
+      //this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
+		Controller.stop();
+		View.quiztime();
+        gone = true;
 	}
 
 	public void move() {
