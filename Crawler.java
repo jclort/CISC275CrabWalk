@@ -4,6 +4,7 @@ abstract class Crawler{
 	protected int yloc;
 	protected int xIncr;
 	protected int yIncr;
+    public boolean gone;
 
 	public void setXLoc(int newX) {
 		xloc = newX;

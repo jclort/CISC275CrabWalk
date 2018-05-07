@@ -18,7 +18,7 @@ public class Trash extends InterObj {
       //this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
 		Controller.stop();
 		View.quiztime();
-      
+        gone = true;
 	}
 
 	public void move() {
