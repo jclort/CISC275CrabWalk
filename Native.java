@@ -1,20 +1,14 @@
 import java.util.Random;
 
 public class Native extends InterObj {
+	public Native(int frameSize, int name) {
+		super(frameSize, name);
+		// TODO Auto-generated constructor stub
+	}
+
 	Random rand = new Random();
 	private int max = 3;
 	final private int GLOBAL = 5;
-	
-	@Override
-	public boolean equals(Object other){
-		if (!(other instanceof Native)){
-			return false;
-		}
-		else{
-			Native o = (Native)other;
-			return super.equals(o);
-		}
-	}
 	
 	public void onCollision(Crab crab) {
       this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());

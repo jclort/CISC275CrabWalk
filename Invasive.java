@@ -1,31 +1,53 @@
 import java.util.Random;
 
 public class Invasive extends InterObj {
-	Random rand = new Random();
-	private int max = 3;
-	final private int GLOBAL = 5;
-
-	@Override
-	public boolean equals(Object other){
-		if (!(other instanceof Invasive)){
-			return false;
-		}
-		else{
-			Invasive o = (Invasive)other;
-			return super.equals(o);
-		}
+	public Invasive(int frameSize, int name) {
+		super(frameSize, name);
+		// TODO Auto-generated constructor stub
 	}
 	
+	private int max = 7;
+	final private int GLOBAL = 14;
+	int ctr = 0;
+	private int counter = 0;
+	private int sign = 0; 
+
 	public void onCollision(Crab crab) {
+<<<<<<< HEAD
       this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
+=======
+      //this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
+		Controller.stop();
+		View.quiztime();
+>>>>>>> JeffreyLort
 	}
 
 	public void move() {
 		this.setXLoc(this.getXLoc() + getIncr());
-		this.setYLoc(this.getYLoc() + getIncr());
+		this.setYLoc(this.getYLoc() + getyIncr());
 	}
-	public int getIncr() { 
+
+
+	public int getIncr() {
 		return rand.nextInt(max + 1 + max) - max - GLOBAL;
+	}
+	public int getyIncr() {
+		
+		if (sign == 0 & counter > -10){
+			counter = counter -1;
+			
+		}else{
+			sign = 1;
+		}
+			
+	    if(sign == 1 & counter < 10){
+		
+			counter = counter +1;
+		}else{
+			sign = 0;
+		}
+	    
+		return counter;
 	}
 	
 }
