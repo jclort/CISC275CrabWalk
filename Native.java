@@ -1,20 +1,22 @@
-import java.util.Random;
+import java.io.Serializable;
 
-public class Native extends InterObj {
-	Random rand = new Random();
+public class Native extends InterObj implements Serializable {
 	private int max = 3;
-	final private int GLOBAL = 5;
+	private int global = 5;
 	
+	/**
+	 * This method implements onCollision method from InterObj that will set the collisionBool to true when the image outline of the crab intersects the image outline of the Native Object.
+	 **/	
 	public void onCollision(Crab crab) {
 		this.collisionBool = true;
 	}
 	
+	/**
+	 * This method will change the location of the Native object depending on the random increments returned by the getIncr method.
+	 **/
 	public void move() {
-		this.setXLoc(this.getXLoc() + getIncr());
-		this.setYLoc(this.getYLoc() + getIncr());
+		this.setXLoc(this.getXLoc() + getIncr(max, global));
+		this.setYLoc(this.getYLoc() + getIncr(max, global));
 	}
-
-	public int getIncr() {
-		return rand.nextInt(max + 1 + max) - max - GLOBAL;
-	}	
+	
 }
