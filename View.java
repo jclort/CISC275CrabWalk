@@ -16,7 +16,6 @@ public class View extends JFrame{
     	private int lives;
     	private Crab player;
     	private ArrayList<InterObj> stuff;
-    	private StartButton startButton;
     	private BufferedImage crabPic;
     	private BufferedImage trashPic;
     	private BufferedImage trashPic1;
@@ -39,15 +38,17 @@ public class View extends JFrame{
 	final int frameCount = 8;
 	private int picNum = 0;
 	private JPanel jPanel;
-	
+	private LayeredPane gameLayeredPane;
+	private LayeredPane menuLayeredPane;
+
 	private BufferedImage[][] pics;
 	private BufferedImage quiz;
 	
 	//private DrawPanel drawPanel= new DrawPanel();
-	private LayeredPane layeredPane;
    	private Integer time;
-
-    
+	private boolean menuBoolean = true;
+	private boolean gameBoolean = false;	
+    	
    	static int crashlesstime = 0;
    	
     	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
@@ -89,53 +90,82 @@ public class View extends JFrame{
         	player = p;
         	stuff = s;
 
-        	startButton = new StartButton();
-        	gameJPanel();
+		menuJPanel();
+        	//gameJPanel();
     	}
+
+	public boolean getMenuBoolean() {
+		return menuBoolean;
+	}
+	public boolean getGameBoolean() {
+		return gameBoolean;
+	}
 
 	public Crab getPlayer() {
 		return player;
 	}
 	public void tutorialJPanel() {
-		add(new JPanel());
 		//Add logic here to add to the new JPanel for the tutorial, and then when it's all done, 
 		//close the tutorial JPanel, and the Menu panel should still be running.
 	}
 	public void menuJPanel() {
-		add(new JPanel());
+		gameBoolean = false;
+		menuBoolean = true;
+		JLabel baseLabel = new JLabel("Menu Label");
+		baseLabel.setBackground(Color.cyan);
+		menuLayeredPane = new LayeredPane();
+		menuLayeredPane.setPreferredSize(getPreferredSize());
+		menuLayeredPane.setBackground(Color.cyan);
+		baseLabel.setBounds(0,0,getWidth(),getHeight());
+		menuLayeredPane.add(baseLabel,0);
+		StartButton startButton = new StartButton();
+		JPanel mJPanel = new JPanel();
+		mJPanel.add(menuLayeredPane);
+		mJPanel.add(startButton);
+		add(mJPanel);
+		//add(startButton);
+		setBackground(Color.cyan);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(getWidth(), getHeight());
+		setVisible(true);
+		pack();
 		//Add logic here to just have a JPanel that doesn't close like the others.
 		//This is the menu so it only has buttons and the Game title, and when a button is pressed 
 		//then another jpanel is created and added on top, deleted, and then the menu jpanel remains
 	}
 	public void highScoreJPanel() {
-		add(new JPanel());
 		//Add logic here to have a panel pop up and just display a list of top scores that will be saved by a 2-d array, two columns
 		//One column for the name, one for the score, and display the table? maybe not even an ArrayList, just a hash table of some sort
 	}
 	public void gameJPanel() {
+		gameBoolean = true;
+		menuBoolean = false;
 		JLabel baseLabel = new JLabel("Test Label");
 		baseLabel.setBackground(Color.cyan);
-		layeredPane = new LayeredPane();
-		layeredPane.setPreferredSize(getPreferredSize());
-		layeredPane.setBackground(Color.cyan);
+		gameLayeredPane = new LayeredPane();
+		gameLayeredPane.setPreferredSize(getPreferredSize());
+		gameLayeredPane.setBackground(Color.cyan);
 	       	baseLabel.setBounds(0,0,getWidth(),getHeight()); 
-	       	layeredPane.add(baseLabel,0);
-		jPanel = new JPanel();
-	       	jPanel.add(layeredPane);
-	       	add(jPanel); 
+	       	gameLayeredPane.add(baseLabel,0);
+		JPanel gJPanel = new JPanel();
+	       	gJPanel.add(gameLayeredPane);
+	       	add(gJPanel); 
 		setBackground(Color.cyan); 
 	       	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	       	setSize(getWidth(), getHeight()); 
 		setVisible(true);
-	       	layeredPane.requestFocusInWindow();
+	       	gameLayeredPane.requestFocusInWindow();
 	       	pack();
 		//this will just be the logic that is currently in the View constructor and call this method
 		//however, now we will need to close this JPanel when the game ends and a name is recorded for the highscore table,
 		//then close the panel, a new game will be created when the new game button is pressed in the menu panel
 	}
 
-	public JLayeredPane getLayeredPane() {
-		return layeredPane;
+	public LayeredPane getGameLayeredPane() {
+		return gameLayeredPane;
+	}
+	public LayeredPane getMenuLayeredPane() {
+		return menuLayeredPane;
 	}
     
     	//public static int getFrameSize() {
@@ -157,7 +187,7 @@ public class View extends JFrame{
     	//public void drawPanel() {
 	//	drawPanel.repaint();
 	//}
-	public void drawLayeredPane() {
+	public void drawLayeredPane(LayeredPane layeredPane) {
 		layeredPane.repaint();
 	}
 
@@ -220,13 +250,13 @@ public class View extends JFrame{
 		}
         	
        
-        public void drawquiz(Graphics g){
-        	g.drawImage(quiz, 400,300 , this);
-        }
+        	public void drawquiz(Graphics g){
+        		g.drawImage(quiz, 400,300 , this);
+        	}
         
-        public void drawCrab(Graphics g){
+        	public void drawCrab(Graphics g){
  
-        		picNum = (picNum + 1) % 8;
+  	      		picNum = (picNum + 1) % 8;
         		g.drawImage(pics[0][picNum], player.getXLoc(), player.getYLoc(), this);
         	}
 
@@ -260,30 +290,84 @@ public class View extends JFrame{
 	            	
             		
         	}
-		public void drawTime(Graphics g) {
-			g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
-		}
-		public void drawbgp(Graphics g){
-			g.drawImage(bgp, 0, 0, this);
-		}
+			public void drawTime(Graphics g) {
+				g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
+			}
+			public void drawbgp(Graphics g){
+				g.drawImage(bgp, 0, 0, this);
+			}
+		
 	}	
-
-    	private class StartButton{
+	@SuppressWarnings("serial")
+    	private class StartButton extends JPanel {
         	//Code for a button that starts the game
     		TextField text = new TextField(20);
-    		Button b;
+    		JButton b;
+		boolean pressed = true;
     		public StartButton() {
-    			b = new Button("Start Game");
+    			b = new JButton("Start Game");
     			add(b);
     			add(text);
     			//b.addActionListener(this);
     	 	}
+		public boolean getPressed() {
+			return pressed;
+		}
     	 
     	 	public void actionPerformed(ActionEvent e) {
-    		 
+    	 		pressed = false;
     	 	}
     	}
+    	@SuppressWarnings("serial")
+    	private class TutorialButton {
+    		//two buttons, giving the player the option to start the tutorial or go back to the loading screen
+    		//playing around with the idea of making this and the retry button their own separate windows rather 
+    		//than part of the main jframe
+    		//public static void main(String[] args) {
+    			
+    		//}
+    		TextField tutStart = new TextField(20);
+    		TextField tutBack = new TextField(20);
+    		JButton a;
+    		JButton b;
+    		public TutorialButton() {
+    			a = new JButton("Start Tutorial");
+    			add(a);
+    			add(tutStart);
+    			b = new JButton("Back");
+    			add(b);
+    			add(tutBack);
+    			//a.addActionListener(this);
+    			//b.addActionListener(this);
+    		}
+    		public void actionPerformed(ActionEvent e) {
+    			
+    		}
+    	}
+    	@SuppressWarnings("serial")
+    	private class RetryButton {
+    		TextField retry = new TextField(20);
+    		TextField backToMain = new TextField(20);
+    		JButton a;
+    		JButton b;
+    		public RetryButton() {
+    			a = new JButton("Retry?");
+    			add(a);
+    			add(retry);
+    			b = new JButton("Back to Main Menu");
+    			add(b);
+    			add(backToMain);
+    			//a.addActionListener(this);
+    			//b.addActionListener(this);
+    		}
+    		public void actionPerformed(ActionEvent e) {
+    			if (e.getSource() == a) {
+			}
 
+    		}
+    	
+    	
+    	}
 
     	private BufferedImage createImage(String fname){
 
@@ -301,13 +385,13 @@ public class View extends JFrame{
 	}
 
 	
-		 public static void quiztime(){
-	        	ifquiz = true;
-	        }
-	        public void notquiztime(){
-	        	ifquiz = false;
-	        	crashlesstime = 20;
-	        }
+	public static void quiztime(){
+	       	ifquiz = true;
+	}
+	public void notquiztime(){
+	      	ifquiz = false;
+	       	crashlesstime = 20;
+	}
 	 
 
 }

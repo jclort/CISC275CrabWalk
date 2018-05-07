@@ -19,11 +19,14 @@ class Controller{
         	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
         	view = new View(model.getPlayer(), model.getStuff(), timerCtr);
         	drawAction = new AbstractAction(){
-			public void actionPerformed(ActionEvent e){
-				
+			public void actionPerformed(ActionEvent e){	
 				model.update(view.getPlayer());
 				view.setTime(timerCtr);
-				view.drawLayeredPane();
+				if (view.getMenuBoolean()) {
+					view.drawLayeredPane(view.getMenuLayeredPane());
+				} else if (view.getGameBoolean()) {
+					view.drawLayeredPane(view.getGameLayeredPane());
+				}
 				if (timerCtr-- == 0) {
 					timer.stop();
 				}
