@@ -9,9 +9,9 @@ import javax.swing.Timer;
 class Controller{
 	final int DRAW_DELAY = 75; //msec
 
-    	private Model model;
-    	private View view;
-    	private Action drawAction;
+    	private static Model model;
+    	private static View view;
+    	private static Action drawAction;
     	private static Timer timer;
     	static int timerCtr = 500;
     	
@@ -42,6 +42,8 @@ class Controller{
 			timer.start();
 		}
 		public static void restart(){
+            model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
+        	view = new View(model.getPlayer(), model.getStuff(), timerCtr);
 			timer.start();
 			timerCtr = 500;
 		}
