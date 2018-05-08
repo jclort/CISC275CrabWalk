@@ -6,7 +6,7 @@ import javax.swing.Action;
 import javax.swing.Timer;
 
 
-class Controller{
+public class Controller{
 	final static int DRAW_DELAY = 75; //msec
 
     	private static Model model;
