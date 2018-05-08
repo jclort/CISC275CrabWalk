@@ -7,7 +7,7 @@ import javax.swing.Timer;
 
 
 class Controller{
-	final int DRAW_DELAY = 75; //msec
+	final static int DRAW_DELAY = 75; //msec
 
     	private static Model model;
     	private static View view;
@@ -18,6 +18,7 @@ class Controller{
 	public Controller(){
         	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
         	view = new View(model.getPlayer(), model.getStuff(), timerCtr);
+        	
         	drawAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){	
 				model.update(view.getPlayer());
@@ -53,8 +54,8 @@ class Controller{
         	javax.swing.SwingUtilities.invokeLater(new Runnable() {
             		public void run() {
                 		Controller ctrllr = new Controller();
-			        ctrllr.timer = new Timer(ctrllr.DRAW_DELAY, ctrllr.drawAction);
-                		ctrllr.timer.start();
+                		timer = new Timer(DRAW_DELAY, drawAction);
+                		timer.start();
             		}
         	});
 	}
