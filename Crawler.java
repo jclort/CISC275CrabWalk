@@ -85,8 +85,7 @@ public abstract class Crawler{
 	}
 	public int getYIncr() {
 		return yIncr;
-	}
-	
+	}	
 	@Override
 	public boolean equals(Object other){
 		if (!(other instanceof Crawler)){
