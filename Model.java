@@ -32,7 +32,7 @@ public class Model{
      * @return Whether or not the two objects are equal
     */
 
-    	/*@Override
+    	@Override
     	public boolean equals(Object other){
     		if (!(other instanceof Model)){
     			return false;
@@ -46,7 +46,17 @@ public class Model{
     					(getStuff().equals(o.getStuff())) &&
     					(getPlayer().equals(o.getPlayer()));
     		}
-    	}*/
+    	}
+    	
+    	public int getFrameHeight(){
+    		return this.frameHeight;
+    	}
+    	
+    	public int getImgSize(){
+    		return this.imgSize;
+    	}
+
+    	
     	/**
 		 * This gives us how fast the objects and player are moving at
 		 * @return The x incrementor
@@ -67,12 +77,13 @@ public class Model{
      * @param frameHeight This is the height of the playable frame
      * @param imgSize This is the size of the images that will be in play
     */
-    	public Model(int frameWidth, int frameHeight, int imgSize){
+    	public Model(int frameHeight, int frameWidth, int imgSize){
         	this.frameWidth = frameWidth;
         	this.frameHeight = frameHeight;
         	this.imgSize = imgSize;
         	stuff = new ArrayList<InterObj>();
         	player = new Crab(frameWidth); 
+        	this.crash = false;
     	}
     /**
      * Returns the player. Meant for using the Crab at various times

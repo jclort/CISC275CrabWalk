@@ -150,7 +150,6 @@ public class View extends JFrame{
 
         	public DrawPanel(){
         	    	super();
-        	        System.out.println("key");
             		setFocusable(true);
             		addKeyListener(new KeyAdapter(){
                 		@Override

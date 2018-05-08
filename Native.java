@@ -47,6 +47,6 @@ public class Native extends InterObj implements Serializable {
 	 * @return The incrementor of the native object
 	 */
 	public int getIncr() {
-		return rand.nextInt(max + 1 + max) - max - GLOBAL;
+		return rand.nextInt(max + 1 + max) - max - global;
 	}	
 }
