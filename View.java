@@ -2,7 +2,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.ActionEvent; 
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.awt.image.BufferedImage; 
 import java.io.File; 
 import java.io.IOException; 
@@ -29,6 +30,9 @@ public class View extends JFrame{
     	private BufferedImage win;
     	private BufferedImage replay;
     	private BufferedImage gameover;
+    	
+    	
+    	JPanel game; //The overall Panel to contain 
     	
     	Random rand = new Random();
     	
@@ -58,6 +62,32 @@ public class View extends JFrame{
    	private Integer time; 
     int titlex = 0;
    	static int crashlesstime = 0;
+   	
+   	
+   	public void addPanelstoPane() {
+   		JPanel main = new DrawPanel();
+   		
+   		JPanel tutorial = new TutorialButton();
+   		
+   		
+   		
+   		
+   		
+   		JPanel highScores = new JPanel();
+   		JPanel retry = new RetryButton();
+   		highScores.add(retry);
+   		
+   		highScores.add(new TextField("HighScores: "));
+   		
+   		game = new JPanel(new CardLayout());
+   		game.add(main);
+   		game.add(tutorial);
+   		game.add(highScores);
+   		
+   		
+   	}
+   	
+   	
    	
     	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
     		String[] picNames = {"images/crab.png"};
@@ -298,7 +328,7 @@ public class View extends JFrame{
 	}	
 
 
-    	/**private class StartButton{
+    	private abstract class StartButton extends JPanel implements ItemListener{
         	//Code for a button that starts the game
     		TextField text = new TextField(20);
     		JButton b;
@@ -309,38 +339,42 @@ public class View extends JFrame{
     			//b.addActionListener(this);
     	 	}
     	 
-    	 	public void actionPerformed(ActionEvent e) {
-    	 		
+    		
+    	 	public void itemStateChanged(ItemEvent e) {
+    	 		CardLayout c1 = (CardLayout)(game.getLayout());
+    	 		c1.show(game, (String)e.getItem());
     	 	}
     	}
     	
-    	private class TutorialButton {
+    	public class TutorialButton extends JPanel implements ItemListener {
     		//two buttons, giving the player the option to start the tutorial or go back to the loading screen
     		//playing around with the idea of making this and the retry button their own separate windows rather 
     		//than part of the main jframe
-    		public static void main(String[] args) {
-    			JFrame tutorial = new
-    		}
     		TextField tutStart = new TextField(20);
     		TextField tutBack = new TextField(20);
     		JButton a;
     		JButton b;
-    		public TutorialButton() {
+    		public JPanel TutorialButton() {
+    			JPanel tutorial = new JPanel();
     			a = new JButton("Start Tutorial");
-    			add(a);
-    			add(tutStart);
+    			tutorial.add(a);
+    			tutorial.add(tutStart);
     			b = new JButton("Back");
-    			add(b);
-    			add(tutBack);
+    			tutorial.add(b);
+    			tutorial.add(tutBack);
     			//a.addActionListener(this);
     			//b.addActionListener(this);
-    		}
-    		public void actionPerformed(ActionEvent e) {
+    			return tutorial;
     			
+    		}
+    		
+    		public void itemStateChanged(ItemEvent e) {
+    			CardLayout c2 = (CardLayout)(game.getLayout());
+    			c2.show(game, (String)e.getItem());
     		}
     	}
     	
-    	private class RetryButton {
+    	public class RetryButton extends JPanel implements ItemListener {
     		TextField retry = new TextField(20);
     		TextField backToMain = new TextField(20);
     		JButton a;
@@ -355,11 +389,13 @@ public class View extends JFrame{
     			//a.addActionListener(this);
     			//b.addActionListener(this);
     		}
-    		public void actionPerformed(ActionEvent e) {
-    			
+    		
+    		public void itemStateChanged(ItemEvent e) {
+    			CardLayout c3 = (CardLayout)(game.getLayout());
+    			c3.show(game, (String)e.getItem());
     		}
     	}
-*/
+
 
     	private BufferedImage createImage(String fname){
 
