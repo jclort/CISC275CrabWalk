@@ -149,27 +149,27 @@ public class Model{
     		randnum = rand.nextInt(7);
     		switch (randnum) {
             case 0: 
-            	stuff.add(new Trash(frameHeight,1));
+            	stuff.add(new Trash(frameWidth,1));
             	break;
             case 1: 
-            	stuff.add(new Trash(frameHeight,2));
+            	stuff.add(new Trash(frameWidth,2));
             	break;
             case 2: 
-            	stuff.add(new Trash(frameHeight,3));
+            	stuff.add(new Trash(frameWidth,3));
             	break;
             case 3: 
-            	stuff.add(new Trash(frameHeight,4));
+            	stuff.add(new Trash(frameWidth,4));
             	break;
             case 4: 
             	if (rand.nextInt(10) > 6){
-            	stuff.add(new Trash(frameHeight,5));
+            	stuff.add(new Trash(frameWidth,5));
             	}
             	break;
             case 5: 
-            	stuff.add(new Invasive(frameHeight,6));
+            	stuff.add(new Invasive(frameWidth,6));
             	break;
             case 6: 
-            	stuff.add(new Invasive(frameHeight,7));
+            	stuff.add(new Invasive(frameWidth,7));
             	break;
     		}
         	

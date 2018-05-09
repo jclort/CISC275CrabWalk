@@ -113,7 +113,8 @@ public class View extends JFrame{
         	add(drawPanel);
         
 
-        	               
+        	setExtendedState(JFrame.MAXIMIZD_BOTH);
+ 		setUndecorated(true);		
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    	setSize(getWidth(), getHeight());
 	    	setVisible(true);
@@ -223,37 +224,35 @@ public class View extends JFrame{
         	}
 		/**
 		 * This method will override paintComponent from JPanel specific to the objects that need to be drawn on the JPanel
+		 *
+		 * @param g The Graphics object that will be passed to other draw functions for the other objects in the game. 
 		 **/
         	@Override
         	protected void paintComponent(Graphics g) {
-			
-			
-			//setBackground(Color.cyan);
-			//g.setColor(new Color(0, 0, 0, 0));
-        	if (ifstart == false){
-        		drawbgp(g);	
-        		drawtitle(g);
-        	}else{
-        		if (iflose == false & ifwin == false){
-			drawbgp(g);
-			drawCrab(g);
-            drawInterObjs(g);
-			drawTime(g);
+        		if (ifstart == false){
+        			drawbgp(g);	
+        			drawtitle(g);
         		}else{
-        			if (iflose){
-        				setBackground(Color.black);
-        				drawgameover(g);
-        				Controller.stop();
-        			}else if(ifwin & ifquiz==false){
-        				setBackground(Color.white);
-        				drawwin(g);
-        				drawreplay(g);
-        				Controller.stop();
+        			if (iflose == false & ifwin == false){
+					drawbgp(g);
+					drawCrab(g);
+            				drawInterObjs(g);
+					drawTime(g);
+        			}else{
+        				if (iflose){
+        					setBackground(Color.black);
+        					drawgameover(g);
+        					Controller.stop();
+        				}else if(ifwin & ifquiz==false){
+        					setBackground(Color.white);
+        					drawwin(g);
+        					drawreplay(g);
+        					Controller.stop();
+        				}
         			}
-        		}
-			if (ifquiz){
-				drawquiz(g);
-			}
+				if (ifquiz){
+					drawquiz(g);
+				}
 			}
 		}
 		/**
@@ -267,31 +266,41 @@ public class View extends JFrame{
 		}
         	
        	/**
-	 * This method will draw the quiz on the screen
+	 * This method will draw the quiz on the screen.
+	 *
+	 * @param g The Graphics object that the quiz will be drawn on.
 	 **/
         public void drawquiz(Graphics g){
         	g.drawImage(quiz, 400,250 , this);
         }
 	/**
-	 * This method will draw the game over screen
+	 * This method will draw the game over screen.
+	 *
+	 * @param g The Graphics object that the game over image will be drawn on.
 	 **/
         public void drawgameover(Graphics g){
         	g.drawImage(gameover, 300,175 , this);
         }
 	/**
-	 * This method will draw the win screen
+	 * This method will draw the win screen.
+	 *
+	 * @param g The Graphics object that the win image will be drawn on.
 	 **/
         public void drawwin(Graphics g){
         	g.drawImage(win, 200,150 , this);
         }
 	/**
 	 * This method will draw the replay screen and prompt the user if they want to replay the game when it is over.
+	 *
+	 * @param g The Graphics object that the replay image will be drawn on.
 	 **/
         public void drawreplay(Graphics g){
         	g.drawImage(replay, 500,550 , this);
         }
 	/**
-	 * This method will draw the player Crab
+	 * This method will draw the player Crab.
+	 *
+	 * @param g The Graphics object that the crab image will be drawn on.
 	 **/
         public void drawCrab(Graphics g){
  
@@ -300,6 +309,8 @@ public class View extends JFrame{
         }
 	/**
 	 * This method will draw the title moving across the screen, part of the menu JPanel.
+	 *
+	 * @param g The Graphics object that the Title image will be drawn on.
 	 **/
         public void drawtitle(Graphics g){
         		if (titlex<300){
@@ -310,50 +321,50 @@ public class View extends JFrame{
         	   g.drawImage(title, titlex, 10, this);
         }
 	/**
-	 * This method will draw the InterObjs by running through the ArrayList and drawing each one
+	 * This method will draw the InterObjs by running through the ArrayList and drawing each one.
+	 *
+	 * @param g The Graphics object that the InterObj images will be drawn on.
 	 **/
-        	public void drawInterObjs(Graphics g){
-        			picNum = (picNum + 1) % 3;
-        			for (InterObj object: stuff){
-            			int objname = object.name;
-            			BufferedImage objp = null;
-            			
-            			
-            			switch (objname) {
-            	            case 1:  objp = trashPic;
-            	                     break;
-            	            case 2:  objp = trashPic1;
-            	            		 break;
-            	            case 3:  objp = trashPic2;
-   	            		 			 break;
-            	            case 4:  objp = trashPic3;
-   	            		 			 break;
-            	            case 5:  objp = trashPic4;
-   	            		 			 break;   
-            	            case 6:  g.drawImage(invaPic1[picNum], object.getXLoc(), object.getYLoc(), this);
-            	            		 break;
-   	            		 			 
-            	            case 7:  g.drawImage(invaPic2[picNum], object.getXLoc(), object.getYLoc(), this);
-            	            		 break; 	            		 			 
-            	            		 
-            		    }
-	            		g.drawImage(objp, object.getXLoc(), object.getYLoc(), this);
-            			}
+        public void drawInterObjs(Graphics g){
+        	picNum = (picNum + 1) % 3;
+        	for (InterObj object: stuff){
+        		int objname = object.name;
+        		BufferedImage objp = null;
+            		           			
+            		switch (objname) {
+            	        	case 1:  objp = trashPic;
+            	              		break;
+            	        	case 2:  objp = trashPic1;
+            	        		break;
+            	        	case 3:  objp = trashPic2;
+   	            		 	break;
+            	            	case 4:  objp = trashPic3;
+   	            		 	break;
+            	            	case 5:  objp = trashPic4;
+   	            			break;   
+            	           	case 6:  g.drawImage(invaPic1[picNum], object.getXLoc(), object.getYLoc(), this);
+            	          		break;		 
+            	        	case 7:  g.drawImage(invaPic2[picNum], object.getXLoc(), object.getYLoc(), this);
+            	        		break; 	            		 			 
+            	           		 
+            		}
+	            	g.drawImage(objp, object.getXLoc(), object.getYLoc(), this);
+            	}
 	            	
             		
-        	}
-		/**
-		 * This method will draw the time (THIS WILL CHANGE INTO A BOAT RUNNING ACROSS THE WAVES IN THE BACKGROUND).
-		 **/
-		public void drawTime(Graphics g) {
-			g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
-		}
-		/**
-		 * This method will draw the background image(s).
-		 **/
-		public void drawbgp(Graphics g){
-			g.drawImage(bgp, 0, 0, this);
-		}
+        }
+	/**
+	 * This method will draw the time (THIS WILL CHANGE INTO A BOAT RUNNING ACROSS THE WAVES IN THE BACKGROUND).
+	 **/
+	public void drawTime(Graphics g) {
+		g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
+	}
+	/**
+	 * This method will draw the background image(s).
+	 **/
+	public void drawbgp(Graphics g){
+		g.drawImage(bgp, 0, 0, this);
+	}
 	}	
 	
 	@SuppressWarnings("serial")
@@ -438,16 +449,16 @@ public class View extends JFrame{
 	/**
 	 * This method will set the ifquiz boolean equal to true.
 	 **/
-		 public static void quiztime(){
-	        	ifquiz = true;
-	        }
+	 public static void quiztime(){
+	       	ifquiz = true;
+	}
 	/**
 	 * This method will set the notquiztime boolean equal to to false and create a time that the crab cannot collide with someone else, sort of like a grace Period.
 	 **/ 
-	        public void notquiztime(){
-	        	ifquiz = false;
-	        	crashlesstime = 20;
-	        }
+	public void notquiztime(){
+	     	ifquiz = false;
+	       	crashlesstime = 20;
+	}
 	 
 
 }
