@@ -134,7 +134,7 @@ public class View extends JFrame{
 	 * @param object The name of the object whose image is being returned
 	 * @return A BufferedImage of the object whose hitbox we wish to create
 	 */
-	public BufferedImage getImage(String object){
+	/*public BufferedImage getImage(String object){
 		BufferedImage i;
 		switch(object){
 			case "trash" : i = trashPic; break;
@@ -148,7 +148,7 @@ public class View extends JFrame{
 			default : i = null;
 		}
 		return i;
-	}
+	}*/
 	/**
 	 * This method will draw the panel
 	 *

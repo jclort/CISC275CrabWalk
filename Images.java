@@ -1,3 +1,8 @@
+import java.awt.*;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.awt.image.BufferedImage;
 public enum Images{
     TRASH1("images/trash1.png"),
     TRASH2("images/trash2.png"),
@@ -8,12 +13,18 @@ public enum Images{
     INVA2("images/creature2.png"),
     CRAB("images/crab.png");
 
-    private String name = null;
+    private BufferedImage pic;
     private Images(String s){
-        name = s;
+        try {
+           // This way we can get the image formatted how we need
+            pic = ImageIO.read(new File(s));
+        } 
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
-    public String getName(){
-        return name;
+    public BufferedImage getPic(){
+        return pic;
     }
 } /* This file is because otherwise
 we would have to bring the View into the Model and

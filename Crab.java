@@ -1,9 +1,13 @@
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 public class Crab extends Crawler {
     	private Direction dir;
 	private boolean powerUp = false;
 	private int score = 0;
 	private int lives = 4;
-    	private int boundary;
+	private int boundary; // This is just how far the crab is able to go
+	private Rectangle hitBox; // This is how we are gonna determine if a collision happens
+		
     /**
      * Constructor for the Crab
      * @param frameSize The size of the frame the crab will be in
@@ -15,15 +19,18 @@ public class Crab extends Crawler {
 
    		this.setYLoc(boundary); // These two set the location to be the middle of the screen
 		this.setXLoc(boundary);
-        	dir = Direction.STILL;
-        boundary = frameSize/2;
-		this.setYLoc(boundary);
-		this.setXLoc(boundary);
-        	dir = Direction.STILL;
+        dir = Direction.STILL;
+		boundary = frameSize/2;
+		BufferedImage crab = Images.CRAB.getPic();
+		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), crab.getWidth(), crab.getHeight());
 	}
 	
 	public boolean getPowerUp(){
 		return this.powerUp;
+	}
+
+	public Rectangle getHitBox(){
+		return hitBox;
 	}
     
 	@Override

@@ -1,4 +1,4 @@
-
+import java.awt.Rectangle;
 public abstract class Crawler{
 	protected int xloc;
 	protected int yloc;

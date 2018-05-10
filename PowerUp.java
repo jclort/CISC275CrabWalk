@@ -7,7 +7,6 @@ public class PowerUp extends InterObj implements Serializable {
 
 	public PowerUp(int frameSize, int name) {
 		super(frameSize, name);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
