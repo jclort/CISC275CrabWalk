@@ -156,7 +156,7 @@ public class View extends JFrame{
 	    	setVisible(true);
         	drawPanel.requestFocusInWindow();
         	pack();	
-    	}
+		}
 	/**
 	 * This method returns the player to pass on to the Model from the Controller.
 	 *
@@ -165,6 +165,27 @@ public class View extends JFrame{
 	public Crab getPlayer() {
 		return player;
 	}
+	/**
+	 * This method is going to be used so that the Model is able to create the hitboxes for the objects.
+	 * This isn't a great implementation of MVC but it's what works without throwing buffered images in every object class
+	 * @param object The name of the object whose image is being returned
+	 * @return A BufferedImage of the object whose hitbox we wish to create
+	 */
+	/*public BufferedImage getImage(String object){
+		BufferedImage i;
+		switch(object){
+			case "trash" : i = trashPic; break;
+			case "trash2" : i = trashPic1; break;
+			case "trash3" : i = trashPic2; break;
+			case "trash4" : i = trashPic3; break;
+			case "trash5" : i = trashPic4; break;
+			case "invasive1" : i = invaPic1[0]; break;
+			case "invasive2" : i = invaPic2[0]; break;
+			case "crab" : i = crabPic; break;
+			default : i = null;
+		}
+		return i;
+	}*/
 	/**
 	 * This method will draw the panel
 	 *

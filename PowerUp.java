@@ -7,7 +7,6 @@ public class PowerUp extends InterObj implements Serializable {
 
 	public PowerUp(int frameSize, int name) {
 		super(frameSize, name);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -16,10 +15,8 @@ public class PowerUp extends InterObj implements Serializable {
 	public void onCollision(Crab crab) {
 		this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
 	}
-
-
 	@Override
-	public boolean equals(Object other){
+	public boolean equals(Object other){ // For testing purposes
 		if (!(other instanceof PowerUp)){
 			return false;
 		}

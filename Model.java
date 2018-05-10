@@ -134,6 +134,7 @@ public class Model{
         	while(it.hasNext()){
                     InterObj o = (InterObj)it.next();
             		if(crash(o) & View.crashlesstime == 0 ){
+						System.out.println("Collision!");
                 	    o.onCollision(player);
                 	    if (o.gone){
                             it.remove();
