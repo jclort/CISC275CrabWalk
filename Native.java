@@ -1,6 +1,9 @@
-import java.util.Random;
+import java.io.Serializable;
 
-public class Native extends InterObj {
+public class Native extends InterObj implements Serializable {
+	private int max = 3;
+	private int global = 5;
+	
 	/**
 	 * This is the constructor for the Native class
 	 * @param frameSize The size of the frame that is in play
@@ -11,30 +14,39 @@ public class Native extends InterObj {
 		// TODO Auto-generated constructor stub
 	}
 
-	Random rand = new Random();
-	private int max = 3;
-	final private int GLOBAL = 5;
-	
 	/**
 	 * This handles the collision logic for the Native object
 	 * @param crab This is the player object
 	 */
 	public void onCollision(Crab crab) {
-      this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
+		this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
+	}
+
+
+	@Override
+	public boolean equals(Object other){
+		if (!(other instanceof Native)){
+			return false;
+		}
+		else{
+			Native o = (Native)other;
+			return super.equals(o);
+		}
 	}
 	
 	/**
-	 * This handles the move logic for the native object. It changes both X and Y location by the incrementor
-	 */
+	 * This method will change the location of the Native object depending on the random increments returned by the getIncr method.
+	 **/
 	public void move() {
-		this.setXLoc(this.getXLoc() + getIncr());
-		this.setYLoc(this.getYLoc() + getIncr());
+		this.setXLoc(this.getXLoc() + getIncr(max, global));
+		this.setYLoc(this.getYLoc() + getIncr(max, global));
 	}
+	
 	/**
 	 * This returns the incrementor of the native object
 	 * @return The incrementor of the native object
 	 */
 	public int getIncr() {
-		return rand.nextInt(max + 1 + max) - max - GLOBAL;
+		return rand.nextInt(max + 1 + max) - max - global;
 	}	
 }

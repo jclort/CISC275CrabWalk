@@ -16,19 +16,17 @@ public class Crab extends Crawler {
    		this.setYLoc(boundary); // These two set the location to be the middle of the screen
 		this.setXLoc(boundary);
         	dir = Direction.STILL;
-        boundary = 800;
-		this.setYLoc(400);
-		this.setXLoc(400);
+        boundary = frameSize/2;
+		this.setYLoc(boundary);
+		this.setXLoc(boundary);
         	dir = Direction.STILL;
 	}
-
-    /**
-     * This will be responsible for moving the crab across the screen
-     *@param None
-     *@return None
-     */
 	
-	/*@Override
+	public boolean getPowerUp(){
+		return this.powerUp;
+	}
+    
+	@Override
 	public boolean equals(Object other){
 		if (!(other instanceof Crab)){
 			return false;
@@ -40,9 +38,14 @@ public class Crab extends Crawler {
 					(getPowerUp() == o.getPowerUp()) &&
 					(getTotalScore() == o.getTotalScore());
 		}
-	}*/
+	}
 
-
+	/**
+     * This will be responsible for moving the crab across the screen
+     *@param None
+     *@return None
+     */
+	
 	public void move() {
         	if (xloc <= boundary-xIncr & xloc >= 0-xIncr & yloc >= 200 - yIncr & yloc <= 700 - yIncr){
 			yloc += yIncr;
