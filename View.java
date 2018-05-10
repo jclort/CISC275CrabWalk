@@ -47,8 +47,8 @@ public class View extends JFrame{
     	boolean ifwin = false;
     	
     	//final static int frameStartSize = 1280;
-    	final static int frameWidth = 1280;//500
-   	final static int frameHeight = 720;//300
+    	final static int frameWidth = Toolkit.getDefaultToolkit().getScreenSize().width;//500
+   	final static int frameHeight = Toolkit.getDefaultToolkit().getScreenSize().height;//300
     	final static int imgWidth = 72;//165
 	final static int imgHeight = 72;
 
@@ -136,8 +136,11 @@ public class View extends JFrame{
         		invaPic2[i] = createImage("images/creature2.png").getSubimage(90*i+17, 0, 90, 90);
 			}
         	
-        	
-        	bgp =createImage("images/background.png");
+		bgp = new BufferedImage(frameWidth, frameHeight, 2);
+        	Graphics2D graphic = bgp.createGraphics();
+        	BufferedImage toBeResizedbgp = createImage("images/background.png");
+		graphic.drawImage(toBeResizedbgp, 0, 0, frameWidth, frameHeight, null);
+
         	score = 0;
         	lives = 3;
         	player = p;
@@ -293,10 +296,10 @@ public class View extends JFrame{
 		 *
 		 * @return Dimension The new Dimension for the JPanel/JFrame.
 		 **/
-        	//@Override
-		//public Dimension getPreferredSize() {
-		//	return new Dimension(frameWidth, frameHeight);
-		//}
+        	@Override
+		public Dimension getPreferredSize() {
+			return new Dimension(frameWidth, frameHeight);
+		}
         	
        	/**
 	 * This method will draw the quiz on the screen.
