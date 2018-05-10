@@ -113,7 +113,7 @@ public class View extends JFrame{
         	add(drawPanel);
         
 
-        	setExtendedState(JFrame.MAXIMIZD_BOTH);
+        	setExtendedState(JFrame.MAXIMIZED_BOTH);
  		setUndecorated(true);		
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    	setSize(getWidth(), getHeight());
@@ -260,10 +260,10 @@ public class View extends JFrame{
 		 *
 		 * @return Dimension The new Dimension for the JPanel/JFrame.
 		 **/
-        	@Override
-		public Dimension getPreferredSize() {
-			return new Dimension(frameWidth, frameHeight);
-		}
+        	//@Override
+		//public Dimension getPreferredSize() {
+		//	return new Dimension(frameWidth, frameHeight);
+		//}
         	
        	/**
 	 * This method will draw the quiz on the screen.
