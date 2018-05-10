@@ -58,6 +58,7 @@ public class View extends JFrame{
 	private BufferedImage[][] pics;
 	private BufferedImage quiz;
 	
+	// addPanelstoPane();
 	private DrawPanel drawPanel= new DrawPanel();
    	private Integer time; 
     int titlex = 0;
@@ -66,16 +67,12 @@ public class View extends JFrame{
    	
    	public void addPanelstoPane() {
    		JPanel main = new DrawPanel();
-   		
    		JPanel tutorial = new TutorialButton();
-   		
-   		
-   		
-   		
    		
    		JPanel highScores = new JPanel();
    		JPanel retry = new RetryButton();
    		highScores.add(retry);
+   		
    		
    		highScores.add(new TextField("HighScores: "));
    		
