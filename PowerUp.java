@@ -11,6 +11,9 @@ public class PowerUp extends InterObj {
 	final private int GLOBAL = 6;
 
 
+
+
+	
 	public void onCollision(Crab crab) {
       this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
         }
