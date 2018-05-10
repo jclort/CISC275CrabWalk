@@ -2,7 +2,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.ActionEvent; 
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.awt.image.BufferedImage; 
 import java.io.File; 
 import java.io.IOException; 
@@ -30,6 +31,9 @@ public class View extends JFrame{
     	private BufferedImage replay;
     	private BufferedImage gameover;
     	
+    	
+    	JPanel game; //The overall Panel to contain 
+    	
     	Random rand = new Random();
     	
     	int randnum;
@@ -54,6 +58,7 @@ public class View extends JFrame{
 	private BufferedImage[][] pics;
 	private BufferedImage quiz;
 	
+	// addPanelstoPane();
 	private DrawPanel drawPanel= new DrawPanel();
    	private Integer time; 
     	int titlex = 0;
@@ -67,7 +72,35 @@ public class View extends JFrame{
 	 * @param startTime - the time from the model to create a new time, mainly for when the view is recreated in the Controller.
 	 *
 	 **/
-    	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
+   	public void addPanelstoPane() {
+   		JPanel main = new DrawPanel();
+   		JPanel tutorial = new TutorialButton();
+   		
+   		JPanel highScores = new JPanel();
+   		JPanel retry = new RetryButton();
+   		highScores.add(retry);
+   		
+   		
+   		highScores.add(new TextField("HighScores: "));
+   		
+   		game = new JPanel(new CardLayout());
+   		game.add(main);
+   		game.add(tutorial);
+   		game.add(highScores);
+   		
+   		
+   	}
+   	
+   	/**
+	 * This is the View constructor that creates the visual base to our game.
+	 * It creates the images for all InterObjs and Crab, manages the JPanels into a CardLayout, and puts the menu jpanel first.
+	 *
+	 * @param p - p represents the player which is a Crab and will be created in the Model and passed to this constructor from the Controller.
+	 * @param s - s represents the ArrayList of InterObjs that will represent the everything to be drawn in the tutorial and game panels except for the player.
+	 * @param startTime - the time from the model to create a new time, mainly for when the view is recreated in the Controller.
+	 *
+	 **/
+   	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
     		String[] picNames = {"images/crab.png"};
     		pics = new BufferedImage[picNames.length][frameCount];
     		for(int j = 0; j < picNames.length; j++) {
@@ -367,8 +400,7 @@ public class View extends JFrame{
 	}
 	}	
 	
-	@SuppressWarnings("serial")
-    	private class StartButton{
+    	private abstract class StartButton extends JPanel implements ItemListener{
         	//Code for a button that starts the game
     		TextField text = new TextField(20);
     		JButton b;
@@ -379,12 +411,14 @@ public class View extends JFrame{
     			//b.addActionListener(this);
     	 	}
     	 
-    	 	public void actionPerformed(ActionEvent e) {
-    	 		
+    		
+    	 	public void itemStateChanged(ItemEvent e) {
+    	 		CardLayout c1 = (CardLayout)(game.getLayout());
+    	 		c1.show(game, (String)e.getItem());
     	 	}
     	}
-    	@SuppressWarnings("serial")
-    	private class TutorialButton {
+    	
+    	public class TutorialButton extends JPanel implements ItemListener {
     		//two buttons, giving the player the option to start the tutorial or go back to the loading screen
     		//playing around with the idea of making this and the retry button their own separate windows rather 
     		//than part of the main jframe
@@ -392,22 +426,27 @@ public class View extends JFrame{
     		TextField tutBack = new TextField(20);
     		JButton a;
     		JButton b;
-    		public TutorialButton() {
+    		public JPanel TutorialButton() {
+    			JPanel tutorial = new JPanel();
     			a = new JButton("Start Tutorial");
-    			add(a);
-    			add(tutStart);
+    			tutorial.add(a);
+    			tutorial.add(tutStart);
     			b = new JButton("Back");
-    			add(b);
-    			add(tutBack);
+    			tutorial.add(b);
+    			tutorial.add(tutBack);
     			//a.addActionListener(this);
     			//b.addActionListener(this);
-    		}
-    		public void actionPerformed(ActionEvent e) {
+    			return tutorial;
     			
     		}
+    		
+    		public void itemStateChanged(ItemEvent e) {
+    			CardLayout c2 = (CardLayout)(game.getLayout());
+    			c2.show(game, (String)e.getItem());
+    		}
     	}
-    	@SuppressWarnings("serial")
-    	private class RetryButton {
+    	
+    	public class RetryButton extends JPanel implements ItemListener {
     		TextField retry = new TextField(20);
     		TextField backToMain = new TextField(20);
     		JButton a;
@@ -422,10 +461,11 @@ public class View extends JFrame{
     			//a.addActionListener(this);
     			//b.addActionListener(this);
     		}
-    		public void actionPerformed(ActionEvent e) {
-    			
+    		
+    		public void itemStateChanged(ItemEvent e) {
+    			CardLayout c3 = (CardLayout)(game.getLayout());
+    			c3.show(game, (String)e.getItem());
     		}
-    	
     	
     	}
 	/**
@@ -437,7 +477,7 @@ public class View extends JFrame{
 
     		try {
     			// Method now takes a String (fname) in order to get the 
-			// right image to load for all the images passed through
+			    // right image to load for all the images passed through
     			bufferedImage = ImageIO.read(new File(fname));
     			return bufferedImage;
     		} catch (IOException e) {
