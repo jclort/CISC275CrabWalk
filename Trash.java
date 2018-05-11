@@ -50,7 +50,7 @@ public class Trash extends InterObj implements Serializable {
 		}
 
 		Controller.stop();
-		View.quiztime();
+		View.quizTime();
         	gone = true;
 	}
 	

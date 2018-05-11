@@ -141,19 +141,21 @@ public class View extends JFrame{
         	player = p;
         	stuff = s;
 		
-		//setLayout(new FlowLayout());
 		setSize(getWidth(), getHeight());
-        	//add(drawPanel);
-        	addPanelsToPane();
+        	
+		
+		addPanelsToPane();
 		cardLayout.show(cards, "Game");
-		game.add(new TutorialButton());		
+		
+		TutorialButton tutorialButton = new TutorialButton();
+		game.add(tutorialButton);		
+		
 		game.requestFocusInWindow();
 		add(cards.getComponent(0));
         	//setExtendedState(JFrame.MAXIMIZED_BOTH);
- 		setUndecorated(true);		
+ 		//setUndecorated(true);		
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    	setVisible(true);
-        	//drawPanel.requestFocusInWindow();
         	pack();	
 	}
 	/**
@@ -173,16 +175,6 @@ public class View extends JFrame{
         	return game;
     	}
     
-    	//public static int getFrameSize() {
-    		//return frameStartSize;
-    //	}
-    	//public int getScore(){
-        //	return score;
-    	//}
-	//
-    	//public int getLives(){
-        //	return lives;
-    	//}
 	/**
 	 * This method returns the ArrayList of InterObjs for the game
 	 *
@@ -235,22 +227,23 @@ public class View extends JFrame{
 						player.setDir(Direction.WEST);
 					}else if (e.getKeyCode() == KeyEvent.VK_Y){
 						if (ifquiz){
-						Controller.start();
-						notquiztime();
+							answerQuiz(1);
+							//Controller.start();
+							//notquiztime();
 						}
+
 					}else if (e.getKeyCode() == KeyEvent.VK_N){
-						if (ifquiz){
-							iflose = true;
-							Controller.start();
-							notquiztime();
-							
+						if (ifquiz) {
+							answerQuiz(0);
+							//Controller.start();
 						}
+
 					}else if (e.getKeyCode() == KeyEvent.VK_R){
-							if (iflose == true | ifwin == true){
+						if (iflose == true | ifwin == true){
 							iflose = false;
 							ifwin = false;
 							Controller.restart();
-							}
+						}
 							
 							
 					}
@@ -417,35 +410,25 @@ public class View extends JFrame{
     	 	}
     	}
     	
-    	public class TutorialButton extends JPanel implements ItemListener {
+    	public class TutorialButton extends JButton implements ActionListener {
     		//two buttons, giving the player the option to start the tutorial or go back to the loading screen
     		//playing around with the idea of making this and the retry button their own separate windows rather 
     		//than part of the main jframe
-    		TextField tutStart = new TextField(20);
-    		TextField tutBack = new TextField(20);
     		JButton a;
-    		JButton b;
     		public TutorialButton() {
-    			//JPanel tutorial = new JPanel();
     			a = new JButton("Start Tutorial");
-    			game.add(a);
-    			//tutorial.add(tutStart);
-    			//b = new JButton("Back to Menu");
-    			//tutorial.add(b);
-    			//tutorial.add(tutBack);
-    			//a.addActionListener(this);
-    			//b.addActionListener(this);
-    			//return tutorial;
-    			
+    			//game.add(a);
+			a.addActionListener(this);
+			add(a);
     		}
 
 		public String toString() {
 			return "Tutorial";
 		}
-    		
-    		public void itemStateChanged(ItemEvent e) {
-    			//CardLayout c2 = (CardLayout)(game.getLayout());
-    			cardLayout.show(cards, e.getItem().toString());
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+			System.out.println(e.getSource().toString());
+    			//cardLayout.show(cards, e.getItem().toString());
     		}
     	}
     	
@@ -492,15 +475,19 @@ public class View extends JFrame{
 	/**
 	 * This method will set the ifquiz boolean equal to true.
 	 **/
-	 public static void quiztime(){
+	 public static void quizTime(){
 	       	ifquiz = true;
 	}
 	/**
 	 * This method will set the notquiztime boolean equal to to false and create a time that the crab cannot collide with someone else, sort of like a grace Period.
 	 **/ 
-	public void notquiztime(){
+	public void notQuizTime(){
 	     	ifquiz = false;
 	       	crashlesstime = 20;
+	}
+
+	public void answerQuiz(int answer) {
+		//logic that will determine which quiz is currently viewing and test the correct answer depending on the integer provided, no will give 0, yes will give 1, can have a false/true questions too based off of this, which wont be too hard to implement, will probably need another object class called Quiz which has image and correctAnswer attributes that we can get and compare against answer here.
 	}
 	 
 
