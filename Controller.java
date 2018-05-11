@@ -25,10 +25,10 @@ public class Controller{
 			public void actionPerformed(ActionEvent e){	
 				model.update(view.getPlayer());
 				view.setTime(timerCtr);
-				view.drawGame();
+				view.drawTopCard();
 				if (timerCtr-- == 0) {
 					Controller.stop();
-					view.quiztime();
+					view.quizTime();
 					view.ifwin = true;
 				}
 					
@@ -57,7 +57,7 @@ public class Controller{
             			public void run() {
                 			Controller ctrllr = new Controller();
                 			timer = new Timer(DRAW_DELAY, drawAction);
-                			timer.start();
+                			//timer.start();
             		}
         		});
 		}
