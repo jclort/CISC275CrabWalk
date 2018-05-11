@@ -2,7 +2,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.ActionEvent; 
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.awt.image.BufferedImage; 
 import java.io.File; 
 import java.io.IOException; 
@@ -30,6 +31,8 @@ public class View extends JFrame{
     	private BufferedImage replay;
     	private BufferedImage gameover;
     	
+    	
+    	
     	Random rand = new Random();
     	
     	int randnum;
@@ -43,8 +46,8 @@ public class View extends JFrame{
     	boolean ifwin = false;
     	
     	//final static int frameStartSize = 1280;
-    	final static int frameWidth = 1280;//500
-   	final static int frameHeight = 720;//300
+    	final static int frameWidth = Toolkit.getDefaultToolkit().getScreenSize().width;//500
+   	final static int frameHeight = Toolkit.getDefaultToolkit().getScreenSize().height;//300
     	final static int imgWidth = 72;//165
 	final static int imgHeight = 72;
 
@@ -54,10 +57,35 @@ public class View extends JFrame{
 	private BufferedImage[][] pics;
 	private BufferedImage quiz;
 	
-	private DrawPanel drawPanel= new DrawPanel();
+	
+	//private DrawPanel drawPanel= new DrawPanel();
    	private Integer time; 
     	int titlex = 0;
    	static int crashlesstime = 0;
+
+	private CardLayout cardLayout;
+	private JPanel cards;
+	//private MenuPanel menu;
+	//private TutorialPanel tutorial;
+	//private HighScoresPanel highScores;
+	private GamePanel game = new GamePanel();
+   	
+	
+	public void addPanelsToPane() {
+   		//game = new GamePanel();
+   		//tutorial = new TutorialPanel();
+   		//highScores = new HighScoresPanel();
+   		//menu = new MenuPanel();
+   		
+		cards = new JPanel(new CardLayout());
+   		cards.add(game,"Game");
+		//cards.add(tutorial, "Tutorial");
+		//cards.add(highScores, "HighScores");
+		//cards.add(menu, "Menu");
+   		
+		cardLayout = (CardLayout) cards.getLayout();
+   	}
+   	
    	/**
 	 * This is the View constructor that creates the visual base to our game.
 	 * It creates the images for all InterObjs and Crab, manages the JPanels into a CardLayout, and puts the menu jpanel first.
@@ -67,7 +95,7 @@ public class View extends JFrame{
 	 * @param startTime - the time from the model to create a new time, mainly for when the view is recreated in the Controller.
 	 *
 	 **/
-    	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
+   	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
     		String[] picNames = {"images/crab.png"};
     		pics = new BufferedImage[picNames.length][frameCount];
     		for(int j = 0; j < picNames.length; j++) {
@@ -103,23 +131,31 @@ public class View extends JFrame{
         		invaPic2[i] = createImage("images/creature2.png").getSubimage(90*i+17, 0, 90, 90);
 			}
         	
-        	
-        	bgp =createImage("images/background.png");
+		bgp = new BufferedImage(frameWidth, frameHeight, 2);
+        	Graphics2D graphic = bgp.createGraphics();
+        	BufferedImage toBeResizedbgp = createImage("images/background.png");
+		graphic.drawImage(toBeResizedbgp, 0, 0, frameWidth, frameHeight, null);
+
         	score = 0;
         	lives = 3;
         	player = p;
         	stuff = s;
-        	//startButton = new StartButton();
-        	add(drawPanel);
-        
-
-        	               
+		
+		//setLayout(new FlowLayout());
+		setSize(getWidth(), getHeight());
+        	//add(drawPanel);
+        	addPanelsToPane();
+		cardLayout.show(cards, "Game");
+		game.add(new TutorialButton());		
+		game.requestFocusInWindow();
+		add(cards.getComponent(0));
+        	//setExtendedState(JFrame.MAXIMIZED_BOTH);
+ 		setUndecorated(true);		
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
-	    	setSize(getWidth(), getHeight());
 	    	setVisible(true);
-        	drawPanel.requestFocusInWindow();
+        	//drawPanel.requestFocusInWindow();
         	pack();	
-    	}
+	}
 	/**
 	 * This method returns the player to pass on to the Model from the Controller.
 	 *
@@ -131,10 +167,10 @@ public class View extends JFrame{
 	/**
 	 * This method will draw the panel
 	 *
-	 * @return DrawPanel the drawPanel that is currently on the top of the Card layout
+	 * @return GamePanel the drawPanel that is currently on the top of the Card layout
 	 **/
-    	public DrawPanel getDrawPanel(){
-        	return drawPanel;
+    	public GamePanel getGame(){
+        	return game;
     	}
     
     	//public static int getFrameSize() {
@@ -159,8 +195,8 @@ public class View extends JFrame{
 	 * This method will repaint the panel that is curently on the top of the CardLayout.
 	 *
 	 **/
-    	public void drawPanel() {
-		drawPanel.repaint();
+    	public void drawGame() {
+		game.repaint();
 	}
 	/**
 	 * This method will take in an Integer and set the time of the game equal to the time from the Controller.
@@ -171,18 +207,18 @@ public class View extends JFrame{
 
 	
     	@SuppressWarnings("serial")
-	private class DrawPanel extends JPanel {
+	private class GamePanel extends JPanel {
 		/**
 		 * This constructor will create the JPanel that will create the JPanel for the game and add the key listeners for the crab/quizzes.
 		 **/
-        	public DrawPanel(){
+        	public GamePanel(){
         	    	super();
             		setFocusable(true);
             		addKeyListener(new KeyAdapter(){
                 		@Override
                 		public void keyPressed(KeyEvent e){
                             	
-                    if (e.getKeyCode() == KeyEvent.VK_UP){
+                    			if (e.getKeyCode() == KeyEvent.VK_UP){
                         			//crab direction is up
 					        player.setDir(Direction.NORTH);
                     			}
@@ -223,37 +259,35 @@ public class View extends JFrame{
         	}
 		/**
 		 * This method will override paintComponent from JPanel specific to the objects that need to be drawn on the JPanel
+		 *
+		 * @param g The Graphics object that will be passed to other draw functions for the other objects in the game. 
 		 **/
         	@Override
         	protected void paintComponent(Graphics g) {
-			
-			
-			//setBackground(Color.cyan);
-			//g.setColor(new Color(0, 0, 0, 0));
-        	if (ifstart == false){
-        		drawbgp(g);	
-        		drawtitle(g);
-        	}else{
-        		if (iflose == false & ifwin == false){
-			drawbgp(g);
-			drawCrab(g);
-            drawInterObjs(g);
-			drawTime(g);
+        		if (ifstart == false){
+        			drawbgp(g);	
+        			drawtitle(g);
         		}else{
-        			if (iflose){
-        				setBackground(Color.black);
-        				drawgameover(g);
-        				Controller.stop();
-        			}else if(ifwin & ifquiz==false){
-        				setBackground(Color.white);
-        				drawwin(g);
-        				drawreplay(g);
-        				Controller.stop();
+        			if (iflose == false & ifwin == false){
+					drawbgp(g);
+					drawCrab(g);
+            				drawInterObjs(g);
+					drawTime(g);
+        			}else{
+        				if (iflose){
+        					setBackground(Color.black);
+        					drawgameover(g);
+        					Controller.stop();
+        				}else if(ifwin & ifquiz==false){
+        					setBackground(Color.white);
+        					drawwin(g);
+        					drawreplay(g);
+        					Controller.stop();
+        				}
         			}
-        		}
-			if (ifquiz){
-				drawquiz(g);
-			}
+				if (ifquiz){
+					drawquiz(g);
+				}
 			}
 		}
 		/**
@@ -266,81 +300,90 @@ public class View extends JFrame{
 			return new Dimension(frameWidth, frameHeight);
 		}
         	
-       	/**
-	 * This method will draw the quiz on the screen
-	 **/
-        public void drawquiz(Graphics g){
-        	g.drawImage(quiz, 400,250 , this);
-        }
-	/**
-	 * This method will draw the game over screen
-	 **/
-        public void drawgameover(Graphics g){
-        	g.drawImage(gameover, 300,175 , this);
-        }
-	/**
-	 * This method will draw the win screen
-	 **/
-        public void drawwin(Graphics g){
-        	g.drawImage(win, 200,150 , this);
-        }
-	/**
-	 * This method will draw the replay screen and prompt the user if they want to replay the game when it is over.
-	 **/
-        public void drawreplay(Graphics g){
-        	g.drawImage(replay, 500,550 , this);
-        }
-	/**
-	 * This method will draw the player Crab
-	 **/
-        public void drawCrab(Graphics g){
- 
-        	picNum = (picNum + 1) % 8;
-        	g.drawImage(pics[0][picNum], player.getXLoc(), player.getYLoc(), this);
-        }
-	/**
-	 * This method will draw the title moving across the screen, part of the menu JPanel.
-	 **/
-        public void drawtitle(Graphics g){
+       		/**
+		 * This method will draw the quiz on the screen.
+		 *
+		 * @param g The Graphics object that the quiz will be drawn on.
+		 **/
+        	public void drawquiz(Graphics g){
+        		g.drawImage(quiz, 400,250 , this);
+        	}
+		/**
+		 * This method will draw the game over screen.
+		 *
+		 * @param g The Graphics object that the game over image will be drawn on.
+		 **/
+        	public void drawgameover(Graphics g){
+        		g.drawImage(gameover, 300,175 , this);
+        	}
+		/**
+		 * This method will draw the win screen.
+		 *
+		 * @param g The Graphics object that the win image will be drawn on.
+		 **/
+        	public void drawwin(Graphics g){
+        		g.drawImage(win, 200,150 , this);
+        	}
+		/**
+		 * This method will draw the replay screen and prompt the user if they want to replay the game when it is over.
+		 *
+		 * @param g The Graphics object that the replay image will be drawn on.
+		 **/
+        	public void drawreplay(Graphics g){
+        		g.drawImage(replay, 500,550 , this);
+        	}
+		/**
+		 * This method will draw the player Crab.
+		 *
+		 * @param g The Graphics object that the crab image will be drawn on.
+		 **/
+        	public void drawCrab(Graphics g){
+ 		       	picNum = (picNum + 1) % 8;
+ 		       	g.drawImage(pics[0][picNum], player.getXLoc(), player.getYLoc(), this);
+ 	       }
+		/**
+		 * This method will draw the title moving across the screen, part of the menu JPanel.
+		 *
+		 * @param g The Graphics object that the Title image will be drawn on.
+		 **/
+        	public void drawtitle(Graphics g){
         		if (titlex<300){
         			titlex = titlex + 20;
         		}else{
         			ifstart = true;
         		}
-        	   g.drawImage(title, titlex, 10, this);
-        }
-	/**
-	 * This method will draw the InterObjs by running through the ArrayList and drawing each one
-	 **/
+        		g.drawImage(title, titlex, 10, this);
+        	}
+		/**
+		 * This method will draw the InterObjs by running through the ArrayList and drawing each one.
+		 *
+		 * @param g The Graphics object that the InterObj images will be drawn on.
+		 **/
         	public void drawInterObjs(Graphics g){
-        			picNum = (picNum + 1) % 3;
-        			for (InterObj object: stuff){
-            			int objname = object.name;
-            			BufferedImage objp = null;
-            			
-            			
+        		picNum = (picNum + 1) % 3;
+        		for (InterObj object: stuff){
+        			int objname = object.name;
+        			BufferedImage objp = null;
+            			           			
             			switch (objname) {
-            	            case 1:  objp = trashPic;
-            	                     break;
-            	            case 2:  objp = trashPic1;
-            	            		 break;
-            	            case 3:  objp = trashPic2;
-   	            		 			 break;
-            	            case 4:  objp = trashPic3;
-   	            		 			 break;
-            	            case 5:  objp = trashPic4;
-   	            		 			 break;   
-            	            case 6:  g.drawImage(invaPic1[picNum], object.getXLoc(), object.getYLoc(), this);
-            	            		 break;
-   	            		 			 
-            	            case 7:  g.drawImage(invaPic2[picNum], object.getXLoc(), object.getYLoc(), this);
-            	            		 break; 	            		 			 
-            	            		 
-            		    }
-	            		g.drawImage(objp, object.getXLoc(), object.getYLoc(), this);
+            	        	case 1:  objp = trashPic;
+            	              		break;
+            	        	case 2:  objp = trashPic1;
+            	        		break;
+            	        	case 3:  objp = trashPic2;
+   	            		 	break;
+            	            	case 4:  objp = trashPic3;
+   	            		 	break;
+            	            	case 5:  objp = trashPic4;
+   	            			break;   
+            	           	case 6:  g.drawImage(invaPic1[picNum], object.getXLoc(), object.getYLoc(), this);
+            	          		break;		 
+            	        	case 7:  g.drawImage(invaPic2[picNum], object.getXLoc(), object.getYLoc(), this);
+            	        		break; 	            		 			 
+            	           		 
             			}
-	            	
-            		
+	            		g.drawImage(objp, object.getXLoc(), object.getYLoc(), this);
+            		}		
         	}
 		/**
 		 * This method will draw the time (THIS WILL CHANGE INTO A BOAT RUNNING ACROSS THE WAVES IN THE BACKGROUND).
@@ -356,8 +399,7 @@ public class View extends JFrame{
 		}
 	}	
 	
-	@SuppressWarnings("serial")
-    	private class StartButton{
+    	private abstract class StartButton extends JPanel implements ItemListener{
         	//Code for a button that starts the game
     		TextField text = new TextField(20);
     		JButton b;
@@ -368,12 +410,14 @@ public class View extends JFrame{
     			//b.addActionListener(this);
     	 	}
     	 
-    	 	public void actionPerformed(ActionEvent e) {
-    	 		
+    		
+    	 	public void itemStateChanged(ItemEvent e) {
+    	 		//CardLayout c1 = (CardLayout)(game.getLayout());
+    	 		cardLayout.show(cards, (String)e.getItem());
     	 	}
     	}
-    	@SuppressWarnings("serial")
-    	private class TutorialButton {
+    	
+    	public class TutorialButton extends JPanel implements ItemListener {
     		//two buttons, giving the player the option to start the tutorial or go back to the loading screen
     		//playing around with the idea of making this and the retry button their own separate windows rather 
     		//than part of the main jframe
@@ -382,21 +426,30 @@ public class View extends JFrame{
     		JButton a;
     		JButton b;
     		public TutorialButton() {
+    			//JPanel tutorial = new JPanel();
     			a = new JButton("Start Tutorial");
-    			add(a);
-    			add(tutStart);
-    			b = new JButton("Back");
-    			add(b);
-    			add(tutBack);
+    			game.add(a);
+    			//tutorial.add(tutStart);
+    			//b = new JButton("Back to Menu");
+    			//tutorial.add(b);
+    			//tutorial.add(tutBack);
     			//a.addActionListener(this);
     			//b.addActionListener(this);
-    		}
-    		public void actionPerformed(ActionEvent e) {
+    			//return tutorial;
     			
     		}
+
+		public String toString() {
+			return "Tutorial";
+		}
+    		
+    		public void itemStateChanged(ItemEvent e) {
+    			//CardLayout c2 = (CardLayout)(game.getLayout());
+    			cardLayout.show(cards, e.getItem().toString());
+    		}
     	}
-    	@SuppressWarnings("serial")
-    	private class RetryButton {
+    	
+    	public class RetryButton extends JPanel implements ItemListener {
     		TextField retry = new TextField(20);
     		TextField backToMain = new TextField(20);
     		JButton a;
@@ -411,10 +464,11 @@ public class View extends JFrame{
     			//a.addActionListener(this);
     			//b.addActionListener(this);
     		}
-    		public void actionPerformed(ActionEvent e) {
-    			
+    		
+    		public void itemStateChanged(ItemEvent e) {
+    			//CardLayout c3 = (CardLayout)(game.getLayout());
+    			cardLayout.show(cards, e.getItem().toString());
     		}
-    	
     	
     	}
 	/**
@@ -426,7 +480,7 @@ public class View extends JFrame{
 
     		try {
     			// Method now takes a String (fname) in order to get the 
-			// right image to load for all the images passed through
+			    // right image to load for all the images passed through
     			bufferedImage = ImageIO.read(new File(fname));
     			return bufferedImage;
     		} catch (IOException e) {
@@ -438,16 +492,16 @@ public class View extends JFrame{
 	/**
 	 * This method will set the ifquiz boolean equal to true.
 	 **/
-		 public static void quiztime(){
-	        	ifquiz = true;
-	        }
+	 public static void quiztime(){
+	       	ifquiz = true;
+	}
 	/**
 	 * This method will set the notquiztime boolean equal to to false and create a time that the crab cannot collide with someone else, sort of like a grace Period.
 	 **/ 
-	        public void notquiztime(){
-	        	ifquiz = false;
-	        	crashlesstime = 20;
-	        }
+	public void notquiztime(){
+	     	ifquiz = false;
+	       	crashlesstime = 20;
+	}
 	 
 
 }
