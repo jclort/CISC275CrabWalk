@@ -1,12 +1,14 @@
 import java.io.Serializable;
 import java.util.Random;
+import java.awt.Rectangle;
 
 public abstract class InterObj extends Crawler implements Serializable {
 
-	protected boolean collisionBool = false;
+	//protected boolean collisionBool = false;
 	Random rand = new Random();
 	int name;
 	int randnum;
+	protected Rectangle hitBox;
     	/**
 	 * This is the constructor for the Interactive Object
 	 * @param frameSize This is the size of the playable frame
@@ -23,8 +25,12 @@ public abstract class InterObj extends Crawler implements Serializable {
 	 * 
 	 * @return boolean - the boolean value of collisionBool
 	 **/
-	public boolean getCollisionBool() {
+	/*public boolean getCollisionBool() {
 		return this.collisionBool;
+	}*/
+
+	public Rectangle getHitBox(){
+		return hitBox;
 	}
 	
 	/**

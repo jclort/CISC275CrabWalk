@@ -44,11 +44,10 @@ public class Trash extends InterObj implements Serializable {
 	 * @param crab the Crab that will be passed to the method and determine if its outline intersects the outline of the InterObj.
 	 **/
 	public void onCollision(Crab crab) {
-      		this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
+      	/*this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
 		if(this.collisionBool){
 			System.out.println("Crashed!");
-		}
-
+		}*/
 		Controller.stop();
 		View.quizTime();
         	gone = true;
@@ -60,5 +59,6 @@ public class Trash extends InterObj implements Serializable {
 	 **/	
 	public void move() {
 		this.setXLoc(this.getXLoc() + getIncr(max, global));
+		this.hitBox.x += getIncr(max, global);
 	}
 }
