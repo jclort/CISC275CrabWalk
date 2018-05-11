@@ -4,8 +4,6 @@ import java.util.Random;
 
 import java.util.Iterator;
 
-import java.awt.Rectangle;
-
 
 public class Model{
     	// This is where all of our logic is going to go for the game
@@ -121,16 +119,8 @@ public class Model{
      * @return A boolean that says whether or not the crash happened
      */
     	public boolean crash(InterObj object){ // tells whether the player has hit this object
-			/*Rectangle box1 = player.getHitBox();
-			System.out.println("Our crab is here: " +box1.getX() + ", " + box1.getY());
-			Rectangle box2 = object.getHitBox();
-			System.out.println("Our object is here: " + box2.getX() + ", " + box2.getY());
-			if(box1.intersects(box2)){
-				System.out.println("There's been a crash!");
-			}*/
-			System.out.println("This is where our crab's hitbox is: " + player.getHitBox().getX() + ", " + player.getHitBox().getY());
-			return player.getHitBox().intersects(object.getHitBox());
-    		//return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
+        	
+    		return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
     	}
     /**
      * Checks the crash method, and if a collision happens, then it handles it accordingly

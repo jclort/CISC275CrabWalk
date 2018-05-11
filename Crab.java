@@ -25,7 +25,6 @@ public class Crab extends Crawler {
 		boundary = frameSize;
 		BufferedImage crab = Images.CRAB.getPic();
 		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), crab.getWidth(), crab.getHeight());
-		System.out.println("A rectangle has been created at " + hitBox.getX() + ", " + hitBox.getY());
 	}
 	
 	public boolean getPowerUp(){
@@ -59,10 +58,7 @@ public class Crab extends Crawler {
 	public void move() {
         	if ((xloc <= screenWidth-xIncr) & (xloc >= 0-xIncr) & (yloc >= 200-yIncr) & (yloc <= screenHeight-yIncr)){
 			yloc += yIncr;
-			System.out.println("Y location is now: " + yloc);
 			xloc += xIncr;
-			System.out.println("X location is now: " + xloc);
-			this.hitBox.setLocation(xloc+=xIncr, yloc += yIncr);
         	}
 	}
     /**
