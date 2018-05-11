@@ -206,7 +206,7 @@ public class Model{
 		   	break;
         	default:
 			player.setXIncr(noIncr);
-                player.setYIncr(noIncr);
+                	player.setYIncr(noIncr);
         	}
         	
         	
@@ -214,7 +214,7 @@ public class Model{
         	handleCollisions(stuff);
         	
         	for(InterObj o : stuff){
-            	o.move();
+            		o.move();
         	}
         	
         	handleCollisions(stuff);

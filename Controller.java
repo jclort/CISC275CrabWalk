@@ -25,7 +25,7 @@ public class Controller{
 			public void actionPerformed(ActionEvent e){	
 				model.update(view.getPlayer());
 				view.setTime(timerCtr);
-				view.drawPanel();
+				view.drawGame();
 				if (timerCtr-- == 0) {
 					Controller.stop();
 					view.quiztime();
