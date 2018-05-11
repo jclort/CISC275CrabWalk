@@ -25,10 +25,10 @@ public class Controller{
 			public void actionPerformed(ActionEvent e){	
 				model.update(view.getPlayer());
 				view.setTime(timerCtr);
-				view.drawGame();
+				view.drawTopCard();
 				if (timerCtr-- == 0) {
 					Controller.stop();
-					view.quiztime();
+					view.quizTime();
 					view.ifwin = true;
 				}
 					
@@ -45,19 +45,19 @@ public class Controller{
 			timer.start();
 		}
 		public static void restart(){
-            		View v = view;
-            		model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
-			timerCtr = 500;
-        		view = new View(model.getPlayer(), model.getStuff(), timerCtr);
-            		v.dispose();
-			timer.start();
+            	//View v = view;
+            	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
+			    timerCtr = 500;
+                view.remove(view.getCards());
+        		view.setView(model.getPlayer(), model.getStuff(), timerCtr);
+			    timer.start();
 		}
     		public static void main(String[] args) {
         		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             			public void run() {
                 			Controller ctrllr = new Controller();
                 			timer = new Timer(DRAW_DELAY, drawAction);
-                			timer.start();
+                			//timer.start();
             		}
         		});
 		}

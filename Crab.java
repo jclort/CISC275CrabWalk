@@ -19,8 +19,8 @@ public class Crab extends Crawler {
 		xIncr = 0;
 		yIncr = 0;
 
-   		this.setYLoc(frameSize/2); // These two set the location to be the middle of the screen
-		this.setXLoc(frameSize/2);
+   		this.setYLoc(600); // These two set the location to be the middle of the screen
+		this.setXLoc(600);
         dir = Direction.STILL;
 		boundary = frameSize;
 		BufferedImage crab = Images.CRAB.getPic();
