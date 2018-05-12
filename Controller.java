@@ -6,7 +6,9 @@ import javax.swing.Action;
 import javax.swing.Timer;
 
 
-class Controller{
+
+public class Controller{
+
 	final static int DRAW_DELAY = 75; //msec
 
     	private static Model model;
@@ -23,7 +25,7 @@ class Controller{
 			public void actionPerformed(ActionEvent e){	
 				model.update(view.getPlayer());
 				view.setTime(timerCtr);
-				view.drawPanel();
+				view.drawGame();
 				if (timerCtr-- == 0) {
 					Controller.stop();
 					view.quiztime();
@@ -43,20 +45,20 @@ class Controller{
 			timer.start();
 		}
 		public static void restart(){
-            View v = view;
-            model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
-        	view = new View(model.getPlayer(), model.getStuff(), timerCtr);
-            v.dispose();
-			timer.start();
+            		View v = view;
+            		model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
 			timerCtr = 500;
+        		view = new View(model.getPlayer(), model.getStuff(), timerCtr);
+            		v.dispose();
+			timer.start();
 		}
-    	public static void main(String[] args) {
-        	javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            		public void run() {
-                		Controller ctrllr = new Controller();
-                		timer = new Timer(DRAW_DELAY, drawAction);
-                		timer.start();
+    		public static void main(String[] args) {
+        		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            			public void run() {
+                			Controller ctrllr = new Controller();
+                			timer = new Timer(DRAW_DELAY, drawAction);
+                			timer.start();
             		}
-        	});
-	}
+        		});
+		}
 }

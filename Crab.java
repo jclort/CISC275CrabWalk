@@ -1,9 +1,15 @@
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.awt.*;
 public class Crab extends Crawler {
     	private Direction dir;
 	private boolean powerUp = false;
 	private int score = 0;
 	private int lives = 4;
-    	private int boundary;
+	private int boundary; // This is just how far the crab is able to go
+	private Rectangle hitBox; // This is how we are gonna determine if a collision happens
+	private int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     /**
      * Constructor for the Crab
      * @param frameSize The size of the frame the crab will be in
@@ -13,17 +19,20 @@ public class Crab extends Crawler {
 		xIncr = 0;
 		yIncr = 0;
 
-   		this.setYLoc(boundary); // These two set the location to be the middle of the screen
-		this.setXLoc(boundary);
-        	dir = Direction.STILL;
-        boundary = frameSize/2;
-		this.setYLoc(boundary);
-		this.setXLoc(boundary);
-        	dir = Direction.STILL;
+   		this.setYLoc(frameSize/2); // These two set the location to be the middle of the screen
+		this.setXLoc(frameSize/2);
+        dir = Direction.STILL;
+		boundary = frameSize;
+		BufferedImage crab = Images.CRAB.getPic();
+		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), crab.getWidth(), crab.getHeight());
 	}
 	
 	public boolean getPowerUp(){
 		return this.powerUp;
+	}
+
+	public Rectangle getHitBox(){
+		return hitBox;
 	}
     
 	@Override
@@ -47,7 +56,7 @@ public class Crab extends Crawler {
      */
 	
 	public void move() {
-        	if (xloc <= boundary-xIncr & xloc >= 0-xIncr & yloc >= 200 - yIncr & yloc <= 700 - yIncr){
+        	if ((xloc <= screenWidth-xIncr) & (xloc >= 0-xIncr) & (yloc >= 200-yIncr) & (yloc <= screenHeight-yIncr)){
 			yloc += yIncr;
 			xloc += xIncr;
         	}

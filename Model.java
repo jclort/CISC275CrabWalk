@@ -134,6 +134,7 @@ public class Model{
         	while(it.hasNext()){
                     InterObj o = (InterObj)it.next();
             		if(crash(o) & View.crashlesstime == 0 ){
+						System.out.println("Collision!");
                 	    o.onCollision(player);
                 	    if (o.gone){
                             it.remove();
@@ -149,27 +150,27 @@ public class Model{
     		randnum = rand.nextInt(7);
     		switch (randnum) {
             case 0: 
-            	stuff.add(new Trash(frameHeight,1));
+            	stuff.add(new Trash(frameWidth,1));
             	break;
             case 1: 
-            	stuff.add(new Trash(frameHeight,2));
+            	stuff.add(new Trash(frameWidth,2));
             	break;
             case 2: 
-            	stuff.add(new Trash(frameHeight,3));
+            	stuff.add(new Trash(frameWidth,3));
             	break;
             case 3: 
-            	stuff.add(new Trash(frameHeight,4));
+            	stuff.add(new Trash(frameWidth,4));
             	break;
             case 4: 
             	if (rand.nextInt(10) > 6){
-            	stuff.add(new Trash(frameHeight,5));
+            	stuff.add(new Trash(frameWidth,5));
             	}
             	break;
             case 5: 
-            	stuff.add(new Invasive(frameHeight,6));
+            	stuff.add(new Invasive(frameWidth,6));
             	break;
             case 6: 
-            	stuff.add(new Invasive(frameHeight,7));
+            	stuff.add(new Invasive(frameWidth,7));
             	break;
     		}
         	
@@ -205,7 +206,7 @@ public class Model{
 		   	break;
         	default:
 			player.setXIncr(noIncr);
-                player.setYIncr(noIncr);
+                	player.setYIncr(noIncr);
         	}
         	
         	
@@ -213,7 +214,7 @@ public class Model{
         	handleCollisions(stuff);
         	
         	for(InterObj o : stuff){
-            	o.move();
+            		o.move();
         	}
         	
         	handleCollisions(stuff);

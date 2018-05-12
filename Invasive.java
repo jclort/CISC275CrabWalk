@@ -1,14 +1,22 @@
 import java.io.Serializable;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class Invasive extends InterObj implements Serializable {
 	private int max = 7;
 	private int global = 14;
 	private int counter = 0;
 	private int sign = 0;	
+	private Rectangle hitBox;
+	private BufferedImage i;
 
 	public Invasive(int frameSize, int name) {         
 		super(frameSize, name);         
-		// TODO Auto-generated constructor stub
+		switch(name){
+			case 6 : i = Images.INVA1.getPic(); break;
+			case 7 : i = Images.INVA2.getPic(); break;
+		}
+		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), i.getWidth(), i.getHeight());
 	}
 	/**
 	 * This method is implemented from InterObj, and when called, sets te value of collisionBool to true when the image outline of the passed Crab intersects with the image outline of the Invasive object.
@@ -19,6 +27,9 @@ public class Invasive extends InterObj implements Serializable {
 		View.quiztime();
 	}
 
+	public Rectangle getHitBox(){
+		return hitBox;
+	}
 
 	@Override
 	public boolean equals(Object other){
