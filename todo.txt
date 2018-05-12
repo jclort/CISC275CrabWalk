@@ -1,0 +1,7 @@
+Things that need to be done
+- For the quiz, create different quiz images, and then, depending on the image, determine what 
+keypress will result in the successful advancement of the game
+We need to make sure we know what question we are on during the quiz so we know what answer
+is appropriate
+Other things to do
+- Create a start menu 

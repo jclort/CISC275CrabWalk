@@ -4,6 +4,7 @@ import java.util.Random;
 
 import java.util.Iterator;
 
+import java.awt.Rectangle;
 
 public class Model{
     	// This is where all of our logic is going to go for the game
@@ -120,7 +121,8 @@ public class Model{
      */
     	public boolean crash(InterObj object){ // tells whether the player has hit this object
         	
-    		return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
+			//return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
+			return(player.getHitBox().intersects(object.getHitBox()));
     	}
     /**
      * Checks the crash method, and if a collision happens, then it handles it accordingly
@@ -225,7 +227,7 @@ public class Model{
         	
         	player.setDir(Direction.STILL);
 
-        	if (trashCtr++ %15 == 0) {
+        	if (trashCtr++ %10 == 0) {
 			   generateNewStuff();
 		    }
         /* The following is pseudocode that will be implemented tomorrow for this method
