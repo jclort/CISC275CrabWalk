@@ -238,11 +238,11 @@ public class View extends JFrame{
 		this.time = time;
 	}
     	@SuppressWarnings("serial")
-	private class GamePanel extends JPanel {
+	private class TutorialPanel extends JPanel {
 		/**
 		 * This constructor will create the JPanel that will create the JPanel for the game and add the key listeners for the crab/quizzes.
 		 **/
-        	public GamePanel(){
+        	public TutorialPanel(){
         	    	super();
             		setFocusable(true);
             		addKeyListener(new KeyAdapter(){
@@ -270,21 +270,18 @@ public class View extends JFrame{
 							Controller.start();
 							notQuizTime();
 						}
-
 					}else if (e.getKeyCode() == KeyEvent.VK_N){
 						if (ifquiz) {
 							answerQuiz(0);
 							Controller.start();
+							notQuizTime();
 						}
-
 					}else if (e.getKeyCode() == KeyEvent.VK_R){
 						if (iflose == true | ifwin == true){
 							iflose = false;
 							ifwin = false;
 							Controller.restart();
 						}
-							
-							
 					}
                 		}
             		});
@@ -392,6 +389,7 @@ public class View extends JFrame{
 		 * @param g The Graphics object that the InterObj images will be drawn on.
 		 **/
         	public void drawInterObjs(Graphics g){
+			String drawCaption = "Just a place holder";
         		picNum = (picNum + 1) % 3;
         		for (InterObj object: stuff){
         			int objname = object.name;
@@ -399,22 +397,30 @@ public class View extends JFrame{
             			           			
             			switch (objname) {
             	        	case 1:  objp = trashPic;
+					 drawCaption = "AVOID ME!";
             	              		break;
             	        	case 2:  objp = trashPic1;
+					 drawCaption = "AVOID ME!";
             	        		break;
             	        	case 3:  objp = trashPic2;
+					 drawCaption = "AVOID ME!";
    	            		 	break;
             	            	case 4:  objp = trashPic3;
+					 drawCaption = "AVOID ME!";
    	            		 	break;
             	            	case 5:  objp = trashPic4;
+					 drawCaption = "AVOID ME!";
    	            			break;   
             	           	case 6:  g.drawImage(invaPic1[picNum], object.getXLoc(), object.getYLoc(), this);
+					 drawCaption = "HIT ME TO EAT ME!";
             	          		break;		 
             	        	case 7:  g.drawImage(invaPic2[picNum], object.getXLoc(), object.getYLoc(), this);
+					 drawCaption = "HIT ME TO EAT ME!";
             	        		break; 	            		 			 
             	           		 
             			}
 	            		g.drawImage(objp, object.getXLoc(), object.getYLoc(), this);
+				g.drawString(drawCaption, object.getXLoc(), object.getYLoc()-2);
             		}		
         	}
 		/**
@@ -820,11 +826,11 @@ public class View extends JFrame{
 	}
 
 	@SuppressWarnings("serial")
-	private class TutorialPanel extends JPanel {
+	private class GamePanel extends JPanel {
 		/**
 		 * This constructor will create the JPanel that will create the JPanel for the game and add the key listeners for the crab/quizzes.
 		 **/
-        	public TutorialPanel(){
+        	public GamePanel(){
         	    	super();
             		setFocusable(true);
             		addKeyListener(new KeyAdapter(){

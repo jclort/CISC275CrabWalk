@@ -47,7 +47,7 @@ public class Invasive extends InterObj implements Serializable {
 	 **/
 	public void move() {
 		this.setXLoc(this.getXLoc() + getIncr(max, global));
-		this.setYLoc(this.getYLoc() + getIncr(max, global));
+		this.setYLoc(this.getYLoc() + getIncr(max, 0));
 	}
 	
 
