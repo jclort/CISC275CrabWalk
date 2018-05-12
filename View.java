@@ -72,6 +72,7 @@ public class View extends JFrame{
    	
 	
 	public void addPanelsToPane() {
+        
    		game = new GamePanel();
    		tutorial = new TutorialPanel();
    		highScores = new HighScoresPanel();
@@ -97,7 +98,11 @@ public class View extends JFrame{
 	 *
 	 **/
    	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
-    		String[] picNames = {"images/crab.png"};
+    		setView(p, s, startTime);
+	}
+
+    public void setView(Crab p, ArrayList<InterObj> s, Integer startTime){
+        String[] picNames = {"images/crab.png"};
     		pics = new BufferedImage[picNames.length][frameCount];
     		for(int j = 0; j < picNames.length; j++) {
 			// load the image
@@ -169,7 +174,7 @@ public class View extends JFrame{
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    	setVisible(true);
         	pack();	
-	}
+    }
 	/**
 	 * This method returns the player to pass on to the Model from the Controller.
 	 *
@@ -195,6 +200,11 @@ public class View extends JFrame{
     	public ArrayList<InterObj> getStuff(){
         	return stuff;
     	}
+
+
+        public JPanel getCards(){
+            return cards;
+        }
 	/**
 	 * This method will repaint the panel that is curently on the top of the CardLayout.
 	 *
@@ -202,18 +212,7 @@ public class View extends JFrame{
     	public void drawTopCard() {
 		for (Component comp : cards.getComponents()) {
 			if (comp.isVisible() == true) {
-				if (((JPanel)comp).getName() == "Menu") {
-					menu.repaint();
-				}
-				else if (((JPanel)comp).getName() == "Game") {
-					game.repaint();
-				}
-				else if (((JPanel)comp).getName() == "Tutorial") {
-					tutorial.repaint();
-				}
-				else if (((JPanel)comp).getName() == "HighScores") {
-					highScores.repaint();
-				}
+				comp.repaint();
 			}
 		}
 		game.repaint();
@@ -1012,9 +1011,10 @@ public class View extends JFrame{
     	 	
 		@Override		
     	 	public void actionPerformed(ActionEvent e) {
+                Controller.restart();
     	 		cardLayout.show(cards, "Game");
 			game.requestFocusInWindow();
-			Controller.start();
+			
     	 	}
     	}
     	
@@ -1031,9 +1031,10 @@ public class View extends JFrame{
 
     		@Override
     		public void actionPerformed(ActionEvent e) {
+                Controller.restart();
     			cardLayout.show(cards, "Tutorial");
 			tutorial.requestFocusInWindow();
-			Controller.start();
+			
     		}
     	}
     	
@@ -1046,10 +1047,9 @@ public class View extends JFrame{
     		}
     		
     		public void actionPerformed(ActionEvent e) {
-    			cardLayout.show(cards, "Menu");
-			menu.requestFocusInWindow();
-			Controller.stop();
+    			
 			Controller.restart();
+            Controller.stop();
     		}
     	
     	}

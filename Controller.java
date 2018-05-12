@@ -45,12 +45,12 @@ public class Controller{
 			timer.start();
 		}
 		public static void restart(){
-            		View v = view;
-            		model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
-			timerCtr = 500;
-        		view = new View(model.getPlayer(), model.getStuff(), timerCtr);
-            		v.dispose();
-			timer.start();
+            	//View v = view;
+            	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
+			    timerCtr = 500;
+                view.remove(view.getCards());
+        		view.setView(model.getPlayer(), model.getStuff(), timerCtr);
+			    timer.start();
 		}
     		public static void main(String[] args) {
         		javax.swing.SwingUtilities.invokeLater(new Runnable() {

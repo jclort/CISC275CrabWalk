@@ -227,7 +227,7 @@ public class Model{
 
         	if (trashCtr++ %10 == 0) {
 			   generateNewStuff();
-		}
+		    }
         /* The following is pseudocode that will be implemented tomorrow for this method
 
            First thing that should be done is a check to see the directions that we are going
