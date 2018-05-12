@@ -69,6 +69,13 @@ public class View extends JFrame{
 	private TutorialPanel tutorial;
 	private HighScoresPanel highScores;
 	private GamePanel game;
+    
+    TutorialButton menuTutorialButton;
+	BackToMenuButton tutorialBTMB;
+	StartButton menuStartButton;
+	StartButton tutorialStartButton;
+    BackToMenuButton gameBTMB;
+    StartButton reStartButton;
    	
 	
 	public void addPanelsToPane() {
@@ -153,15 +160,23 @@ public class View extends JFrame{
 		addPanelsToPane();
 		cardLayout.show(cards, "Menu");
 		
-		TutorialButton menuTutorialButton = new TutorialButton();
-		BackToMenuButton tutorialBTMB = new BackToMenuButton();
-		StartButton menuStartButton = new StartButton();
-		StartButton tutorialStartButton = new StartButton();
+		menuTutorialButton = new TutorialButton();
+		tutorialBTMB = new BackToMenuButton();
+		menuStartButton = new StartButton();
+		tutorialStartButton = new StartButton();
+        gameBTMB = new BackToMenuButton();
+        reStartButton = new StartButton();
+
+        gameBTMB.setVisible(false);
+        reStartButton.setVisible(false);
+
 		
 		tutorial.add(tutorialBTMB);
 		tutorial.add(tutorialStartButton);
 		menu.add(menuStartButton);
 		menu.add(menuTutorialButton);
+        game.add(reStartButton);
+        game.add(gameBTMB);
 		
 		
 		
@@ -264,14 +279,6 @@ public class View extends JFrame{
 							Controller.start();
 						}
 
-					}else if (e.getKeyCode() == KeyEvent.VK_R){
-						if (iflose == true | ifwin == true){
-							iflose = false;
-							ifwin = false;
-							Controller.restart();
-						}
-							
-							
 					}
                 		}
             		});
@@ -298,9 +305,12 @@ public class View extends JFrame{
         					drawgameover(g);
         					Controller.stop();
         				}else if(ifwin & ifquiz==false){
+                            iflose = false;
+							ifwin = false;
         					setBackground(Color.white);
         					drawwin(g);
-        					drawreplay(g);
+        					reStartButton.setVisible(true);
+                            gameBTMB.setVisible(true);
         					Controller.stop();
         				}
         			}
@@ -621,47 +631,39 @@ public class View extends JFrame{
         	    	super();
             		setFocusable(true);
             		addKeyListener(new KeyAdapter(){
-                		@Override
-                		public void keyPressed(KeyEvent e){
+                		
+                    @Override
+                	public void keyPressed(KeyEvent e){
                             	
-                    			if (e.getKeyCode() == KeyEvent.VK_UP){
+                    	if (e.getKeyCode() == KeyEvent.VK_UP){
                         			//crab direction is up
 					        player.setDir(Direction.NORTH);
-                    			}
-					else if (e.getKeyCode() == KeyEvent.VK_DOWN){
-						//crab direction is down
-						player.setDir(Direction.SOUTH);
-					}
-					else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
-						//crab direction is right
-						player.setDir(Direction.EAST);
-					}
-					else if (e.getKeyCode() == KeyEvent.VK_LEFT){
-						//crab direction is left
-						player.setDir(Direction.WEST);
-					}else if (e.getKeyCode() == KeyEvent.VK_Y){
-						if (ifquiz){
-							answerQuiz(1);
-							Controller.start();
-							notQuizTime();
-						}
+                    	}
+					    else if (e.getKeyCode() == KeyEvent.VK_DOWN){
+						    //crab direction is down
+						    player.setDir(Direction.SOUTH);
+					    }
+					    else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+						    //crab direction is right
+						    player.setDir(Direction.EAST);
+					    }
+					    else if (e.getKeyCode() == KeyEvent.VK_LEFT){
+						    //crab direction is left
+						    player.setDir(Direction.WEST);
+					    }else if (e.getKeyCode() == KeyEvent.VK_Y){
+						    if (ifquiz){
+							    answerQuiz(1);
+							    Controller.start();
+						    	notQuizTime();
+						    }
 
-					}else if (e.getKeyCode() == KeyEvent.VK_N){
-						if (ifquiz) {
-							answerQuiz(0);
-							Controller.start();
-						}
-
-					}else if (e.getKeyCode() == KeyEvent.VK_R){
-						if (iflose == true | ifwin == true){
-							iflose = false;
-							ifwin = false;
-							Controller.restart();
-						}
-							
-							
-					}
+					    }else if (e.getKeyCode() == KeyEvent.VK_N){
+						    if (ifquiz) {
+							    answerQuiz(0);
+							    Controller.start();
+						    }
                 		}
+                    }
             		});
         	}
 		/**
