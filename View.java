@@ -217,6 +217,19 @@ public class View extends JFrame{
 		}
 		game.repaint();
 	}
+	/**
+	 * This method will return the top card in the CardLayout so that the controller knows which is currently happening in the View and tell the model.
+	 *
+	 * @return String The name of the JPanel that is on the top card.
+	 **/
+	public String getTopCard() {
+		for (Component comp: cards.getComponents()) {
+			if (comp.isVisible() == true) {
+				return comp.getName();
+			}
+		}
+		return "this case will never happen, but just for compiling purposes";
+	}
 	
 	/**
 	 * This method will take in an Integer and set the time of the game equal to the time from the Controller.
