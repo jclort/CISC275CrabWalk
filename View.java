@@ -18,18 +18,18 @@ public class View extends JFrame{
     	private Crab player;
     	private ArrayList<InterObj> stuff;
     	//private StartButton startButton;
-    	private BufferedImage crabPic;
-    	private BufferedImage trashPic;
-    	private BufferedImage trashPic1;
-    	private BufferedImage trashPic2;
-    	private BufferedImage trashPic3;
-    	private BufferedImage trashPic4;
-    	private BufferedImage[] invaPic1;
-    	private BufferedImage[] invaPic2;
-    	private BufferedImage title;
-    	private BufferedImage win;
-    	private BufferedImage replay;
-    	private BufferedImage gameover;
+    	public static BufferedImage crabPic;
+    	public static BufferedImage trashPic;
+    	public static BufferedImage trashPic1;
+    	public static BufferedImage trashPic2;
+    	public static BufferedImage trashPic3;
+    	public static BufferedImage trashPic4;
+    	public static BufferedImage[] invaPic1;
+    	public static BufferedImage[] invaPic2;
+    	public BufferedImage title;
+    	public BufferedImage win;
+    	public BufferedImage replay;
+    	public BufferedImage gameover;
     	
     	
     	
@@ -54,7 +54,7 @@ public class View extends JFrame{
 	final int frameCount = 8;
 	private int picNum = 0;
 	
-	private BufferedImage[][] pics;
+	public static BufferedImage[][] pics;
 	private BufferedImage quiz;
 	
 	
@@ -190,6 +190,14 @@ public class View extends JFrame{
 	    	setVisible(true);
         	pack();	
     }
+
+    public void startQuiz(){
+        
+        Quiz gameQuiz = new Quiz();
+        gameQuiz.setSize(400, 200);
+        Controller.stop();
+    }
+
 	/**
 	 * This method returns the player to pass on to the Model from the Controller.
 	 *
@@ -315,7 +323,7 @@ public class View extends JFrame{
         				}
         			}
 				if (ifquiz){
-					drawquiz(g);
+					startQuiz();
 				}
 			}
 		}
@@ -509,7 +517,7 @@ public class View extends JFrame{
         				}
         			}
 				if (ifquiz){
-					drawquiz(g);
+					startQuiz();
 				}
 			}
 		}
@@ -695,7 +703,7 @@ public class View extends JFrame{
         				}
         			}
 				if (ifquiz){
-					drawquiz(g);
+					startQuiz();
 				}
 			}
 		}

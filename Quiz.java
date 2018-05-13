@@ -1,20 +1,21 @@
 import java.util.Random;
-import java.swing.*;
+import javax.swing.*;
 import java.util.ArrayList;
+import java.awt.*;
 
-Class Quiz{
+class Quiz extends JFrame{
     private int question;
     private ArrayList<ImageIcon> answers;
-    private static ImageIcon Trash1 = new ImageIcon("images\trash1.png");
-    private static ImageIcon Trash2 = new ImageIcon("images\trash2.png");
-    private static ImageIcon Trash3 = new ImageIcon("images\trash3.png");
-    private static ImageIcon Trash4 = new ImageIcon("images\trash4.png");
-    private static ImageIcon Trash5 = new ImageIcon("images\trash5.png");
-    private static ImageIcon Crab = new ImageIcon("images\crab.png");
-    private static ImageIcon Creature1 = new ImageIcon("images\creature1");
-    private static ImageIcon Creature2 = new ImageIcon("images\creature2");
+    private static ImageIcon Trash1 = new ImageIcon(View.trashPic);
+    private static ImageIcon Trash2 = new ImageIcon(View.trashPic1);
+    private static ImageIcon Trash3 = new ImageIcon(View.trashPic2);
+    private static ImageIcon Trash4 = new ImageIcon(View.trashPic3);
+    private static ImageIcon Trash5 = new ImageIcon(View.trashPic4);
+    private static ImageIcon Crab = new ImageIcon(View.pics[0][0]);
+    private static ImageIcon Creature1 = new ImageIcon(View.invaPic1[0]);
+    private static ImageIcon Creature2 = new ImageIcon(View.invaPic2[0]);
     private static String[] questions = {"Which of these belongs in an estuary"};
-    privat static Random rand = new Random();
+    private static Random rand = new Random();
     
 
     public Quiz(){
@@ -23,12 +24,23 @@ Class Quiz{
         switch(question){
             default: answers.add(Crab);
         }
+        setLocationRelativeTo(null);
+        setLayout(new GridLayout(1, 4, 5, 5));
+        add(new JButton(answers.get(0)));
+        add(new JButton(Trash1));
+        setVisible(true);
+        requestFocusInWindow();
+    }
 
+    @Override
+    public Dimension getPreferredSize(){
+        return new Dimension(200, 200);
     }
 
     public boolean correct(ImageIcon response){
         return answers.contains(response);
     }
+
 
 }
 
