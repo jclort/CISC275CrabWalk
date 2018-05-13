@@ -1030,7 +1030,7 @@ public class View extends JFrame{
     	 	
 		@Override		
     	 	public void actionPerformed(ActionEvent e) {
-                Controller.restart();
+                	Controller.start();
     	 		cardLayout.show(cards, "Game");
 			game.requestFocusInWindow();
 			
@@ -1050,10 +1050,9 @@ public class View extends JFrame{
 
     		@Override
     		public void actionPerformed(ActionEvent e) {
-                Controller.restart();
+			Controller.start();
     			cardLayout.show(cards, "Tutorial");
 			tutorial.requestFocusInWindow();
-			
     		}
     	}
     	
@@ -1068,10 +1067,38 @@ public class View extends JFrame{
     		public void actionPerformed(ActionEvent e) {
     			
 			Controller.restart();
-            Controller.stop();
+            		Controller.stop();
+			
     		}
     	
     	}
+
+	public class SaveGameButton extends JButton implements ActionListener {
+		JButton a;
+		public SaveGameButton() {
+			a = new JButton("Save Game");
+			a.addActionListener(this);
+			add(a);
+		}
+		public void actionPerformed(ActionEvent e) {
+			// method call to the logic that will save the game
+			Controller.restart();
+		}
+	}
+
+	public class LoadGameButton extends JButton implements ActionListener {
+		JButton a;
+		public LoadGameButton() {
+			a = new JButton("Load Game");
+			a.addActionListener(this);
+			add(a);
+		}
+		public void actionPerformed(ActionEvent e) {
+			// Method call to the logic that will retrieve the selected game state and
+			// fast forward the current game state to it.
+		}
+	}
+
 	/**
 	 * This Mehtod will create an Image and return a BufferedImage.
 	 **/
