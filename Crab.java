@@ -59,6 +59,7 @@ public class Crab extends Crawler {
         	if ((xloc <= screenWidth-xIncr) & (xloc >= 0-xIncr) & (yloc >= 200-yIncr) & (yloc <= screenHeight-yIncr)){
 			yloc += yIncr;
 			xloc += xIncr;
+			this.getHitBox().setLocation(xloc + xIncr, yloc + yIncr);
         	}
 	}
     /**
