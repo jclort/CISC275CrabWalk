@@ -60,6 +60,6 @@ public class Trash extends InterObj implements Serializable {
 	 **/	
 	public void move() {
 		this.setXLoc(this.getXLoc() + getIncr(max, global));
-		hitBox.setLocation(this.getXLoc(), this.getYLoc());
+		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), i.getWidth(), i.getHeight()); 
 	}
 }

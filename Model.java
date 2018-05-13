@@ -121,8 +121,8 @@ public class Model{
      */
     	public boolean crash(InterObj object){ // tells whether the player has hit this object
         	
-			//return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
-			return(player.getHitBox().intersects(object.getHitBox()));
+			return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
+			//return(player.getHitBox().intersects(object.getHitBox()));
     	}
     /**
      * Checks the crash method, and if a collision happens, then it handles it accordingly
@@ -136,10 +136,10 @@ public class Model{
         	while(it.hasNext()){
                     InterObj o = (InterObj)it.next();
             		if(crash(o) & View.crashlesstime == 0 ){
-						System.out.println("Collision!");
-                	    o.onCollision(player);
-                	    if (o.gone){
-                            it.remove();
+			    	System.out.println("Collision!");
+                	    	o.onCollision(player);
+                	    	if (o.gone){
+                            	it.remove();
                         }
             	    }
 

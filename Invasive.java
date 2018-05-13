@@ -48,7 +48,7 @@ public class Invasive extends InterObj implements Serializable {
 	public void move() {
 		this.setXLoc(this.getXLoc() + getIncr(max, global));
 		this.setYLoc(this.getYLoc() + getIncr(20, 0));
-		hitBox.setLocation(this.getXLoc(), this.getYLoc());
+		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), i.getWidth(), i.getHeight());
 	}
 	
 

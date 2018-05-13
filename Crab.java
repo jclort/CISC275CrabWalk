@@ -10,6 +10,7 @@ public class Crab extends Crawler {
 	private Rectangle hitBox; // This is how we are gonna determine if a collision happens
 	private int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+	private BufferedImage crab = Images.CRAB.getPic();
     /**
      * Constructor for the Crab
      * @param frameSize The size of the frame the crab will be in
@@ -19,11 +20,10 @@ public class Crab extends Crawler {
 		xIncr = 0;
 		yIncr = 0;
 
-   		this.setYLoc(600); // These two set the location to be the middle of the screen
-		this.setXLoc(600);
-        dir = Direction.STILL;
+   		this.setYLoc(300); // These two set the location to be the middle of the screen
+		this.setXLoc(300);
+        	dir = Direction.STILL;
 		boundary = frameSize;
-		BufferedImage crab = Images.CRAB.getPic();
 		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), crab.getWidth(), crab.getHeight());
 	}
 	
@@ -57,10 +57,11 @@ public class Crab extends Crawler {
 	
 	public void move() {
         	if ((xloc <= screenWidth-xIncr) & (xloc >= 0-xIncr) & (yloc >= 200-yIncr) & (yloc <= screenHeight-yIncr)){
-			yloc += yIncr;
-			xloc += xIncr;
-			this.getHitBox().setLocation(xloc + xIncr, yloc + yIncr);
-        	}
+			this.setYLoc(this.getYLoc()+yIncr);
+			this.setXLoc(this.getXLoc()+xIncr);
+		}
+		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), crab.getWidth(), crab.getHeight());
+		
 	}
     /**
       * Meant for adding to the score of the game
