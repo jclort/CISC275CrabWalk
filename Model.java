@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 import java.util.Random;
 
+import Controller.SavedGame;
+
 import java.util.Iterator;
 
 import java.awt.Rectangle;
@@ -240,6 +242,13 @@ public class Model implements Serializable {
            by xIncr, and yIncr. We will then check and see if a collision has occurred, and
            handle it accordingly. Once it is dealt with, we will then increment the
            Interactive Objects locations, and check for collisions, and handle them accordingly*/
+    	}
+    	
+    	private void SaveGame() throws IOException {
+    		SavedGame game = new SavedGame();
+    		
+    		game.ifquiz = 
+    		
     	}
 
 }
