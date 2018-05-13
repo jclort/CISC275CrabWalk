@@ -1,7 +1,9 @@
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.*;
-public class Crab extends Crawler {
+import java.io.Serializable;
+
+public class Crab extends Crawler implements Serializable {
     	private Direction dir;
 	private boolean powerUp = false;
 	private int score = 0;

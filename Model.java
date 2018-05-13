@@ -6,7 +6,9 @@ import java.util.Iterator;
 
 import java.awt.Rectangle;
 
-public class Model{
+import java.io.Serializable;
+
+public class Model implements Serializable {
     	// This is where all of our logic is going to go for the game
     	// This will also be where our game state is handled
     	private int objXIncr; // All objects will only move left, not up or down

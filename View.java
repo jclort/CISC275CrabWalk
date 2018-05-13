@@ -10,15 +10,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.Serializable;
 
 
-public class View extends JFrame{
+public class View extends JFrame implements Serializable{
     	private int score;
     	private int lives;
     	private Crab player;
     	private ArrayList<InterObj> stuff;
-    	//private StartButton startButton;
-    	private BufferedImage crabPic;
+    	
+	private BufferedImage crabPic;
     	private BufferedImage trashPic;
     	private BufferedImage trashPic1;
     	private BufferedImage trashPic2;
@@ -31,8 +32,9 @@ public class View extends JFrame{
     	private BufferedImage replay;
     	private BufferedImage gameover;
     	
-    	
-    	
+	//private Quiz quiz = new Quiz();	
+    	private boolean trashCollision = false;
+	private BufferedImage quizPic;
     	Random rand = new Random();
     	
     	int randnum;
@@ -45,7 +47,6 @@ public class View extends JFrame{
     	static boolean iflose = false;
     	boolean ifwin = false;
     	
-    	//final static int frameStartSize = 1280;
     	final static int frameWidth = Toolkit.getDefaultToolkit().getScreenSize().width;//500
    	final static int frameHeight = Toolkit.getDefaultToolkit().getScreenSize().height;//300
     	final static int imgWidth = 72;//165
@@ -58,7 +59,6 @@ public class View extends JFrame{
 	private BufferedImage quiz;
 	
 	
-	//private DrawPanel drawPanel= new DrawPanel();
    	private Integer time; 
     	int titlex = 0;
    	static int crashlesstime = 0;
@@ -302,6 +302,7 @@ public class View extends JFrame{
 					drawCrab(g);
             				drawInterObjs(g);
 					drawTime(g);
+					drawDirections(g);
         			}else{
         				if (iflose){
         					setBackground(Color.black);
@@ -434,6 +435,12 @@ public class View extends JFrame{
 		 **/
 		public void drawbgp(Graphics g){
 			g.drawImage(bgp, 0, 0, this);
+		}
+		/**
+		 * This method will draw the directions necessary to play the game!
+		 **/
+		public void drawDirections(Graphics g) {
+			g.drawString("Use the Arrow Keys to Move the Crab", 0,300);
 		}
 	}
 
@@ -852,27 +859,30 @@ public class View extends JFrame{
 					else if (e.getKeyCode() == KeyEvent.VK_LEFT){
 						//crab direction is left
 						player.setDir(Direction.WEST);
-					}else if (e.getKeyCode() == KeyEvent.VK_Y){
+					}else if (e.getKeyCode() == KeyEvent.VK_A){
 						if (ifquiz){
+							answerQuiz(0);
+							Controller.start();
+							notQuizTime();
+						}
+					}else if (e.getKeyCode() == KeyEvent.VK_B){
+						if (ifquiz) {
 							answerQuiz(1);
 							Controller.start();
 							notQuizTime();
 						}
-
-					}else if (e.getKeyCode() == KeyEvent.VK_N){
+					} else if (e.getKeyCode() == KeyEvent.VK_C) {
 						if (ifquiz) {
-							answerQuiz(0);
+							answerQuiz(2);
 							Controller.start();
+							notQuizTime();
 						}
-
-					}else if (e.getKeyCode() == KeyEvent.VK_R){
-						if (iflose == true | ifwin == true){
-							iflose = false;
-							ifwin = false;
-							Controller.restart();
+					} else if (e.getKeyCode() == KeyEvent.VK_D) {
+						if (ifquiz) {
+							answerQuiz(3);
+							Controller.start();
+							notQuizTime();
 						}
-							
-							
 					}
                 		}
             		});
@@ -926,8 +936,10 @@ public class View extends JFrame{
 		 * @param g The Graphics object that the quiz will be drawn on.
 		 **/
         	public void drawquiz(Graphics g){
-        		g.drawImage(quiz, 400,250 , this);
-        	}
+			if (quizCtr++%25 == 0 || trashCollision == True) {
+				g.drawImage(quiz.nextQuiz().getPic(), 400, 250, this);
+        		}
+		}
 		/**
 		 * This method will draw the game over screen.
 		 *
@@ -1017,6 +1029,20 @@ public class View extends JFrame{
 		public void drawbgp(Graphics g){
 			g.drawImage(bgp, 0, 0, this);
 		}
+		/**
+		 * This method will draw the score for the user.
+		 **/
+		public void drawScore(Graphics g) {
+			g.drawString("Score: ", 0, 0);
+			int xHolder = 10;
+			int score = player.getTotalScore();
+			int numberOfClams = score % 15;
+			for (int i = 0; i < numberOfClams; i++) {
+				//g.drawImage(clamPic, xHolder, 0, this);
+				xHolder = xHolder + 10;
+			}
+		}	
+			
 	}	
 	
     	private class StartButton extends JButton implements ActionListener{

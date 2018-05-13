@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Timer;
+import java.io.Serializable;
 
 
-
-public class Controller{
+public class Controller implements Serializable {
 
 	final static int DRAW_DELAY = 75; //msec
 
