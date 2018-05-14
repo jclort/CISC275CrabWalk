@@ -73,7 +73,7 @@ public class Crab extends Crawler implements Serializable {
       * Meant for adding to the score of the game
      */
 	public void addScore() {
-		score += 2;
+		score += 3;
 	}
     /**
       * Subtracting from the score of the game
