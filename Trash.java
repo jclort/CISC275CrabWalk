@@ -1,10 +1,10 @@
 import java.io.Serializable;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
+
 public class Trash extends InterObj implements Serializable {
 	private int max = 3;
 	private int global = 6;
-	private Rectangle hitBox;
 	private BufferedImage i;
 	
 	/**
@@ -21,13 +21,12 @@ public class Trash extends InterObj implements Serializable {
 			case 4 : i = Images.TRASH4.getPic(); break;
 			case 5 : i = Images.TRASH5.getPic(); break;
 		}
-		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), i.getWidth(), i.getHeight());
 	}
-
-	public Rectangle getHitBox(){
-		return hitBox;
-	}
-
+	/**
+	 * This method calls the super method which will return if the object is equal to a crawler, but before hand, we test to see if it is trash, and if not, then cast it to Trash and send it to the super method. This method is only used for testing purposes.
+	 * @param other The Object that we will be testing against the Trash and Crawler Objects.
+	 * @return boolean - The boolean value of whether it is Trash, a Crawler, or neither.
+	 **/
 	@Override
 	public boolean equals(Object other){
 		if (!(other instanceof Trash)){
@@ -61,6 +60,5 @@ public class Trash extends InterObj implements Serializable {
 	 **/	
 	public void move() {
 		this.setXLoc(this.getXLoc() + getIncr(max, global));
-		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), i.getWidth(), i.getHeight()); 
 	}
 }
