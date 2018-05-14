@@ -134,19 +134,17 @@ public class View extends JFrame implements Serializable{
         	for(int i = 0; i < 3; i++) {
         		invaPic2[i] = createImage("images/creature2.png").getSubimage(90*i+17, 0, 90, 90);
 			}
-        	
+        	boatX = 0;
 		bgp = new BufferedImage(frameWidth, frameHeight, 2);
         	graphic = bgp.createGraphics();
         	BufferedImage toBeResizedbgp = createImage("images/background.png");
 		graphic.drawImage(toBeResizedbgp, 0, 0, frameWidth, frameHeight, null);
 		
-		BufferedImage toBeResizedBoat = createImage("images/boat.png");
-		graphic.drawImage(toBeResizedBoat, boatX, 100,125, 125, null);
+		boatPic = createImage("images/boat.png");
 
-		BufferedImage toBeResizedDock = createImage("images/dock.png");
-		graphic.drawImage(toBeResizedDock, frameWidth-100, 100, 150, 150, null);
+		dockPic = createImage("images/dock.png");
 		
-		BufferedImage toBeResizedCheck = createImage("images/checkmark.png");
+		BufferedImage checkmark = createImage("images/checkmark.png");
 		//graphic3.drawImage(toBeResizedCheck, 0,0,20,20,null);	
 
 
@@ -281,9 +279,11 @@ public class View extends JFrame implements Serializable{
 		 **/
         	@Override
         	protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
 			drawbgp(g);
 			drawCrab(g);
             		drawInterObjs(g);
+			drawTime(g);
 			drawDirections(g);
         		
         		if (ifquiz){
@@ -376,16 +376,19 @@ public class View extends JFrame implements Serializable{
 				g.drawString(drawCaption, object.getXLoc(), object.getYLoc()-2);
             		}		
         	}
+		public void drawTime(Graphics g) {
+			int distance = frameWidth-15-125;
+			g.drawImage(dockPic,frameWidth-220,85,this);
+			boatX = boatX + distance/500;
+			g.drawImage(boatPic, boatX, 50, this);
+		}
+
+
 		/**
 		 * This method will draw the background image(s).
 		 **/
 		public void drawbgp(Graphics g){
 			g.drawImage(bgp, 0, 0, this);
-			int distance = (frameWidth-150-125);
-			graphic.drawImage(dockPic,frameWidth-100, 100, 150,150, null);
-			boatX = boatX + distance/2000;
-			graphic.drawImage(boatPic, boatX, 100, 125,125, this);
-			//boatX = boatX + distance/2000;
 		}
 		/**
 		 * This method will draw the directions necessary to play the game!
@@ -445,11 +448,6 @@ public class View extends JFrame implements Serializable{
 		 **/
 		public void drawbgp(Graphics g){
 			g.drawImage(bgp, 0, 0, this);
-			
-			int distance = (frameWidth-200);
-			g.drawImage(dockPic,frameWidth-100, 100, this);
-			g.drawImage(boatPic, boatX, 100, this);
-			boatX = boatX + distance/2000;
 		}
 	}
 
@@ -619,10 +617,6 @@ public class View extends JFrame implements Serializable{
 		public void drawbgp(Graphics g){
 			// Add more drawImages, but in this order, draw the sky, then the dock, then the boat, then the ocean(bgp)
 			g.drawImage(bgp, 0, 0, this);
-			int distance = (frameWidth-200);
-			g.drawImage(dockPic,frameWidth-100, 100, this);   
-  			g.drawImage(boatPic, boatX, 100, this);  
- 			boatX = boatX + distance/2000;
 		}
 		/**
 		 * This method will draw the score for the user.
