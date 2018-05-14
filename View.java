@@ -57,7 +57,7 @@ public class View extends JFrame implements Serializable{
 	
 	private BufferedImage[][] pics;
 	private BufferedImage quiz;
-	
+	private int quizCtr = 1;	
 	
    	private Integer time; 
     	int titlex = 0;
@@ -157,19 +157,21 @@ public class View extends JFrame implements Serializable{
 		BackToMenuButton tutorialBTMB = new BackToMenuButton();
 		StartButton menuStartButton = new StartButton();
 		StartButton tutorialStartButton = new StartButton();
-		
+		LoadGameButton menuLoadGameButton = new LoadGameButton();
+		SaveGameButton gameSaveGameButton = new SaveGameButton();
+
 		tutorial.add(tutorialBTMB);
 		tutorial.add(tutorialStartButton);
 		menu.add(menuStartButton);
 		menu.add(menuTutorialButton);
+		menu.add(menuLoadGameButton);
+		game.add(gameSaveGameButton);	
 		
 		
 		
 		
 		menu.requestFocusInWindow();
-		//game.requestFocusInWindow();
 		add(cards);
-        	//setExtendedState(JFrame.MAXIMIZED_BOTH);
  		//setUndecorated(true);		
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    	setVisible(true);
@@ -183,15 +185,6 @@ public class View extends JFrame implements Serializable{
 	public Crab getPlayer() {
 		return player;
 	}
-	/**
-	 * This method will draw the panel
-	 *
-	 * @return GamePanel the drawPanel that is currently on the top of the Card layout
-	 **/
-    	public GamePanel getGame(){
-        	return game;
-    	}
-    
 	/**
 	 * This method returns the ArrayList of InterObjs for the game
 	 *
@@ -264,24 +257,9 @@ public class View extends JFrame implements Serializable{
 					else if (e.getKeyCode() == KeyEvent.VK_LEFT){
 						//crab direction is left
 						player.setDir(Direction.WEST);
-					}else if (e.getKeyCode() == KeyEvent.VK_Y){
-						if (ifquiz){
-							answerQuiz(1);
-							Controller.start();
-							notQuizTime();
-						}
-					}else if (e.getKeyCode() == KeyEvent.VK_N){
-						if (ifquiz) {
-							answerQuiz(0);
-							Controller.start();
-							notQuizTime();
-						}
-					}else if (e.getKeyCode() == KeyEvent.VK_R){
-						if (iflose == true | ifwin == true){
-							iflose = false;
-							ifwin = false;
-							Controller.restart();
-						}
+					} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+						Controller.start();
+						notQuizTime();
 					}
                 		}
             		});
@@ -293,32 +271,17 @@ public class View extends JFrame implements Serializable{
 		 **/
         	@Override
         	protected void paintComponent(Graphics g) {
-        		if (ifstart == false){
-        			drawbgp(g);	
-        			drawtitle(g);
-        		}else{
-        			if (iflose == false & ifwin == false){
-					drawbgp(g);
-					drawCrab(g);
-            				drawInterObjs(g);
-					drawTime(g);
-					drawDirections(g);
-        			}else{
-        				if (iflose){
-        					setBackground(Color.black);
-        					drawgameover(g);
-        					Controller.stop();
-        				}else if(ifwin & ifquiz==false){
-        					setBackground(Color.white);
-        					drawwin(g);
-        					drawreplay(g);
-        					Controller.stop();
-        				}
-        			}
-				if (ifquiz){
-					drawquiz(g);
-				}
+			drawbgp(g);
+			drawCrab(g);
+            		drawInterObjs(g);
+			drawTime(g);
+			drawDirections(g);
+        		
+        		if (ifquiz){
+				Controller.stop();
+				drawquiz(g);
 			}
+			
 		}
 		/**
 		 * This method will return a Dimension for the JPanel to resize
@@ -336,31 +299,10 @@ public class View extends JFrame implements Serializable{
 		 * @param g The Graphics object that the quiz will be drawn on.
 		 **/
         	public void drawquiz(Graphics g){
-        		g.drawImage(quiz, 400,250 , this);
-        	}
-		/**
-		 * This method will draw the game over screen.
-		 *
-		 * @param g The Graphics object that the game over image will be drawn on.
-		 **/
-        	public void drawgameover(Graphics g){
-        		g.drawImage(gameover, 300,175 , this);
-        	}
-		/**
-		 * This method will draw the win screen.
-		 *
-		 * @param g The Graphics object that the win image will be drawn on.
-		 **/
-        	public void drawwin(Graphics g){
-        		g.drawImage(win, 200,150 , this);
-        	}
-		/**
-		 * This method will draw the replay screen and prompt the user if they want to replay the game when it is over.
-		 *
-		 * @param g The Graphics object that the replay image will be drawn on.
-		 **/
-        	public void drawreplay(Graphics g){
-        		g.drawImage(replay, 500,550 , this);
+			if (quizCtr++%5 == 0) {
+				//quizPic = quiz.getQuiz().getPic();
+        			//g.drawImage(quizPic, 400,250 , this);
+			}
         	}
 		/**
 		 * This method will draw the player Crab.
@@ -440,7 +382,10 @@ public class View extends JFrame implements Serializable{
 		 * This method will draw the directions necessary to play the game!
 		 **/
 		public void drawDirections(Graphics g) {
-			g.drawString("Use the Arrow Keys to Move the Crab", 0,300);
+			g.drawString("Use the Arrow Keys to Move the Crab", 100, 350);
+			g.drawString("Eat the Invasive Species and Avoid Trash", 100, 365);
+			g.drawString("Answer a Quiz Right to Receive a Power-Up", 100, 380);
+			g.drawString("The Game Ends when the Boat Reaches the Dock", 100, 395);
 		}
 	}
 
@@ -645,50 +590,6 @@ public class View extends JFrame implements Serializable{
 		 **/
         	public MenuPanel(){
         	    	super();
-            		setFocusable(true);
-            		addKeyListener(new KeyAdapter(){
-                		@Override
-                		public void keyPressed(KeyEvent e){
-                            	
-                    			if (e.getKeyCode() == KeyEvent.VK_UP){
-                        			//crab direction is up
-					        player.setDir(Direction.NORTH);
-                    			}
-					else if (e.getKeyCode() == KeyEvent.VK_DOWN){
-						//crab direction is down
-						player.setDir(Direction.SOUTH);
-					}
-					else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
-						//crab direction is right
-						player.setDir(Direction.EAST);
-					}
-					else if (e.getKeyCode() == KeyEvent.VK_LEFT){
-						//crab direction is left
-						player.setDir(Direction.WEST);
-					}else if (e.getKeyCode() == KeyEvent.VK_Y){
-						if (ifquiz){
-							answerQuiz(1);
-							Controller.start();
-							notQuizTime();
-						}
-
-					}else if (e.getKeyCode() == KeyEvent.VK_N){
-						if (ifquiz) {
-							answerQuiz(0);
-							Controller.start();
-						}
-
-					}else if (e.getKeyCode() == KeyEvent.VK_R){
-						if (iflose == true | ifwin == true){
-							iflose = false;
-							ifwin = false;
-							Controller.restart();
-						}
-							
-							
-					}
-                		}
-            		});
         	}
 		/**
 		 * This method will override paintComponent from JPanel specific to the objects that need to be drawn on the JPanel
@@ -697,31 +598,9 @@ public class View extends JFrame implements Serializable{
 		 **/
         	@Override
         	protected void paintComponent(Graphics g) {
-        		if (ifstart == false){
-        			drawbgp(g);	
-        			drawtitle(g);
-        		}else{
-        			if (iflose == false & ifwin == false){
-					drawbgp(g);
-					drawCrab(g);
-            				drawInterObjs(g);
-					drawTime(g);
-        			}else{
-        				if (iflose){
-        					setBackground(Color.black);
-        					drawgameover(g);
-        					Controller.stop();
-        				}else if(ifwin & ifquiz==false){
-        					setBackground(Color.white);
-        					drawwin(g);
-        					drawreplay(g);
-        					Controller.stop();
-        				}
-        			}
-				if (ifquiz){
-					drawquiz(g);
-				}
-			}
+        		drawbgp(g);	
+        		drawtitle(g);
+			drawTime(g);
 		}
 		/**
 		 * This method will return a Dimension for the JPanel to resize
@@ -733,47 +612,6 @@ public class View extends JFrame implements Serializable{
 			return new Dimension(frameWidth, frameHeight);
 		}
         	
-       		/**
-		 * This method will draw the quiz on the screen.
-		 *
-		 * @param g The Graphics object that the quiz will be drawn on.
-		 **/
-        	public void drawquiz(Graphics g){
-        		g.drawImage(quiz, 400,250 , this);
-        	}
-		/**
-		 * This method will draw the game over screen.
-		 *
-		 * @param g The Graphics object that the game over image will be drawn on.
-		 **/
-        	public void drawgameover(Graphics g){
-        		g.drawImage(gameover, 300,175 , this);
-        	}
-		/**
-		 * This method will draw the win screen.
-		 *
-		 * @param g The Graphics object that the win image will be drawn on.
-		 **/
-        	public void drawwin(Graphics g){
-        		g.drawImage(win, 200,150 , this);
-        	}
-		/**
-		 * This method will draw the replay screen and prompt the user if they want to replay the game when it is over.
-		 *
-		 * @param g The Graphics object that the replay image will be drawn on.
-		 **/
-        	public void drawreplay(Graphics g){
-        		g.drawImage(replay, 500,550 , this);
-        	}
-		/**
-		 * This method will draw the player Crab.
-		 *
-		 * @param g The Graphics object that the crab image will be drawn on.
-		 **/
-        	public void drawCrab(Graphics g){
- 		       	picNum = (picNum + 1) % 8;
- 		       	g.drawImage(pics[0][picNum], player.getXLoc(), player.getYLoc(), this);
- 	       }
 		/**
 		 * This method will draw the title moving across the screen, part of the menu JPanel.
 		 *
@@ -786,37 +624,6 @@ public class View extends JFrame implements Serializable{
         			ifstart = true;
         		}
         		g.drawImage(title, titlex, 10, this);
-        	}
-		/**
-		 * This method will draw the InterObjs by running through the ArrayList and drawing each one.
-		 *
-		 * @param g The Graphics object that the InterObj images will be drawn on.
-		 **/
-        	public void drawInterObjs(Graphics g){
-        		picNum = (picNum + 1) % 3;
-        		for (InterObj object: stuff){
-        			int objname = object.name;
-        			BufferedImage objp = null;
-            			           			
-            			switch (objname) {
-            	        	case 1:  objp = trashPic;
-            	              		break;
-            	        	case 2:  objp = trashPic1;
-            	        		break;
-            	        	case 3:  objp = trashPic2;
-   	            		 	break;
-            	            	case 4:  objp = trashPic3;
-   	            		 	break;
-            	            	case 5:  objp = trashPic4;
-   	            			break;   
-            	           	case 6:  g.drawImage(invaPic1[picNum], object.getXLoc(), object.getYLoc(), this);
-            	          		break;		 
-            	        	case 7:  g.drawImage(invaPic2[picNum], object.getXLoc(), object.getYLoc(), this);
-            	        		break; 	            		 			 
-            	           		 
-            			}
-	            		g.drawImage(objp, object.getXLoc(), object.getYLoc(), this);
-            		}		
         	}
 		/**
 		 * This method will draw the time (THIS WILL CHANGE INTO A BOAT RUNNING ACROSS THE WAVES IN THE BACKGROUND).
@@ -862,27 +669,22 @@ public class View extends JFrame implements Serializable{
 					}else if (e.getKeyCode() == KeyEvent.VK_A){
 						if (ifquiz){
 							answerQuiz(0);
-							Controller.start();
-							notQuizTime();
 						}
 					}else if (e.getKeyCode() == KeyEvent.VK_B){
 						if (ifquiz) {
 							answerQuiz(1);
-							Controller.start();
-							notQuizTime();
 						}
 					} else if (e.getKeyCode() == KeyEvent.VK_C) {
 						if (ifquiz) {
 							answerQuiz(2);
-							Controller.start();
-							notQuizTime();
 						}
 					} else if (e.getKeyCode() == KeyEvent.VK_D) {
 						if (ifquiz) {
 							answerQuiz(3);
-							Controller.start();
-							notQuizTime();
 						}
+					} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+						Controller.start();
+						notQuizTime();
 					}
                 		}
             		});
@@ -898,24 +700,19 @@ public class View extends JFrame implements Serializable{
         			drawbgp(g);	
         			drawtitle(g);
         		}else{
-        			if (iflose == false & ifwin == false){
+        			if (time > 0){
 					drawbgp(g);
 					drawCrab(g);
             				drawInterObjs(g);
 					drawTime(g);
-        			}else{
-        				if (iflose){
-        					setBackground(Color.black);
-        					drawgameover(g);
-        					Controller.stop();
-        				}else if(ifwin & ifquiz==false){
-        					setBackground(Color.white);
-        					drawwin(g);
-        					drawreplay(g);
-        					Controller.stop();
-        				}
-        			}
-				if (ifquiz){
+        			} else if (time == 0){
+        				drawgameover(g);
+        				Controller.stop();
+					Controller.restart();
+        			} else if(ifquiz){
+        				Controller.stop();
+        			} else if (ifquiz){
+					Controller.stop();
 					drawquiz(g);
 				}
 			}
@@ -936,8 +733,9 @@ public class View extends JFrame implements Serializable{
 		 * @param g The Graphics object that the quiz will be drawn on.
 		 **/
         	public void drawquiz(Graphics g){
-			if (quizCtr++%25 == 0 || trashCollision == True) {
-				g.drawImage(quiz.nextQuiz().getPic(), 400, 250, this);
+			if (quizCtr++%25 == 0 || trashCollision == true) {
+				//quizPic = quiz.getQuiz().getPic();
+				//g.drawImage(quizPic, 400, 250, this);
         		}
 		}
 		/**
@@ -947,22 +745,6 @@ public class View extends JFrame implements Serializable{
 		 **/
         	public void drawgameover(Graphics g){
         		g.drawImage(gameover, 300,175 , this);
-        	}
-		/**
-		 * This method will draw the win screen.
-		 *
-		 * @param g The Graphics object that the win image will be drawn on.
-		 **/
-        	public void drawwin(Graphics g){
-        		g.drawImage(win, 200,150 , this);
-        	}
-		/**
-		 * This method will draw the replay screen and prompt the user if they want to replay the game when it is over.
-		 *
-		 * @param g The Graphics object that the replay image will be drawn on.
-		 **/
-        	public void drawreplay(Graphics g){
-        		g.drawImage(replay, 500,550 , this);
         	}
 		/**
 		 * This method will draw the player Crab.
@@ -1027,6 +809,7 @@ public class View extends JFrame implements Serializable{
 		 * This method will draw the background image(s).
 		 **/
 		public void drawbgp(Graphics g){
+			// Add more drawImages, but in this order, draw the sky, then the dock, then the boat, then the ocean(bgp)
 			g.drawImage(bgp, 0, 0, this);
 		}
 		/**
@@ -1091,10 +874,8 @@ public class View extends JFrame implements Serializable{
     		}
     		
     		public void actionPerformed(ActionEvent e) {
-    			
+			Controller.stop();
 			Controller.restart();
-            		Controller.stop();
-			
     		}
     	
     	}
