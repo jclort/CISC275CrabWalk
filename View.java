@@ -712,6 +712,12 @@ public class View extends JFrame implements Serializable{
 			add(a);
 		}
 		public void actionPerformed(ActionEvent e) {
+			try {
+				Controller.loadGame();
+			} catch (ClassNotFoundException | IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			// Method call to the logic that will retrieve the selected game state and
 			// fast forward the current game state to it.
 		}

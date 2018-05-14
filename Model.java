@@ -249,13 +249,24 @@ public class Model implements Serializable {
     	public void saveGame(View view, int timerCtr) throws IOException {
     		SavedGame game = new SavedGame(view, timerCtr);
     		
-    		
     		FileOutputStream fileout = new FileOutputStream("SavedFile.txt");
     		ObjectOutputStream out = new ObjectOutputStream(fileout);
     		out.writeObject(game);
     		out.close(); 		
     	}
     	
+    	public void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
+    		SavedGame game = null;
+    		
+    		FileInputStream fileIn = new FileInputStream("SavedFile.txt");
+    		ObjectInputStream in = new ObjectInputStream(fileIn);
+    		
+    		game = (SavedGame) in.readObject();
+    		in.close();
+    		fileIn.close();
+    		
+    		
+    	}
     	
 }
 

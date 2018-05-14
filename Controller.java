@@ -52,8 +52,8 @@ public class Controller implements Serializable {
 	public static void saveGame() throws IOException {
 		model.saveGame(view, timerCtr);
 	}
-	public static void loadGame() {
-		
+	public static void loadGame() throws IOException, FileNotFoundException, ClassNotFoundException {
+		model.loadGame();
 	}
 	public static void restart(){
            	//View v = view;
