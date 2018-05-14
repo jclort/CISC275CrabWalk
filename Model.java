@@ -12,6 +12,8 @@ import java.awt.Rectangle;
 
 import java.io.Serializable;
 
+import java.lang.Throwable;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.FileInputStream;
@@ -250,26 +252,34 @@ public class Model implements Serializable {
     	}
     	
     	public void saveGame(View view, int timerCtr) throws IOException {
-    		SavedGame game = new SavedGame(view, timerCtr);
+    		try{
+				SavedGame game = new SavedGame(view, timerCtr);
     		
-    		FileOutputStream fileout = new FileOutputStream("SavedFile.txt");
-    		ObjectOutputStream out = new ObjectOutputStream(fileout);
-    		out.writeObject(game);
-    		out.close(); 		
+    			FileOutputStream fileout = new FileOutputStream("SavedFile.txt");
+				ObjectOutputStream out = new ObjectOutputStream(fileout);
+				out.writeObject(game);
+				out.close();
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			} 		
     	}
     	
     	public void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
-    		SavedGame game = null;
+			try{
+				SavedGame game = null;
     		
-    		FileInputStream fileIn = new FileInputStream("SavedFile.txt");
-    		ObjectInputStream in = new ObjectInputStream(fileIn);
-    		
-			game = (SavedGame) in.readObject();
-			
-    		in.close();
-			fileIn.close();
+				FileInputStream fileIn = new FileInputStream("SavedFile.txt");
+				ObjectInputStream in = new ObjectInputStream(fileIn);
+				
+				game = (SavedGame) in.readObject();
+				
+				in.close();
+				fileIn.close();
+			}
+			catch(FileNotFoundException e){
+				e.printStackTrace();
+			}
     	}
     	
 }
-
-
