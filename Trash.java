@@ -4,8 +4,8 @@ import java.awt.image.BufferedImage;
 public class Trash extends InterObj implements Serializable {
 	private int max = 3;
 	private int global = 6;
-	//private Rectangle hitBox;
-	private BufferedImage i;
+	private Rectangle hitBox;
+	//private BufferedImage i;
 	
 	/**
 	 * This constructor will create an instance of Trash with a random spawn from the right hand side moving left towards a Crab.
@@ -14,14 +14,14 @@ public class Trash extends InterObj implements Serializable {
 	 **/
 	public Trash(int frameSize, int name){
 		super(frameSize, name);
-		switch(name){
+		/*switch(name){
 			case 1 : i = Images.TRASH1.getPic(); break;
 			case 2 : i = Images.TRASH2.getPic(); break;
 			case 3 : i = Images.TRASH3.getPic(); break;
 			case 4 : i = Images.TRASH4.getPic(); break;
 			case 5 : i = Images.TRASH5.getPic(); break;
 		}
-		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), i.getWidth(), i.getHeight());
+		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), i.getWidth(), i.getHeight());*/
 	}
 
 	/*public Rectangle getHitBox(){
@@ -60,7 +60,6 @@ public class Trash extends InterObj implements Serializable {
 	 **/	
 	public void move() {
 		this.setXLoc(this.getXLoc() + getIncr(max, global));
-		/*this.getHitBox().x = this.getXLoc();
-		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), i.getWidth(), i.getHeight());*/
+		//hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), i.getWidth(), i.getHeight()); 
 	}
 }

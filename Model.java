@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import java.io.*;
+
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -15,7 +17,7 @@ import java.io.ObjectInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-import java.io.FIle;
+import java.io.File;
 
 public class Model implements Serializable {
     	// This is where all of our logic is going to go for the game
@@ -247,39 +249,27 @@ public class Model implements Serializable {
 		    }
     	}
     	
-    	public void saveGame(File file){// throws IOException {
-			try{
-				FileOutputStream fileStream = new FileOutputStream(file);
-				ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
-
-				objectStream.writeObject(stuff);
-				objectStream.writeObject(player);
-				objectStream.writeObject(trashCtr);
-
-				objectStream.close();
-				fileStream.close();
-
-				System.out.println("Save successful");
-				/*JOptionPane.showConfirmDialog(frame,
-					"Save game state successfully.",
-					"Crab Walk",
-					JOptionPane.DEFAULT_OPTION);*/
-			}
-			catch(Exception e){
-				/*JOptionPane.showConfirmDialog(frame,
-				e.toString() + "\nFail to save game state.",
-				"Crab Walk", 
-				JOptionPane.DEFAULT_OPTION);*/
-				System.out.println("Save unsuccessful");
-		}
-	}
-
-	public void loadGame(File file) throws ClassNotFoundException{
-		FileInputStream fileStream = new FileInputStream(file);
-		ObjectInputStream objectStream = new ObjectInputStream(fileStream);
-
-		InterObj[] savedStuff = (InterObj[])objectStream.readObject();
-		Crab savedPlayer = (Crab)objectStream.readObject();
-		int savedCtr = (Integer)objectStream.readObject();
-	}
+    	public void saveGame(View view, int timerCtr) throws IOException {
+    		SavedGame game = new SavedGame(view, timerCtr);
+    		
+    		FileOutputStream fileout = new FileOutputStream("SavedFile.txt");
+    		ObjectOutputStream out = new ObjectOutputStream(fileout);
+    		out.writeObject(game);
+    		out.close(); 		
+    	}
+    	
+    	public void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
+    		SavedGame game = null;
+    		
+    		FileInputStream fileIn = new FileInputStream("SavedFile.txt");
+    		ObjectInputStream in = new ObjectInputStream(fileIn);
+    		
+			game = (SavedGame) in.readObject();
+			
+    		in.close();
+			fileIn.close();
+    	}
+    	
 }
+
+

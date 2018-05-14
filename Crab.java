@@ -12,7 +12,7 @@ public class Crab extends Crawler implements Serializable {
 	//private Rectangle hitBox; // This is how we are gonna determine if a collision happens
 	private int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-	private BufferedImage crab = Images.CRAB.getPic();
+	//private transient BufferedImage crab = Images.CRAB.getPic();
     /**
      * Constructor for the Crab
      * @param frameSize The size of the frame the crab will be in
@@ -26,7 +26,6 @@ public class Crab extends Crawler implements Serializable {
 		this.setXLoc(300);
         	dir = Direction.STILL;
 		boundary = frameSize;
-		BufferedImage crab = Images.CRAB.getPic();
 		//hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), crab.getWidth(), crab.getHeight());
 	}
 	
@@ -90,6 +89,13 @@ public class Crab extends Crawler implements Serializable {
     */
 	public int getTotalScore() {
 		return score+(lives*5);
+	}
+	public int getLives() {
+		return lives;
+	}
+	
+	public void setLives(int lives) {
+		this.lives = lives;
 	}
 		/**
 		 * This returns the direction the player is currently going in

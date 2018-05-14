@@ -50,8 +50,10 @@ public class Controller implements Serializable {
 		timer.start();
 	}
 	public static void saveGame() {
-		File saveState = new File(".\SavedGame");// tbd
-		model.saveGame(saveState);
+		model.saveGame(view, timerCtr);
+	}
+	public static void loadGame(){
+		model.loadGame();
 	}
 	public static void restart(){
            	//View v = view;
