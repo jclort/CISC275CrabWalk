@@ -184,7 +184,8 @@ public class View extends JFrame implements Serializable{
 		
 		menu.requestFocusInWindow();
 		add(cards);
- 		//setUndecorated(true);		
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+ 		setUndecorated(true);		
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    	setVisible(true);
         	pack();	
