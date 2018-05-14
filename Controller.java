@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Timer;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.io.File;
 
 
-
-public class Controller{
+public class Controller implements Serializable {
 
 	final static int DRAW_DELAY = 75; //msec
 
@@ -47,6 +49,10 @@ public class Controller{
 	public static void start(){
 		timer.start();
 	}
+	public static void saveGame() {
+		File saveState = new File(".\SavedGame");// tbd
+		model.saveGame(saveState);
+	}
 	public static void restart(){
            	//View v = view;
         	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
@@ -64,4 +70,5 @@ public class Controller{
         		}
         	});
 	}
+    	
 }

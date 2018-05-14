@@ -2,11 +2,22 @@ import java.util.ArrayList;
 
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import java.util.Iterator;
 
 import java.awt.Rectangle;
 
-public class Model{
+import java.io.Serializable;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.FIle;
+
+public class Model implements Serializable {
     	// This is where all of our logic is going to go for the game
     	// This will also be where our game state is handled
     	private int objXIncr; // All objects will only move left, not up or down
@@ -140,10 +151,10 @@ public class Model{
         	while(it.hasNext()){
                     InterObj o = (InterObj)it.next();
             		if(crash(o) & View.crashlesstime == 0 ){
-						System.out.println("Collision!");
-                	    o.onCollision(player);
-                	    if (o.gone){
-                            it.remove();
+			    	System.out.println("Collision!");
+                	    	o.onCollision(player);
+                	    	if (o.gone){
+                            	it.remove();
                         }
             	    }
 
@@ -234,14 +245,41 @@ public class Model{
         	if (trashCtr++ %10 == 0) {
 			   generateNewStuff();
 		    }
-        /* The following is pseudocode that will be implemented tomorrow for this method
-
-           First thing that should be done is a check to see the directions that we are going
-           to go in. The result of each case will set the xIncr and the yIncr to either
-           positive or negative numbers. Afterwards, the crab's location will increment
-           by xIncr, and yIncr. We will then check and see if a collision has occurred, and
-           handle it accordingly. Once it is dealt with, we will then increment the
-           Interactive Objects locations, and check for collisions, and handle them accordingly*/
     	}
+    	
+    	public void saveGame(File file){// throws IOException {
+			try{
+				FileOutputStream fileStream = new FileOutputStream(file);
+				ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
 
+				objectStream.writeObject(stuff);
+				objectStream.writeObject(player);
+				objectStream.writeObject(trashCtr);
+
+				objectStream.close();
+				fileStream.close();
+
+				System.out.println("Save successful");
+				/*JOptionPane.showConfirmDialog(frame,
+					"Save game state successfully.",
+					"Crab Walk",
+					JOptionPane.DEFAULT_OPTION);*/
+			}
+			catch(Exception e){
+				/*JOptionPane.showConfirmDialog(frame,
+				e.toString() + "\nFail to save game state.",
+				"Crab Walk", 
+				JOptionPane.DEFAULT_OPTION);*/
+				System.out.println("Save unsuccessful");
+		}
+	}
+
+	public void loadGame(File file) throws ClassNotFoundException{
+		FileInputStream fileStream = new FileInputStream(file);
+		ObjectInputStream objectStream = new ObjectInputStream(fileStream);
+
+		InterObj[] savedStuff = (InterObj[])objectStream.readObject();
+		Crab savedPlayer = (Crab)objectStream.readObject();
+		int savedCtr = (Integer)objectStream.readObject();
+	}
 }
