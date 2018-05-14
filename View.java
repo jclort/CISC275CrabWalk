@@ -302,7 +302,7 @@ public class View extends JFrame implements Serializable{
 			drawCrab(g);
             		drawInterObjs(g);
 			//drawTime(g);
-            drawLives(g);
+            //drawLives(g);
 			drawDirections(g);
         		
         		if (ifquiz){
