@@ -14,7 +14,7 @@ public class Invasive extends InterObj implements Serializable {
 	 **/
 	public Invasive(int frameSize, int name) {         
 		super(frameSize, name);         
-		/*switch(name){
+		switch(name){
 			case 6 : i = Images.INVA1.getPic(); break;
 			case 7 : i = Images.INVA2.getPic(); break;
 		}

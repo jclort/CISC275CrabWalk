@@ -15,7 +15,7 @@ public class Trash extends InterObj implements Serializable {
 	 **/
 	public Trash(int frameSize, int name){
 		super(frameSize, name);
-		/*switch(name){
+		switch(name){
 			case 1 : i = Images.TRASH1.getPic(); break;
 			case 2 : i = Images.TRASH2.getPic(); break;
 			case 3 : i = Images.TRASH3.getPic(); break;

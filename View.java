@@ -660,11 +660,10 @@ public class View extends JFrame implements Serializable{
 		public void drawScore(Graphics g) {
 			g.drawString("Score: ", 0, 0);
 			int xHolder = 10;
-			int score = player.getTotalScore();
-			int numberOfClams = score % 20;
-			for (int i = 0; i < numberOfClams; i++) {
+			int score = player.getTotalScore()/5;
+			for (int i = 0; i < score; i++) {
 				g.drawImage(clampic, xHolder, 0, this);
-				xHolder = xHolder + 55;
+				xHolder = xHolder + 15;
 			}
 		}	
 			
@@ -733,13 +732,12 @@ public class View extends JFrame implements Serializable{
 		}
 		public void actionPerformed(ActionEvent e){
 			// method call to the logic that will save the game
-			/*try {
+			try {
 				Controller.saveGame();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}*/
-			Controller.saveGame();
+			}
 			Controller.stop();
 			Controller.restart();
 		}
@@ -753,13 +751,13 @@ public class View extends JFrame implements Serializable{
 			add(a);
 		}
 		public void actionPerformed(ActionEvent e) {
-			/*try {
+			try {
 				Controller.loadGame();
 			} catch (ClassNotFoundException | IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}*/
-			Controller.loadGame();
+			}
+
 			Controller.restart();
 			// Method call to the logic that will retrieve the selected game state and
 			// fast forward the current game state to it.

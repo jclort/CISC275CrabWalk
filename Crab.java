@@ -92,11 +92,9 @@ public class Crab extends Crawler implements Serializable {
       * @return  The total score of the game
     */
 	public int getTotalScore() {
-		return score+(lives*5);
+		return score;
 	}
-	public int getLives() {
-		return lives;
-	}
+	
 	
 	public void setLives(int lives) {
 		this.lives = lives;
