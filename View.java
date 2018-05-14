@@ -301,7 +301,7 @@ public class View extends JFrame implements Serializable{
 			drawbgp(g);
 			drawCrab(g);
             		drawInterObjs(g);
-			//drawTime(g);
+			drawTime(g);
             //drawLives(g);
 			drawDirections(g);
         		
