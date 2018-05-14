@@ -7,7 +7,7 @@ public class Crab extends Crawler {
 	private int score = 0;
 	private int lives = 4;
 	private int boundary; // This is just how far the crab is able to go
-	private Rectangle hitBox; // This is how we are gonna determine if a collision happens
+	//private Rectangle hitBox; // This is how we are gonna determine if a collision happens
 	private int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     /**
@@ -24,16 +24,16 @@ public class Crab extends Crawler {
         dir = Direction.STILL;
 		boundary = frameSize;
 		BufferedImage crab = Images.CRAB.getPic();
-		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), crab.getWidth(), crab.getHeight());
+		//hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), crab.getWidth(), crab.getHeight());
 	}
 	
 	public boolean getPowerUp(){
 		return this.powerUp;
 	}
 
-	public Rectangle getHitBox(){
+	/*public Rectangle getHitBox(){
 		return hitBox;
-	}
+	}*/
     
 	@Override
 	public boolean equals(Object other){
@@ -59,7 +59,7 @@ public class Crab extends Crawler {
         	if ((xloc <= screenWidth-xIncr) & (xloc >= 0-xIncr) & (yloc >= 200-yIncr) & (yloc <= screenHeight-yIncr)){
 			yloc += yIncr;
 			xloc += xIncr;
-			this.getHitBox().setLocation(xloc + xIncr, yloc + yIncr);
+			//this.getHitBox().setLocation(xloc + xIncr, yloc + yIncr);
         	}
 	}
     /**

@@ -119,10 +119,14 @@ public class Model{
      * @param object The object that we are checking to see if there is a crash between it and the player
      * @return A boolean that says whether or not the crash happened
      */
-    	public boolean crash(InterObj object){ // tells whether the player has hit this object
-        	
-			//return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
-			return(player.getHitBox().intersects(object.getHitBox()));
+		public boolean crash(InterObj object){ // tells whether the player has hit this object
+			if(Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50))
+			{
+				System.out.println(player.getXLoc()-object.getXLoc());
+				System.out.println(player.getYLoc()-object.getYLoc());
+			}
+			return (Math.abs(player.getXLoc()-object.getXLoc()) < 40 && (Math.abs(player.getYLoc()-object.getYLoc()) < 40));
+			//return(player.getHitBox().intersects(object.getHitBox()));
     	}
     /**
      * Checks the crash method, and if a collision happens, then it handles it accordingly
@@ -229,7 +233,7 @@ public class Model{
 
         	if (trashCtr++ %10 == 0) {
 			   generateNewStuff();
-		}
+		    }
         /* The following is pseudocode that will be implemented tomorrow for this method
 
            First thing that should be done is a check to see the directions that we are going

@@ -15,7 +15,7 @@ public class Controller{
     	private static View view;
     	private static Action drawAction;
     	private static Timer timer;
-    	static int timerCtr = 500;
+    	static int timerCtr = 500;//2400 is 3 minutes
     	
 	public Controller(){
         	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
@@ -31,34 +31,37 @@ public class Controller{
 					view.quizTime();
 					view.ifwin = true;
 				}
-					
-				
-                // something interacting with the view's startButton
 			}
 		};
-
 	}
-		public static void stop(){
-			timer.stop();
-		}
-		public static void start(){
-			timer.start();
-		}
-		public static void restart(){
-            		View v = view;
-            		model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
-			timerCtr = 500;
-        		view = new View(model.getPlayer(), model.getStuff(), timerCtr);
-            		v.dispose();
-			timer.start();
-		}
-    		public static void main(String[] args) {
-        		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            			public void run() {
-                			Controller ctrllr = new Controller();
-                			timer = new Timer(DRAW_DELAY, drawAction);
-                			//timer.start();
-            		}
-        		});
-		}
+
+	public int getTime() {
+		return timerCtr;
+	}
+	public void setTime() {
+		timerCtr = 500;//2400 is 3 minutes, every 800 is one minute with 75 msec draw delay
+	}
+	public static void stop(){
+		timer.stop();
+	}
+	public static void start(){
+		timer.start();
+	}
+	public static void restart(){
+           	//View v = view;
+        	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
+		timerCtr = 500;
+               	view.remove(view.getCards());
+        	view.setView(model.getPlayer(), model.getStuff(), timerCtr);
+		timer.start();
+	}
+    	public static void main(String[] args) {
+        	javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        		public void run() {
+               			Controller ctrllr = new Controller();
+               			timer = new Timer(DRAW_DELAY, drawAction);
+               			//timer.start();
+        		}
+        	});
+	}
 }

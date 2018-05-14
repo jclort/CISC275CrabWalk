@@ -72,6 +72,7 @@ public class View extends JFrame{
    	
 	
 	public void addPanelsToPane() {
+        
    		game = new GamePanel();
    		tutorial = new TutorialPanel();
    		highScores = new HighScoresPanel();
@@ -97,7 +98,11 @@ public class View extends JFrame{
 	 *
 	 **/
    	public View(Crab p, ArrayList<InterObj> s, Integer startTime){  
-    		String[] picNames = {"images/crab.png"};
+    		setView(p, s, startTime);
+	}
+
+    public void setView(Crab p, ArrayList<InterObj> s, Integer startTime){
+        String[] picNames = {"images/crab.png"};
     		pics = new BufferedImage[picNames.length][frameCount];
     		for(int j = 0; j < picNames.length; j++) {
 			// load the image
@@ -169,7 +174,7 @@ public class View extends JFrame{
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    	setVisible(true);
         	pack();	
-	}
+    }
 	/**
 	 * This method returns the player to pass on to the Model from the Controller.
 	 *
@@ -195,6 +200,11 @@ public class View extends JFrame{
     	public ArrayList<InterObj> getStuff(){
         	return stuff;
     	}
+
+
+        public JPanel getCards(){
+            return cards;
+        }
 	/**
 	 * This method will repaint the panel that is curently on the top of the CardLayout.
 	 *
@@ -202,21 +212,23 @@ public class View extends JFrame{
     	public void drawTopCard() {
 		for (Component comp : cards.getComponents()) {
 			if (comp.isVisible() == true) {
-				if (((JPanel)comp).getName() == "Menu") {
-					menu.repaint();
-				}
-				else if (((JPanel)comp).getName() == "Game") {
-					game.repaint();
-				}
-				else if (((JPanel)comp).getName() == "Tutorial") {
-					tutorial.repaint();
-				}
-				else if (((JPanel)comp).getName() == "HighScores") {
-					highScores.repaint();
-				}
+				comp.repaint();
 			}
 		}
 		game.repaint();
+	}
+	/**
+	 * This method will return the top card in the CardLayout so that the controller knows which is currently happening in the View and tell the model.
+	 *
+	 * @return String The name of the JPanel that is on the top card.
+	 **/
+	public String getTopCard() {
+		for (Component comp: cards.getComponents()) {
+			if (comp.isVisible() == true) {
+				return comp.getName();
+			}
+		}
+		return "this case will never happen, but just for compiling purposes";
 	}
 	
 	/**
@@ -226,11 +238,11 @@ public class View extends JFrame{
 		this.time = time;
 	}
     	@SuppressWarnings("serial")
-	private class GamePanel extends JPanel {
+	private class TutorialPanel extends JPanel {
 		/**
 		 * This constructor will create the JPanel that will create the JPanel for the game and add the key listeners for the crab/quizzes.
 		 **/
-        	public GamePanel(){
+        	public TutorialPanel(){
         	    	super();
             		setFocusable(true);
             		addKeyListener(new KeyAdapter(){
@@ -258,21 +270,18 @@ public class View extends JFrame{
 							Controller.start();
 							notQuizTime();
 						}
-
 					}else if (e.getKeyCode() == KeyEvent.VK_N){
 						if (ifquiz) {
 							answerQuiz(0);
 							Controller.start();
+							notQuizTime();
 						}
-
 					}else if (e.getKeyCode() == KeyEvent.VK_R){
 						if (iflose == true | ifwin == true){
 							iflose = false;
 							ifwin = false;
 							Controller.restart();
 						}
-							
-							
 					}
                 		}
             		});
@@ -380,6 +389,7 @@ public class View extends JFrame{
 		 * @param g The Graphics object that the InterObj images will be drawn on.
 		 **/
         	public void drawInterObjs(Graphics g){
+			String drawCaption = "Just a place holder";
         		picNum = (picNum + 1) % 3;
         		for (InterObj object: stuff){
         			int objname = object.name;
@@ -387,22 +397,30 @@ public class View extends JFrame{
             			           			
             			switch (objname) {
             	        	case 1:  objp = trashPic;
+					 drawCaption = "AVOID ME!";
             	              		break;
             	        	case 2:  objp = trashPic1;
+					 drawCaption = "AVOID ME!";
             	        		break;
             	        	case 3:  objp = trashPic2;
+					 drawCaption = "AVOID ME!";
    	            		 	break;
             	            	case 4:  objp = trashPic3;
+					 drawCaption = "AVOID ME!";
    	            		 	break;
             	            	case 5:  objp = trashPic4;
+					 drawCaption = "AVOID ME!";
    	            			break;   
             	           	case 6:  g.drawImage(invaPic1[picNum], object.getXLoc(), object.getYLoc(), this);
+					 drawCaption = "HIT ME TO EAT ME!";
             	          		break;		 
             	        	case 7:  g.drawImage(invaPic2[picNum], object.getXLoc(), object.getYLoc(), this);
+					 drawCaption = "HIT ME TO EAT ME!";
             	        		break; 	            		 			 
             	           		 
             			}
 	            		g.drawImage(objp, object.getXLoc(), object.getYLoc(), this);
+				g.drawString(drawCaption, object.getXLoc(), object.getYLoc()-2);
             		}		
         	}
 		/**
@@ -808,11 +826,11 @@ public class View extends JFrame{
 	}
 
 	@SuppressWarnings("serial")
-	private class TutorialPanel extends JPanel {
+	private class GamePanel extends JPanel {
 		/**
 		 * This constructor will create the JPanel that will create the JPanel for the game and add the key listeners for the crab/quizzes.
 		 **/
-        	public TutorialPanel(){
+        	public GamePanel(){
         	    	super();
             		setFocusable(true);
             		addKeyListener(new KeyAdapter(){
@@ -1012,9 +1030,10 @@ public class View extends JFrame{
     	 	
 		@Override		
     	 	public void actionPerformed(ActionEvent e) {
+                Controller.restart();
     	 		cardLayout.show(cards, "Game");
 			game.requestFocusInWindow();
-			Controller.start();
+			
     	 	}
     	}
     	
@@ -1031,9 +1050,10 @@ public class View extends JFrame{
 
     		@Override
     		public void actionPerformed(ActionEvent e) {
+                Controller.restart();
     			cardLayout.show(cards, "Tutorial");
 			tutorial.requestFocusInWindow();
-			Controller.start();
+			
     		}
     	}
     	
@@ -1046,10 +1066,9 @@ public class View extends JFrame{
     		}
     		
     		public void actionPerformed(ActionEvent e) {
-    			cardLayout.show(cards, "Menu");
-			menu.requestFocusInWindow();
-			Controller.stop();
+    			
 			Controller.restart();
+            Controller.stop();
     		}
     	
     	}

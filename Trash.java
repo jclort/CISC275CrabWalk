@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 public class Trash extends InterObj implements Serializable {
 	private int max = 3;
 	private int global = 6;
-	private Rectangle hitBox;
+	//private Rectangle hitBox;
 	private BufferedImage i;
 	
 	/**
@@ -24,9 +24,9 @@ public class Trash extends InterObj implements Serializable {
 		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), i.getWidth(), i.getHeight());
 	}
 
-	public Rectangle getHitBox(){
+	/*public Rectangle getHitBox(){
 		return hitBox;
-	}
+	}*/
 
 	@Override
 	public boolean equals(Object other){
@@ -60,6 +60,7 @@ public class Trash extends InterObj implements Serializable {
 	 **/	
 	public void move() {
 		this.setXLoc(this.getXLoc() + getIncr(max, global));
-		this.getHitBox().x = this.getXLoc();
+		/*this.getHitBox().x = this.getXLoc();
+		hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), i.getWidth(), i.getHeight());*/
 	}
 }
