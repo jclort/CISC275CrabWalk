@@ -176,16 +176,14 @@ public class View extends JFrame implements Serializable{
 		tutorial.add(tutorialStartButton);
 		menu.add(menuStartButton);
 		menu.add(menuTutorialButton);
-		//menu.add(menuLoadGameButton);
-		//game.add(gameSaveGameButton);	
+		menu.add(menuLoadGameButton);
+		game.add(gameSaveGameButton);	
 		
 		
 		
 		
 		menu.requestFocusInWindow();
 		add(cards);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
- 		setUndecorated(true);		
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    	setVisible(true);
         	pack();	
