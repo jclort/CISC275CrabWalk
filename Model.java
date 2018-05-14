@@ -223,6 +223,9 @@ public class Model implements Serializable {
         	}
         	
         	handleCollisions(stuff);
+            if (crashes.size() == 0){
+                View.notQuizTime();
+            }
             for (InterObj o: crashes){
                 System.out.println("What's next?");
                 System.out.println("Collision!");

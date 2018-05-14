@@ -36,13 +36,14 @@ public class View extends JFrame implements Serializable{
     	private boolean trashCollision = false;
 	private BufferedImage quizPic;
     	Random rand = new Random();
-	private int quizCtr = 1;    	
+	private static int quizCtr = 1;    	
     	int randnum;
     	private BufferedImage bgp;
         
     	int starttime = 50;
 
     	static boolean ifquiz;
+        static boolean quizstart;
     	static boolean ifstart = false;
     	static boolean iflose = false;
     	boolean ifwin = false;
@@ -108,8 +109,9 @@ public class View extends JFrame implements Serializable{
 				pics[j][i] = img.getSubimage(imgWidth*i, 0, imgWidth, imgHeight);
 			}
     		}
-    		
-    		
+    		quizCtr = 1;
+            ifquiz = false;
+    		quizstart = false;
         	time = startTime;
         	trashPic = createImage("images/trash1.png");
         	trashPic1 = createImage("images/trash2.png");
@@ -251,7 +253,23 @@ public class View extends JFrame implements Serializable{
 					else if (e.getKeyCode() == KeyEvent.VK_LEFT){
 						//crab direction is left
 						player.setDir(Direction.WEST);
-					} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					} else if (e.getKeyCode() == KeyEvent.VK_A){
+						if (ifquiz){
+							answerQuiz(0);
+						}
+					}else if (e.getKeyCode() == KeyEvent.VK_B){
+						if (ifquiz) {
+							answerQuiz(1);
+						}
+					} else if (e.getKeyCode() == KeyEvent.VK_C) {
+						if (ifquiz) {
+							answerQuiz(2);
+						}
+					} else if (e.getKeyCode() == KeyEvent.VK_D) {
+						if (ifquiz) {
+							answerQuiz(3);
+						}
+					}else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 						Controller.start();
 						notQuizTime();
 					}
@@ -273,8 +291,12 @@ public class View extends JFrame implements Serializable{
 			drawDirections(g);
         		
         		if (ifquiz){
-				Controller.stop();
-				drawquiz(g);
+				//Controller.stop();
+                if (quizCtr%5 == 0) {
+                    Controller.stop();
+				    drawquiz(g);
+                }
+                quizstart = false;
 			}
 			
 		}
@@ -294,11 +316,11 @@ public class View extends JFrame implements Serializable{
 		 * @param g The Graphics object that the quiz will be drawn on.
 		 **/
         	public void drawquiz(Graphics g){
-			if (quizCtr++%5 == 0) {
+			//if (quizCtr++%5 == 0) {
 				quizNum = quiz.getQuiz();
 				quizPic = quiz.getPic(quizNum);
-        			//g.drawImage(quizPic, 400,250 , this);
-			}
+        	    g.drawImage(quizPic, 400,250 , this);
+			//}
         	}
 		/**
 		 * This method will draw the player Crab.
@@ -515,11 +537,14 @@ public class View extends JFrame implements Serializable{
         				drawgameover(g);
         				Controller.stop();
 					Controller.restart();
-        			} else if(ifquiz){
-        				Controller.stop();
-        			} else if (ifquiz){
-					Controller.stop();
-					drawquiz(g);
+        		    }
+                    if (ifquiz){
+                    if (quizCtr%5 == 0) {
+					    Controller.stop();
+					    drawquiz(g);
+                    }
+
+                    quizstart = false;
 				}
 			}
 		}
@@ -539,11 +564,11 @@ public class View extends JFrame implements Serializable{
 		 * @param g The Graphics object that the quiz will be drawn on.
 		 **/
         	public void drawquiz(Graphics g){
-			if (quizCtr++%25 == 0 || trashCollision == true) {
+			//if (quizCtr++%25 == 0 || trashCollision == true) {
 				quizNum = quiz.getQuiz();
 				quizPic = quiz.getPic(quizNum);
 				g.drawImage(quizPic, 400, 250, this);
-        		}
+        		//}
 		}
 		/**
 		 * This method will draw the game over screen.
@@ -667,8 +692,9 @@ public class View extends JFrame implements Serializable{
 
     		@Override
     		public void actionPerformed(ActionEvent e) {
-			Controller.start();
-    			cardLayout.show(cards, "Tutorial");
+			//Controller.start();
+    		cardLayout.show(cards, "Tutorial");
+            Controller.start();
 			tutorial.requestFocusInWindow();
     		}
     	}
@@ -738,14 +764,19 @@ public class View extends JFrame implements Serializable{
 	 * This method will set the ifquiz boolean equal to true.
 	 **/
 	 public static void quizTime(){
+            if(!ifquiz){
+                quizstart = true;
+                quizCtr++;
+            }
 	       	ifquiz = true;
+            
 	}
 	/**
 	 * This method will set the notquiztime boolean equal to to false and create a time that the crab cannot collide with someone else, sort of like a grace Period.
 	 **/ 
-	public void notQuizTime(){
+	public static void notQuizTime(){
 	     	ifquiz = false;
-	       	crashlesstime = 20;
+	       	//crashlesstime = 20;
 	}
 
 	public void answerQuiz(int answer) {
@@ -753,7 +784,7 @@ public class View extends JFrame implements Serializable{
 	    if(answer != quiz.getAnswer(quizNum)){
             player.removeLife();
         }
-        notQuizTime();
+        crashlesstime = 20;
         Controller.start();
         
     }
