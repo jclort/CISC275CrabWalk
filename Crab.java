@@ -10,7 +10,7 @@ public class Crab extends Crawler implements Serializable {
 	private int boundary; // This is just how far the crab is able to go
 	private int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-	private BufferedImage crab = Images.CRAB.getPic();
+	//private transient BufferedImage crab = Images.CRAB.getPic();
     /**
      * Constructor for the Crab
      * @param frameSize The size of the frame the crab will be in
@@ -33,10 +33,11 @@ public class Crab extends Crawler implements Serializable {
 	public boolean getPowerUp(){
 		return this.powerUp;
 	}
-	
+
 	public Integer getLives(){
  		return (Integer)lives;
  	}
+
     
 	@Override
 	public boolean equals(Object other){
@@ -92,6 +93,13 @@ public class Crab extends Crawler implements Serializable {
     */
 	public int getTotalScore() {
 		return score+(lives*5);
+	}
+	public int getLives() {
+		return lives;
+	}
+	
+	public void setLives(int lives) {
+		this.lives = lives;
 	}
 		/**
 		 * This returns the direction the player is currently going in

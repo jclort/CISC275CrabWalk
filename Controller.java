@@ -6,6 +6,11 @@ import javax.swing.Action;
 import javax.swing.Timer;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.io.File;
+import java.lang.Throwable;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.lang.ClassNotFoundException;
 
 
 public class Controller implements Serializable {
@@ -48,8 +53,27 @@ public class Controller implements Serializable {
 	public static void start(){
 		timer.start();
 	}
-	public static void saveGame() {
-		model.saveGame(view, timerCtr);
+	public static void saveGame() throws IOException{
+		try{
+			model.saveGame(view, timerCtr);
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	public static void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException{
+		try{
+			model.loadGame();
+		}
+		catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+		catch(IOException i){
+			i.printStackTrace();
+		}
+		catch(ClassNotFoundException c){
+			c.printStackTrace();
+		}
 	}
 	public static void restart(){
            	//View v = view;
@@ -57,6 +81,7 @@ public class Controller implements Serializable {
 		timerCtr = 500;
                	view.remove(view.getCards());
         	view.setView(model.getPlayer(), model.getStuff(), timerCtr);
+		timer.start();
 	}
     	public static void main(String[] args) {
         	javax.swing.SwingUtilities.invokeLater(new Runnable() {

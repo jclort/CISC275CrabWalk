@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 
+import java.io.*;
+
 import java.util.Random;
+
+import javax.swing.JOptionPane;
 
 import java.util.Iterator;
 
@@ -8,7 +12,14 @@ import java.awt.Rectangle;
 
 import java.io.Serializable;
 
+import java.lang.Throwable;
+
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.File;
 
 import java.util.HashSet;
 
@@ -127,9 +138,13 @@ public class Model implements Serializable {
      * @param object The object that we are checking to see if there is a crash between it and the player
      * @return A boolean that says whether or not the crash happened
      */
-    	public boolean crash(InterObj object){ // tells whether the player has hit this object
-        	
-			return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
+		public boolean crash(InterObj object){ // tells whether the player has hit this object
+			if(Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50))
+			{
+				System.out.println(player.getXLoc()-object.getXLoc());
+				System.out.println(player.getYLoc()-object.getYLoc());
+			}
+			return (Math.abs(player.getXLoc()-object.getXLoc()) < 40 && (Math.abs(player.getYLoc()-object.getYLoc()) < 40));
 			//return(player.getHitBox().intersects(object.getHitBox()));
     	}
     /**
@@ -245,22 +260,38 @@ public class Model implements Serializable {
         	if (trashCtr++ %10 == 0) {
 			   generateNewStuff();
 		    }
-            
-
             crashes = new HashSet<InterObj>();
-        /* The following is pseudocode that will be implemented tomorrow for this method
-
-           First thing that should be done is a check to see the directions that we are going
-           to go in. The result of each case will set the xIncr and the yIncr to either
-           positive or negative numbers. Afterwards, the crab's location will increment
-           by xIncr, and yIncr. We will then check and see if a collision has occurred, and
-           handle it accordingly. Once it is dealt with, we will then increment the
-           Interactive Objects locations, and check for collisions, and handle them accordingly*/
     	}
     	
-    	public void saveGame(View view, int timerCtr){// throws IOException {
-    		SavedGame game = new SavedGame(view, timerCtr);
+    	public void saveGame(View view, int timerCtr) throws IOException {
+    		try{
+				SavedGame game = new SavedGame(view, timerCtr);
     		
+    			FileOutputStream fileout = new FileOutputStream("SavedFile.txt");
+				ObjectOutputStream out = new ObjectOutputStream(fileout);
+				out.writeObject(game);
+				out.close();
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			} 		
     	}
-
+    	
+    	public void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
+			try{
+				SavedGame game = null;
+    		
+				FileInputStream fileIn = new FileInputStream("SavedFile.txt");
+				ObjectInputStream in = new ObjectInputStream(fileIn);
+				
+				game = (SavedGame) in.readObject();
+				
+				in.close();
+				fileIn.close();
+			}
+			catch(FileNotFoundException e){
+				e.printStackTrace();
+			}
+    	}
+    	
 }
