@@ -57,7 +57,6 @@ public class Controller implements Serializable {
 		timerCtr = 500;
                	view.remove(view.getCards());
         	view.setView(model.getPlayer(), model.getStuff(), timerCtr);
-		timer.start();
 	}
     	public static void main(String[] args) {
         	javax.swing.SwingUtilities.invokeLater(new Runnable() {

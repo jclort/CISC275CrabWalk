@@ -839,7 +839,8 @@ public class View extends JFrame implements Serializable{
     	 	
 		@Override		
     	 	public void actionPerformed(ActionEvent e) {
-                	Controller.start();
+			Controller.restart();
+			Controller.start();
     	 		cardLayout.show(cards, "Game");
 			game.requestFocusInWindow();
 			
@@ -890,6 +891,7 @@ public class View extends JFrame implements Serializable{
 		public void actionPerformed(ActionEvent e) {
 			// method call to the logic that will save the game
 			Controller.saveGame();
+			Controller.stop();
 			Controller.restart();
 		}
 	}
