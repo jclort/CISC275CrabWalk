@@ -31,7 +31,11 @@ public class View extends JFrame implements Serializable{
     	private BufferedImage win;
     	private BufferedImage replay;
     	private BufferedImage gameover;
-    	
+    	private BufferedImage boatPic;
+	private BufferedImage dockPic;
+	private BufferedImage checkmark;
+	int boatX = 0;
+
 	Quiz quiz = new Quiz();	
     	private boolean trashCollision = false;
 	private BufferedImage quizPic;
@@ -67,7 +71,7 @@ public class View extends JFrame implements Serializable{
 	private MenuPanel menu;
 	private TutorialPanel tutorial;
 	private GamePanel game;
-   	
+   	private Graphics2D graphic;
 	
 	public void addPanelsToPane() {
         
@@ -132,11 +136,21 @@ public class View extends JFrame implements Serializable{
         	for(int i = 0; i < 3; i++) {
         		invaPic2[i] = createImage("images/creature2.png").getSubimage(90*i+17, 0, 90, 90);
 			}
-        	
+        	boatX = 0;
 		bgp = new BufferedImage(frameWidth, frameHeight, 2);
-        	Graphics2D graphic = bgp.createGraphics();
+        	graphic = bgp.createGraphics();
         	BufferedImage toBeResizedbgp = createImage("images/background.png");
 		graphic.drawImage(toBeResizedbgp, 0, 0, frameWidth, frameHeight, null);
+		
+		boatPic = createImage("images/boat.png");
+
+		dockPic = createImage("images/dock.png");
+		
+		BufferedImage checkmark = createImage("images/checkmark.png");
+		//graphic3.drawImage(toBeResizedCheck, 0,0,20,20,null);	
+
+
+
 
         	score = 0;
         	lives = 3;
@@ -283,6 +297,7 @@ public class View extends JFrame implements Serializable{
 		 **/
         	@Override
         	protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
 			drawbgp(g);
 			drawCrab(g);
             		drawInterObjs(g);
@@ -342,7 +357,7 @@ public class View extends JFrame implements Serializable{
         		}else{
         			ifstart = true;
         		}
-        		g.drawImage(title, titlex, 10, this);
+        		g.drawImage(title, titlex, 350, this);
         	}
 		/**
 		 * This method will draw the InterObjs by running through the ArrayList and drawing each one.
@@ -384,16 +399,13 @@ public class View extends JFrame implements Serializable{
 				g.drawString(drawCaption, object.getXLoc(), object.getYLoc()-2);
             		}		
         	}
-		/**
-		 * This method will draw the time (THIS WILL CHANGE INTO A BOAT RUNNING ACROSS THE WAVES IN THE BACKGROUND).
-		 **/
 		public void drawTime(Graphics g) {
-			g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
+			int distance = frameWidth-15-125;
+			g.drawImage(dockPic,frameWidth-220,85,this);
+			boatX = boatX + distance/500;
+			g.drawImage(boatPic, boatX, 50, this);
 		}
 
-        public void drawLives(Graphics g) {
-			g.drawString(player.getLives().toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
-		}
 		/**
 		 * This method will draw the background image(s).
 		 **/
@@ -407,7 +419,8 @@ public class View extends JFrame implements Serializable{
 			g.drawString("Use the Arrow Keys to Move the Crab", 100, 350);
 			g.drawString("Pick up Trash and Dodge the Invasive Species", 100, 365);
 			g.drawString("Answer a Quiz Right to Receive a Power-Up", 100, 380);
-			g.drawString("The Game Ends when the Boat Reaches the Dock", 100, 395);
+			g.drawString("After Answering a Quiz, Press Enter to Continue", 100, 395);
+			g.drawString("The Game Ends when the Boat Reaches the Dock", 100, 410);
 		}
 	}
 
@@ -428,7 +441,6 @@ public class View extends JFrame implements Serializable{
         	protected void paintComponent(Graphics g) {
         		drawbgp(g);	
         		drawtitle(g);
-			drawTime(g);
 		}
 		/**
 		 * This method will return a Dimension for the JPanel to resize
@@ -451,14 +463,8 @@ public class View extends JFrame implements Serializable{
         		}else{
         			ifstart = true;
         		}
-        		g.drawImage(title, titlex, 10, this);
+        		g.drawImage(title, titlex, 350, this);
         	}
-		/**
-		 * This method will draw the time (THIS WILL CHANGE INTO A BOAT RUNNING ACROSS THE WAVES IN THE BACKGROUND).
-		 **/
-		public void drawTime(Graphics g) {
-			g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
-		}
 		/**
 		 * This method will draw the background image(s).
 		 **/
@@ -532,7 +538,6 @@ public class View extends JFrame implements Serializable{
 					drawbgp(g);
 					drawCrab(g);
             				drawInterObjs(g);
-					drawTime(g);
         			} else if (time == 0){
         				drawgameover(g);
         				Controller.stop();
@@ -598,7 +603,7 @@ public class View extends JFrame implements Serializable{
         		}else{
         			ifstart = true;
         		}
-        		g.drawImage(title, titlex, 10, this);
+        		g.drawImage(title, titlex, 350, this);
         	}
 		/**
 		 * This method will draw the InterObjs by running through the ArrayList and drawing each one.
@@ -631,12 +636,6 @@ public class View extends JFrame implements Serializable{
 	            		g.drawImage(objp, object.getXLoc(), object.getYLoc(), this);
             		}		
         	}
-		/**
-		 * This method will draw the time (THIS WILL CHANGE INTO A BOAT RUNNING ACROSS THE WAVES IN THE BACKGROUND).
-		 **/
-		public void drawTime(Graphics g) {
-			g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
-		}
 		/**
 		 * This method will draw the background image(s).
 		 **/
