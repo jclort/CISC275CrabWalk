@@ -34,6 +34,7 @@ public class View extends JFrame implements Serializable{
     	private BufferedImage boatPic;
 	private BufferedImage dockPic;
 	private BufferedImage checkmark;
+        private BufferedImage clampic;
 	int boatX = 0;
 
 	Quiz quiz = new Quiz();	
@@ -122,6 +123,7 @@ public class View extends JFrame implements Serializable{
         	trashPic2 = createImage("images/trash3.png");
         	trashPic3 = createImage("images/trash4.png");
         	trashPic4 = createImage("images/trash5.png");
+            clampic = pics[0][0];
         	title = createImage("images/startwords.png");
         	win = createImage("images/win.jpg");
         	replay = createImage("images/replay.png");
@@ -174,8 +176,8 @@ public class View extends JFrame implements Serializable{
 		tutorial.add(tutorialStartButton);
 		menu.add(menuStartButton);
 		menu.add(menuTutorialButton);
-		menu.add(menuLoadGameButton);
-		game.add(gameSaveGameButton);	
+		//menu.add(menuLoadGameButton);
+		//game.add(gameSaveGameButton);	
 		
 		
 		
@@ -536,6 +538,8 @@ public class View extends JFrame implements Serializable{
         		}else{
         			if (time > 0){
 					drawbgp(g);
+                    drawTime(g);
+                    drawScore(g);
 					drawCrab(g);
             				drawInterObjs(g);
         			} else if (time == 0){
@@ -605,6 +609,13 @@ public class View extends JFrame implements Serializable{
         		}
         		g.drawImage(title, titlex, 350, this);
         	}
+
+        public void drawTime(Graphics g) {
+			int distance = frameWidth-15-125;
+			g.drawImage(dockPic,frameWidth-220,85,this);
+			boatX = boatX + distance/500;
+			g.drawImage(boatPic, boatX, 50, this);
+		}
 		/**
 		 * This method will draw the InterObjs by running through the ArrayList and drawing each one.
 		 *
@@ -652,7 +663,7 @@ public class View extends JFrame implements Serializable{
 			int score = player.getTotalScore();
 			int numberOfClams = score % 15;
 			for (int i = 0; i < numberOfClams; i++) {
-				//g.drawImage(clamPic, xHolder, 0, this);
+				g.drawImage(clampic, xHolder, 0, this);
 				xHolder = xHolder + 10;
 			}
 		}	
