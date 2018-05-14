@@ -5,6 +5,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Timer;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 public class Controller implements Serializable {
@@ -64,4 +65,25 @@ public class Controller implements Serializable {
         		}
         	});
 	}
+    	
+    public class SavedGame {
+    	int time;
+    	ArrayList<InterObj> objList;
+    	Crab player;
+    	boolean ifquiz;
+    	boolean ifwin;
+    	Quiz quiz;
+    	
+    	public SavedGame() {
+    		this.time = timerCtr;
+    		this.objList = view.getStuff();
+    		this.player = view.getPlayer();
+    		this.ifquiz = view.ifquiz;
+    		this.ifwin = view.ifwin;
+    		this.quiz = quiz.???;
+    		
+    	}
+    	
+    	
+    }
 }
