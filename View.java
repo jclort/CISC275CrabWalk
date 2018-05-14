@@ -936,7 +936,7 @@ public class View extends JFrame implements Serializable{
 		 * @param g The Graphics object that the quiz will be drawn on.
 		 **/
         	public void drawquiz(Graphics g){
-			if (quizCtr++%25 == 0 || trashCollision == True) {
+			if (quizCtr++%25 == 0 || trashCollision == true) {
 				g.drawImage(quiz.nextQuiz().getPic(), 400, 250, this);
         		}
 		}
