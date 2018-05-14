@@ -9,28 +9,46 @@ import javax.swing.Timer;
 class Controller{
 	final int DRAW_DELAY = 75; //msec
 
-    	private Model model;
-	private View view;
-    	private Action drawAction;
-    	private Timer timer;
-    	int timerCtr = 1000;
-
-    	public Controller(){
+    	private static Model model;
+    	private static View view;
+    	private static Action drawAction;
+    	private static Timer timer;
+    	static int timerCtr = 500;
+    	
+	public Controller(){
         	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
-		view = new View(model.getPlayer(), model.getStuff(), timerCtr);
-		drawAction = new AbstractAction(){
-			public void actionPerformed(ActionEvent e){
+        	view = new View(model.getPlayer(), model.getStuff(), timerCtr);
+        	drawAction = new AbstractAction(){
+			public void actionPerformed(ActionEvent e){	
 				model.update(view.getPlayer());
 				view.setTime(timerCtr);
-				view.drawLayeredPane();
+				view.drawPanel();
 				if (timerCtr-- == 0) {
-					timer.stop();
+					Controller.stop();
+					view.quiztime();
+					view.ifwin = true;
 				}
+					
+				
                 // something interacting with the view's startButton
 			}
 		};
+
 	}
-    
+		public static void stop(){
+			timer.stop();
+		}
+		public static void start(){
+			timer.start();
+		}
+		public static void restart(){
+            View v = view;
+            model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
+        	view = new View(model.getPlayer(), model.getStuff(), timerCtr);
+            v.dispose();
+			timer.start();
+			timerCtr = 500;
+		}
     	public static void main(String[] args) {
         	javax.swing.SwingUtilities.invokeLater(new Runnable() {
             		public void run() {

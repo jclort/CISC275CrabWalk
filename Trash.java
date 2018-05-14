@@ -8,18 +8,35 @@ public class Trash extends InterObj implements Serializable {
 	 * This constructor will create an instance of Trash with a random spawn from the right hand side moving left towards a Crab.
 	 *
 	 * @param frameSize This int will contribute to the randomization of the location along the right wall.
-	 **/	
-    	public Trash(int frameSize){
-        	this.setYLoc(rand.nextInt()%frameSize);
-        	this.setXLoc(frameSize);
-    	}
+	 **/
+	public Trash(int frameSize, int name){
+		super(frameSize, name);
+	}
+
+	@Override
+	public boolean equals(Object other){
+		if (!(other instanceof Trash)){
+			return false;
+		}
+		else{
+			Trash o = (Trash)other;
+			return super.equals(o);
+		}
+	}
 	
 	/** This method is implemented from InterObj and once called, will set the collisionBool value to true if the images of the Crab and the Trash collide.
 	 *
 	 * @param crab the Crab that will be passed to the method and determine if its outline intersects the outline of the InterObj.
 	 **/
 	public void onCollision(Crab crab) {
-		this.collisionBool = true;
+      		this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());
+		if(this.collisionBool){
+			System.out.println("Crashed!");
+		}
+
+		Controller.stop();
+		View.quiztime();
+        	gone = true;
 	}
 	
 	/**
