@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.Random;
 import java.io.Serializable;
+import java.io.*;
 
 
 public class View extends JFrame implements Serializable{
@@ -730,8 +731,14 @@ public class View extends JFrame implements Serializable{
 			a.addActionListener(this);
 			add(a);
 		}
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e){
 			// method call to the logic that will save the game
+			/*try {
+				Controller.saveGame();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}*/
 			Controller.saveGame();
 			Controller.stop();
 			Controller.restart();
@@ -746,6 +753,14 @@ public class View extends JFrame implements Serializable{
 			add(a);
 		}
 		public void actionPerformed(ActionEvent e) {
+			/*try {
+				Controller.loadGame();
+			} catch (ClassNotFoundException | IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}*/
+			Controller.loadGame();
+			Controller.restart();
 			// Method call to the logic that will retrieve the selected game state and
 			// fast forward the current game state to it.
 		}
