@@ -25,6 +25,8 @@ public class Invasive extends InterObj implements Serializable {
        		this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());		
 		Controller.stop();         
 		View.quizTime();
+        crab.subScore();
+        crab.removeLife();
 	}
 
 	public Rectangle getHitBox(){

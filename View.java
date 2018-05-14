@@ -268,7 +268,8 @@ public class View extends JFrame implements Serializable{
 			drawbgp(g);
 			drawCrab(g);
             		drawInterObjs(g);
-			drawTime(g);
+			//drawTime(g);
+            drawLives(g);
 			drawDirections(g);
         		
         		if (ifquiz){
@@ -335,25 +336,25 @@ public class View extends JFrame implements Serializable{
             			           			
             			switch (objname) {
             	        	case 1:  objp = trashPic;
-					 drawCaption = "AVOID ME!";
+					 drawCaption = "CATCH ME FOR POINTS!";
             	              		break;
             	        	case 2:  objp = trashPic1;
-					 drawCaption = "AVOID ME!";
+					 drawCaption = "CATCH ME FOR POINTS!";
             	        		break;
             	        	case 3:  objp = trashPic2;
-					 drawCaption = "AVOID ME!";
+					 drawCaption = "CATCH ME FOR POINTS!";
    	            		 	break;
             	            	case 4:  objp = trashPic3;
-					 drawCaption = "AVOID ME!";
+					 drawCaption = "CATCH ME FOR POINTS!";
    	            		 	break;
             	            	case 5:  objp = trashPic4;
-					 drawCaption = "AVOID ME!";
+					 drawCaption = "CATCH ME FOR POINTS!";
    	            			break;   
             	           	case 6:  g.drawImage(invaPic1[picNum], object.getXLoc(), object.getYLoc(), this);
-					 drawCaption = "HIT ME TO EAT ME!";
+					 drawCaption = "AVOID ME!";
             	          		break;		 
             	        	case 7:  g.drawImage(invaPic2[picNum], object.getXLoc(), object.getYLoc(), this);
-					 drawCaption = "HIT ME TO EAT ME!";
+					 drawCaption = "AVOID ME!";
             	        		break; 	            		 			 
             	           		 
             			}
@@ -367,6 +368,10 @@ public class View extends JFrame implements Serializable{
 		public void drawTime(Graphics g) {
 			g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
 		}
+
+        public void drawLives(Graphics g) {
+			g.drawString(player.getLives().toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
+		}
 		/**
 		 * This method will draw the background image(s).
 		 **/
@@ -378,7 +383,7 @@ public class View extends JFrame implements Serializable{
 		 **/
 		public void drawDirections(Graphics g) {
 			g.drawString("Use the Arrow Keys to Move the Crab", 100, 350);
-			g.drawString("Eat the Invasive Species and Avoid Trash", 100, 365);
+			g.drawString("Pick up Trash and Dodge the Invasive Species", 100, 365);
 			g.drawString("Answer a Quiz Right to Receive a Power-Up", 100, 380);
 			g.drawString("The Game Ends when the Boat Reaches the Dock", 100, 395);
 		}
@@ -537,7 +542,7 @@ public class View extends JFrame implements Serializable{
 			if (quizCtr++%25 == 0 || trashCollision == true) {
 				quizNum = quiz.getQuiz();
 				quizPic = quiz.getPic(quizNum);
-				//g.drawImage(quizPic, 400, 250, this);
+				g.drawImage(quizPic, 400, 250, this);
         		}
 		}
 		/**
@@ -745,7 +750,13 @@ public class View extends JFrame implements Serializable{
 
 	public void answerQuiz(int answer) {
 		//logic that will determine which quiz is currently viewing and test the correct answer depending on the integer provided, no will give 0, yes will give 1, can have a false/true questions too based off of this, which wont be too hard to implement, will probably need another object class called Quiz which has image and correctAnswer attributes that we can get and compare against answer here.
-	}
+	    if(answer != quiz.getAnswer(quizNum)){
+            player.removeLife();
+        }
+        notQuizTime();
+        Controller.start();
+        
+    }
 	 
 
 }

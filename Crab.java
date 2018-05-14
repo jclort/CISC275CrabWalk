@@ -36,6 +36,10 @@ public class Crab extends Crawler implements Serializable {
 	public Rectangle getHitBox(){
 		return hitBox;
 	}
+
+    public Integer getLives(){
+        return (Integer)lives;
+    }
     
 	@Override
 	public boolean equals(Object other){

@@ -51,7 +51,8 @@ public class Trash extends InterObj implements Serializable {
 
 		Controller.stop();
 		View.quizTime();
-        	gone = true;
+        gone = true;
+        crab.addScore();
 	}
 	
 	/**
