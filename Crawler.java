@@ -79,13 +79,29 @@ public abstract class Crawler{
 	 **/
 	public abstract void move();
 
-	
+	/**
+	 * This method will return the increment in the x directon, which may be positive or negative.
+	 *
+	 *@return int - the value of the incrementor in the x direction.
+	**/	 
 	public int getXIncr() {
 		return xIncr;
 	}
+	/**
+	 * This method wll return the increment in the y direction, which may be positive or negative.
+	 *
+	 * @return int - the value of the incrementor in the y direction.
+	 **/
 	public int getYIncr() {
 		return yIncr;
-	}	
+	}
+	/**
+	 * This method Overrides the Object.equals(Object) method, so that we can see if two objects are in the space.
+	 * This is used only for testing.
+	 *
+	 * @param other The Object that will be compared to a Crawler.
+	 * @return boolean - The boolean that will be returned if the Crawler and the Object other are indeed the same object or not.
+	 **/	
 	@Override
 	public boolean equals(Object other){
 		if (!(other instanceof Crawler)){
