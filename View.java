@@ -123,7 +123,7 @@ public class View extends JFrame implements Serializable{
         	trashPic2 = createImage("images/trash3.png");
         	trashPic3 = createImage("images/trash4.png");
         	trashPic4 = createImage("images/trash5.png");
-            clampic = pics[0][0];
+           	clampic = createImage("images/score.png");
         	title = createImage("images/startwords.png");
         	win = createImage("images/win.jpg");
         	replay = createImage("images/replay.png");
@@ -661,10 +661,10 @@ public class View extends JFrame implements Serializable{
 			g.drawString("Score: ", 0, 0);
 			int xHolder = 10;
 			int score = player.getTotalScore();
-			int numberOfClams = score % 15;
+			int numberOfClams = score % 20;
 			for (int i = 0; i < numberOfClams; i++) {
 				g.drawImage(clampic, xHolder, 0, this);
-				xHolder = xHolder + 10;
+				xHolder = xHolder + 55;
 			}
 		}	
 			

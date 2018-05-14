@@ -79,8 +79,11 @@ public class Crab extends Crawler implements Serializable {
       * Subtracting from the score of the game
     */
 	public void subScore() {
-		score -= 1;
+		if (score > 0) {
+			score -= 1;
+		}
 	}
+
     /**
       * Takes a life away if your health runs out
      */
