@@ -1,14 +1,16 @@
 import java.util.ArrayList;
 
-import java.util.Random;
+import java.io.*;
 
-import Controller.SavedGame;
+import java.util.Random;
 
 import java.util.Iterator;
 
 import java.awt.Rectangle;
 
 import java.io.Serializable;
+
+import java.io.IOException;
 
 public class Model implements Serializable {
     	// This is where all of our logic is going to go for the game
@@ -244,11 +246,17 @@ public class Model implements Serializable {
            Interactive Objects locations, and check for collisions, and handle them accordingly*/
     	}
     	
-    	private void SaveGame() throws IOException {
-    		SavedGame game = new SavedGame();
+    	public void saveGame(View view, int timerCtr) throws IOException {
+    		SavedGame game = new SavedGame(view, timerCtr);
     		
-    		game.ifquiz = 
     		
+    		FileOutputStream fileout = new FileOutputStream("SavedFile.txt");
+    		ObjectOutputStream out = new ObjectOutputStream(fileout);
+    		out.writeObject(game);
+    		out.close(); 		
     	}
-
+    	
+    	
 }
+
+

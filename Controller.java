@@ -1,5 +1,6 @@
 
 import java.awt.EventQueue; 
+import java.io.*;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -48,13 +49,18 @@ public class Controller implements Serializable {
 	public static void start(){
 		timer.start();
 	}
+	public static void saveGame() throws IOException {
+		model.saveGame(view, timerCtr);
+	}
+	public static void loadGame() {
+		
+	}
 	public static void restart(){
            	//View v = view;
         	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
 		timerCtr = 500;
                	view.remove(view.getCards());
         	view.setView(model.getPlayer(), model.getStuff(), timerCtr);
-		timer.start();
 	}
     	public static void main(String[] args) {
         	javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -66,24 +72,4 @@ public class Controller implements Serializable {
         	});
 	}
     	
-    public class SavedGame {
-    	int time;
-    	ArrayList<InterObj> objList;
-    	Crab player;
-    	boolean ifquiz;
-    	boolean ifwin;
-    	Quiz quiz;
-    	
-    	public SavedGame() {
-    		this.time = timerCtr;
-    		this.objList = view.getStuff();
-    		this.player = view.getPlayer();
-    		this.ifquiz = view.ifquiz;
-    		this.ifwin = view.ifwin;
-    		this.quiz = quiz.???;
-    		
-    	}
-    	
-    	
-    }
 }
