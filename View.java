@@ -32,7 +32,7 @@ public class View extends JFrame implements Serializable{
     	private BufferedImage replay;
     	private BufferedImage gameover;
     	
-	//private Quiz quiz = new Quiz();	
+	//Quiz quiz = new Quiz();	
     	private boolean trashCollision = false;
 	private BufferedImage quizPic;
     	Random rand = new Random();
@@ -889,6 +889,7 @@ public class View extends JFrame implements Serializable{
 		}
 		public void actionPerformed(ActionEvent e) {
 			// method call to the logic that will save the game
+			Controller.saveGame();
 			Controller.restart();
 		}
 	}

@@ -48,6 +48,9 @@ public class Controller implements Serializable {
 	public static void start(){
 		timer.start();
 	}
+	public static void saveGame() {
+		model.saveGame(view, timerCtr);
+	}
 	public static void restart(){
            	//View v = view;
         	model = new Model(View.frameHeight, View.frameWidth, View.imgWidth);
@@ -66,24 +69,4 @@ public class Controller implements Serializable {
         	});
 	}
     	
-    public class SavedGame {
-    	int time;
-    	ArrayList<InterObj> objList;
-    	Crab player;
-    	boolean ifquiz;
-    	boolean ifwin;
-    	Quiz quiz;
-    	
-    	public SavedGame() {
-    		this.time = timerCtr;
-    		this.objList = view.getStuff();
-    		this.player = view.getPlayer();
-    		this.ifquiz = view.ifquiz;
-    		this.ifwin = view.ifwin;
-    		this.quiz = quiz.???;
-    		
-    	}
-    	
-    	
-    }
 }
