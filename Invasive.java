@@ -23,8 +23,10 @@ public class Invasive extends InterObj implements Serializable {
 	 **/
 	public void onCollision(Crab crab) {
        		this.collisionBool = (this.getXLoc() == crab.getXLoc() && this.getYLoc() == crab.getYLoc());		
-		Controller.stop();         
+		//Controller.stop();         
 		View.quizTime();
+        crab.subScore();
+        crab.removeLife();
 	}
 
 	public Rectangle getHitBox(){

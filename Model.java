@@ -10,6 +10,8 @@ import java.io.Serializable;
 
 import java.io.IOException;
 
+import java.util.HashSet;
+
 public class Model implements Serializable {
     	// This is where all of our logic is going to go for the game
     	// This will also be where our game state is handled
@@ -20,6 +22,7 @@ public class Model implements Serializable {
     	private final int SOUTHSTEP = 30;
     	private final int EASTSTEP = 30;
     	private final int WESTSTEP = -30;
+        HashSet<InterObj> crashes;
     	int frameHeight;
     	int imgSize;
     	private int noIncr = 0;
@@ -89,6 +92,7 @@ public class Model implements Serializable {
         	stuff = new ArrayList<InterObj>();
         	player = new Crab(frameWidth); 
         	this.crash = false;
+            crashes = new HashSet<InterObj>();
     	}
     /**
      * Returns the player. Meant for using the Crab at various times
@@ -136,15 +140,10 @@ public class Model implements Serializable {
         	// checks each InterObj whether the player has hit it
         	// if it has, it calls the object's onCollision method
         	// This method largely depends on other collision methods already being created
-            Iterator it = stuff.iterator();
-        	while(it.hasNext()){
-                    InterObj o = (InterObj)it.next();
+            
+        	for (InterObj o: stuff){
             		if(crash(o) & View.crashlesstime == 0 ){
-			    	System.out.println("Collision!");
-                	    	o.onCollision(player);
-                	    	if (o.gone){
-                            	it.remove();
-                        }
+			    	    crashes.add(o);
             	    }
 
         	}
@@ -224,6 +223,18 @@ public class Model implements Serializable {
         	}
         	
         	handleCollisions(stuff);
+            if (crashes.size() == 0){
+                View.notQuizTime();
+            }
+            for (InterObj o: crashes){
+                System.out.println("What's next?");
+                System.out.println("Collision!");
+                o.onCollision(player);
+                if (o.gone){
+                    System.out.println("Bye!");
+                    stuff.remove(o);
+                }
+            }
         	
         	if (View.crashlesstime != 0){
         		View.crashlesstime --;
@@ -234,6 +245,9 @@ public class Model implements Serializable {
         	if (trashCtr++ %10 == 0) {
 			   generateNewStuff();
 		    }
+            
+
+            crashes = new HashSet<InterObj>();
         /* The following is pseudocode that will be implemented tomorrow for this method
 
            First thing that should be done is a check to see the directions that we are going

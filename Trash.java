@@ -49,9 +49,10 @@ public class Trash extends InterObj implements Serializable {
 			System.out.println("Crashed!");
 		}
 
-		Controller.stop();
+		//Controller.stop();
 		View.quizTime();
-        	gone = true;
+        gone = true;
+        crab.addScore();
 	}
 	
 	/**
