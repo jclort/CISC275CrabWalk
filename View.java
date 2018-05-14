@@ -32,18 +32,24 @@ public class View extends JFrame implements Serializable{
     	private BufferedImage win;
     	private BufferedImage replay;
     	private BufferedImage gameover;
-    	
-    	Quiz quiz = new Quiz();	
+    	private BufferedImage boatPic;
+	private BufferedImage dockPic;
+	private BufferedImage checkmark;
+        private BufferedImage clampic;
+	int boatX = 0;
+
+	Quiz quiz = new Quiz();	
     	private boolean trashCollision = false;
 	private BufferedImage quizPic;
     	Random rand = new Random();
-	private int quizCtr = 1;    	
+	private static int quizCtr = 1;    	
     	int randnum;
     	private BufferedImage bgp;
         
     	int starttime = 50;
 
     	static boolean ifquiz;
+        static boolean quizstart;
     	static boolean ifstart = false;
     	static boolean iflose = false;
     	boolean ifwin = false;
@@ -67,7 +73,7 @@ public class View extends JFrame implements Serializable{
 	private MenuPanel menu;
 	private TutorialPanel tutorial;
 	private GamePanel game;
-   	
+   	private Graphics2D graphic;
 	
 	public void addPanelsToPane() {
         
@@ -109,14 +115,16 @@ public class View extends JFrame implements Serializable{
 				pics[j][i] = img.getSubimage(imgWidth*i, 0, imgWidth, imgHeight);
 			}
     		}
-    		
-    		
+    		quizCtr = 1;
+            ifquiz = false;
+    		quizstart = false;
         	time = startTime;
         	trashPic = createImage("images/trash1.png");
         	trashPic1 = createImage("images/trash2.png");
         	trashPic2 = createImage("images/trash3.png");
         	trashPic3 = createImage("images/trash4.png");
         	trashPic4 = createImage("images/trash5.png");
+           	clampic = createImage("images/score.png");
         	title = createImage("images/startwords.png");
         	win = createImage("images/win.jpg");
         	replay = createImage("images/replay.png");
@@ -131,11 +139,21 @@ public class View extends JFrame implements Serializable{
         	for(int i = 0; i < 3; i++) {
         		invaPic2[i] = createImage("images/creature2.png").getSubimage(90*i+17, 0, 90, 90);
 			}
-        	
+        	boatX = 0;
 		bgp = new BufferedImage(frameWidth, frameHeight, 2);
-        	Graphics2D graphic = bgp.createGraphics();
+        	graphic = bgp.createGraphics();
         	BufferedImage toBeResizedbgp = createImage("images/background.png");
 		graphic.drawImage(toBeResizedbgp, 0, 0, frameWidth, frameHeight, null);
+		
+		boatPic = createImage("images/boat.png");
+
+		dockPic = createImage("images/dock.png");
+		
+		BufferedImage checkmark = createImage("images/checkmark.png");
+		//graphic3.drawImage(toBeResizedCheck, 0,0,20,20,null);	
+
+
+
 
         	score = 0;
         	lives = 3;
@@ -167,7 +185,6 @@ public class View extends JFrame implements Serializable{
 		
 		menu.requestFocusInWindow();
 		add(cards);
- 		//setUndecorated(true);		
 	    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                 
 	    	setVisible(true);
         	pack();	
@@ -252,7 +269,23 @@ public class View extends JFrame implements Serializable{
 					else if (e.getKeyCode() == KeyEvent.VK_LEFT){
 						//crab direction is left
 						player.setDir(Direction.WEST);
-					} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					} else if (e.getKeyCode() == KeyEvent.VK_A){
+						if (ifquiz){
+							answerQuiz(0);
+						}
+					}else if (e.getKeyCode() == KeyEvent.VK_B){
+						if (ifquiz) {
+							answerQuiz(1);
+						}
+					} else if (e.getKeyCode() == KeyEvent.VK_C) {
+						if (ifquiz) {
+							answerQuiz(2);
+						}
+					} else if (e.getKeyCode() == KeyEvent.VK_D) {
+						if (ifquiz) {
+							answerQuiz(3);
+						}
+					}else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 						Controller.start();
 						notQuizTime();
 					}
@@ -266,15 +299,21 @@ public class View extends JFrame implements Serializable{
 		 **/
         	@Override
         	protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
 			drawbgp(g);
 			drawCrab(g);
             		drawInterObjs(g);
 			drawTime(g);
+            //drawLives(g);
 			drawDirections(g);
         		
         		if (ifquiz){
-				Controller.stop();
-				drawquiz(g);
+				//Controller.stop();
+                if (quizCtr%5 == 0) {
+                    Controller.stop();
+				    drawquiz(g);
+                }
+                quizstart = false;
 			}
 			
 		}
@@ -294,11 +333,11 @@ public class View extends JFrame implements Serializable{
 		 * @param g The Graphics object that the quiz will be drawn on.
 		 **/
         	public void drawquiz(Graphics g){
-			if (quizCtr++%5 == 0) {
+			//if (quizCtr++%5 == 0) {
 				quizNum = quiz.getQuiz();
 				quizPic = quiz.getPic(quizNum);
-        			//g.drawImage(quizPic, 400,250 , this);
-			}
+        	    g.drawImage(quizPic, 400,250 , this);
+			//}
         	}
 		/**
 		 * This method will draw the player Crab.
@@ -320,7 +359,7 @@ public class View extends JFrame implements Serializable{
         		}else{
         			ifstart = true;
         		}
-        		g.drawImage(title, titlex, 10, this);
+        		g.drawImage(title, titlex, 350, this);
         	}
 		/**
 		 * This method will draw the InterObjs by running through the ArrayList and drawing each one.
@@ -336,25 +375,25 @@ public class View extends JFrame implements Serializable{
             			           			
             			switch (objname) {
             	        	case 1:  objp = trashPic;
-					 drawCaption = "AVOID ME!";
+					 drawCaption = "CATCH ME FOR POINTS!";
             	              		break;
             	        	case 2:  objp = trashPic1;
-					 drawCaption = "AVOID ME!";
+					 drawCaption = "CATCH ME FOR POINTS!";
             	        		break;
             	        	case 3:  objp = trashPic2;
-					 drawCaption = "AVOID ME!";
+					 drawCaption = "CATCH ME FOR POINTS!";
    	            		 	break;
             	            	case 4:  objp = trashPic3;
-					 drawCaption = "AVOID ME!";
+					 drawCaption = "CATCH ME FOR POINTS!";
    	            		 	break;
             	            	case 5:  objp = trashPic4;
-					 drawCaption = "AVOID ME!";
+					 drawCaption = "CATCH ME FOR POINTS!";
    	            			break;   
             	           	case 6:  g.drawImage(invaPic1[picNum], object.getXLoc(), object.getYLoc(), this);
-					 drawCaption = "HIT ME TO EAT ME!";
+					 drawCaption = "AVOID ME!";
             	          		break;		 
             	        	case 7:  g.drawImage(invaPic2[picNum], object.getXLoc(), object.getYLoc(), this);
-					 drawCaption = "HIT ME TO EAT ME!";
+					 drawCaption = "AVOID ME!";
             	        		break; 	            		 			 
             	           		 
             			}
@@ -362,12 +401,13 @@ public class View extends JFrame implements Serializable{
 				g.drawString(drawCaption, object.getXLoc(), object.getYLoc()-2);
             		}		
         	}
-		/**
-		 * This method will draw the time (THIS WILL CHANGE INTO A BOAT RUNNING ACROSS THE WAVES IN THE BACKGROUND).
-		 **/
 		public void drawTime(Graphics g) {
-			g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
+			int distance = frameWidth-15-125;
+			g.drawImage(dockPic,frameWidth-220,85,this);
+			boatX = boatX + distance/500;
+			g.drawImage(boatPic, boatX, 50, this);
 		}
+
 		/**
 		 * This method will draw the background image(s).
 		 **/
@@ -379,9 +419,10 @@ public class View extends JFrame implements Serializable{
 		 **/
 		public void drawDirections(Graphics g) {
 			g.drawString("Use the Arrow Keys to Move the Crab", 100, 350);
-			g.drawString("Eat the Invasive Species and Avoid Trash", 100, 365);
+			g.drawString("Pick up Trash and Dodge the Invasive Species", 100, 365);
 			g.drawString("Answer a Quiz Right to Receive a Power-Up", 100, 380);
-			g.drawString("The Game Ends when the Boat Reaches the Dock", 100, 395);
+			g.drawString("After Answering a Quiz, Press Enter to Continue", 100, 395);
+			g.drawString("The Game Ends when the Boat Reaches the Dock", 100, 410);
 		}
 	}
 
@@ -402,7 +443,6 @@ public class View extends JFrame implements Serializable{
         	protected void paintComponent(Graphics g) {
         		drawbgp(g);	
         		drawtitle(g);
-			drawTime(g);
 		}
 		/**
 		 * This method will return a Dimension for the JPanel to resize
@@ -425,14 +465,8 @@ public class View extends JFrame implements Serializable{
         		}else{
         			ifstart = true;
         		}
-        		g.drawImage(title, titlex, 10, this);
+        		g.drawImage(title, titlex, 350, this);
         	}
-		/**
-		 * This method will draw the time (THIS WILL CHANGE INTO A BOAT RUNNING ACROSS THE WAVES IN THE BACKGROUND).
-		 **/
-		public void drawTime(Graphics g) {
-			g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
-		}
 		/**
 		 * This method will draw the background image(s).
 		 **/
@@ -504,18 +538,22 @@ public class View extends JFrame implements Serializable{
         		}else{
         			if (time > 0){
 					drawbgp(g);
+                    drawTime(g);
+                    drawScore(g);
 					drawCrab(g);
             				drawInterObjs(g);
-					drawTime(g);
         			} else if (time == 0){
         				drawgameover(g);
         				Controller.stop();
 					Controller.restart();
-        			} else if(ifquiz){
-        				Controller.stop();
-        			} else if (ifquiz){
-					Controller.stop();
-					drawquiz(g);
+        		    }
+                    if (ifquiz){
+                    if (quizCtr%5 == 0) {
+					    Controller.stop();
+					    drawquiz(g);
+                    }
+
+                    quizstart = false;
 				}
 			}
 		}
@@ -535,11 +573,11 @@ public class View extends JFrame implements Serializable{
 		 * @param g The Graphics object that the quiz will be drawn on.
 		 **/
         	public void drawquiz(Graphics g){
-			if (quizCtr++%25 == 0 || trashCollision == true) {
+			//if (quizCtr++%25 == 0 || trashCollision == true) {
 				quizNum = quiz.getQuiz();
 				quizPic = quiz.getPic(quizNum);
-				//g.drawImage(quizPic, 400, 250, this);
-        		}
+				g.drawImage(quizPic, 400, 250, this);
+        		//}
 		}
 		/**
 		 * This method will draw the game over screen.
@@ -569,8 +607,15 @@ public class View extends JFrame implements Serializable{
         		}else{
         			ifstart = true;
         		}
-        		g.drawImage(title, titlex, 10, this);
+        		g.drawImage(title, titlex, 350, this);
         	}
+
+        public void drawTime(Graphics g) {
+			int distance = frameWidth-15-125;
+			g.drawImage(dockPic,frameWidth-220,85,this);
+			boatX = boatX + distance/500;
+			g.drawImage(boatPic, boatX, 50, this);
+		}
 		/**
 		 * This method will draw the InterObjs by running through the ArrayList and drawing each one.
 		 *
@@ -603,12 +648,6 @@ public class View extends JFrame implements Serializable{
             		}		
         	}
 		/**
-		 * This method will draw the time (THIS WILL CHANGE INTO A BOAT RUNNING ACROSS THE WAVES IN THE BACKGROUND).
-		 **/
-		public void drawTime(Graphics g) {
-			g.drawString(time.toString(),player.getXLoc()+(imgWidth*2/5), player.getYLoc()+(imgHeight-4));
-		}
-		/**
 		 * This method will draw the background image(s).
 		 **/
 		public void drawbgp(Graphics g){
@@ -622,10 +661,10 @@ public class View extends JFrame implements Serializable{
 			g.drawString("Score: ", 0, 0);
 			int xHolder = 10;
 			int score = player.getTotalScore();
-			int numberOfClams = score % 15;
+			int numberOfClams = score % 20;
 			for (int i = 0; i < numberOfClams; i++) {
-				//g.drawImage(clamPic, xHolder, 0, this);
-				xHolder = xHolder + 10;
+				g.drawImage(clampic, xHolder, 0, this);
+				xHolder = xHolder + 55;
 			}
 		}	
 			
@@ -663,8 +702,9 @@ public class View extends JFrame implements Serializable{
 
     		@Override
     		public void actionPerformed(ActionEvent e) {
-			Controller.start();
-    			cardLayout.show(cards, "Tutorial");
+			//Controller.start();
+    		cardLayout.show(cards, "Tutorial");
+            Controller.start();
 			tutorial.requestFocusInWindow();
     		}
     	}
@@ -748,19 +788,30 @@ public class View extends JFrame implements Serializable{
 	 * This method will set the ifquiz boolean equal to true.
 	 **/
 	 public static void quizTime(){
+            if(!ifquiz){
+                quizstart = true;
+                quizCtr++;
+            }
 	       	ifquiz = true;
+            
 	}
 	/**
 	 * This method will set the notquiztime boolean equal to to false and create a time that the crab cannot collide with someone else, sort of like a grace Period.
 	 **/ 
-	public void notQuizTime(){
+	public static void notQuizTime(){
 	     	ifquiz = false;
-	       	crashlesstime = 20;
+	       	//crashlesstime = 20;
 	}
 
 	public void answerQuiz(int answer) {
 		//logic that will determine which quiz is currently viewing and test the correct answer depending on the integer provided, no will give 0, yes will give 1, can have a false/true questions too based off of this, which wont be too hard to implement, will probably need another object class called Quiz which has image and correctAnswer attributes that we can get and compare against answer here.
-	}
+	    if(answer != quiz.getAnswer(quizNum)){
+            player.removeLife();
+        }
+        crashlesstime = 20;
+        Controller.start();
+        
+    }
 	 
 
 }

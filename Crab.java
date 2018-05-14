@@ -1,4 +1,3 @@
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.io.Serializable;
@@ -9,7 +8,6 @@ public class Crab extends Crawler implements Serializable {
 	private int score = 0;
 	private int lives = 4;
 	private int boundary; // This is just how far the crab is able to go
-	//private Rectangle hitBox; // This is how we are gonna determine if a collision happens
 	private int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 	//private transient BufferedImage crab = Images.CRAB.getPic();
@@ -26,16 +24,20 @@ public class Crab extends Crawler implements Serializable {
 		this.setXLoc(300);
         	dir = Direction.STILL;
 		boundary = frameSize;
-		//hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), crab.getWidth(), crab.getHeight());
 	}
-	
+	/**
+	 * This method will return a boolean to determine whether a powerup has been activated or not.
+	 *
+	 * @return boolean - The boolean value for whether the powerup has been activated.
+	 **/	
 	public boolean getPowerUp(){
 		return this.powerUp;
 	}
 
-	/*public Rectangle getHitBox(){
-		return hitBox;
-	}*/
+	public Integer getLives(){
+ 		return (Integer)lives;
+ 	}
+
     
 	@Override
 	public boolean equals(Object other){
@@ -62,21 +64,23 @@ public class Crab extends Crawler implements Serializable {
 			this.setYLoc(this.getYLoc()+yIncr);
 			this.setXLoc(this.getXLoc()+xIncr);
 		}
-		//hitBox = new Rectangle(this.getXLoc(), this.getYLoc(), crab.getWidth(), crab.getHeight());
 		
 	}
     /**
       * Meant for adding to the score of the game
      */
 	public void addScore() {
-		score += 2;
+		score += 3;
 	}
     /**
       * Subtracting from the score of the game
     */
 	public void subScore() {
-		score -= 1;
+		if (score > 0) {
+			score -= 1;
+		}
 	}
+
     /**
       * Takes a life away if your health runs out
      */
