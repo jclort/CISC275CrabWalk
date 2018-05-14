@@ -4,8 +4,13 @@ import java.util.Random;
 
 import java.util.Iterator;
 
+import java.awt.Rectangle;
 
-public class Model{
+import java.io.Serializable;
+
+import java.io.IOException;
+
+public class Model implements Serializable {
     	// This is where all of our logic is going to go for the game
     	// This will also be where our game state is handled
     	private int objXIncr; // All objects will only move left, not up or down
@@ -120,7 +125,8 @@ public class Model{
      */
     	public boolean crash(InterObj object){ // tells whether the player has hit this object
         	
-    		return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
+			return (Math.abs(player.getXLoc()-object.getXLoc()) < 50 && (Math.abs(player.getYLoc()-object.getYLoc()) < 50));
+			//return(player.getHitBox().intersects(object.getHitBox()));
     	}
     /**
      * Checks the crash method, and if a collision happens, then it handles it accordingly
@@ -134,10 +140,10 @@ public class Model{
         	while(it.hasNext()){
                     InterObj o = (InterObj)it.next();
             		if(crash(o) & View.crashlesstime == 0 ){
-						System.out.println("Collision!");
-                	    o.onCollision(player);
-                	    if (o.gone){
-                            it.remove();
+			    	System.out.println("Collision!");
+                	    	o.onCollision(player);
+                	    	if (o.gone){
+                            	it.remove();
                         }
             	    }
 
@@ -225,9 +231,9 @@ public class Model{
         	
         	player.setDir(Direction.STILL);
 
-        	if (trashCtr++ %15 == 0) {
+        	if (trashCtr++ %10 == 0) {
 			   generateNewStuff();
-		}
+		    }
         /* The following is pseudocode that will be implemented tomorrow for this method
 
            First thing that should be done is a check to see the directions that we are going
@@ -236,6 +242,11 @@ public class Model{
            by xIncr, and yIncr. We will then check and see if a collision has occurred, and
            handle it accordingly. Once it is dealt with, we will then increment the
            Interactive Objects locations, and check for collisions, and handle them accordingly*/
+    	}
+    	
+    	public void saveGame(View view, int timerCtr){// throws IOException {
+    		SavedGame game = new SavedGame(view, timerCtr);
+    		
     	}
 
 }
