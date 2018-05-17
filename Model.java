@@ -281,7 +281,7 @@ public class Model implements Serializable {
 			try{
 				SavedGame game = null;
     		
-				FileInputStream fileIn = new FileInputStream("SavedFile.txt");
+				FileInputStream fileIn = new FileInputStream("./SavedFile.txt");
 				ObjectInputStream in = new ObjectInputStream(fileIn);
 				
 				game = (SavedGame) in.readObject();
