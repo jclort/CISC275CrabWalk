@@ -19,7 +19,7 @@ public class SavedGame implements Serializable {
    	/**
 	* Constructor for SavedGame. Saves all current data.
 	* @param view The view that we are looking at
-	* param timerCtr The current counter for the timer
+	* @param timerCtr The current counter for the timer
 	*/
 	
 	public SavedGame(View view, int timerCtr) { 
