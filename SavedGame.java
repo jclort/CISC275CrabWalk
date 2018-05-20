@@ -17,7 +17,12 @@ public class SavedGame implements Serializable {
    	boolean ifquiz;
    	boolean ifwin;
    	//Quiz quiz;      
-	public SavedGame(View view, int timerCtr) { //Serializing the parts of the game needed to save the game: the timer, object list, powerup, score, lives, player location and quiz/win booleans
+	/*Serializing the 
+	*parts of the game needed to save the game: the timer, object list, 
+	*powerup, score, lives, player location and quiz/win booleans
+	*/
+	
+	public SavedGame(View view, int timerCtr) { 
    		this.time = timerCtr;
    		this.objList = view.getStuff();
    		this.powerUp = view.getPlayer().getPowerUp();
