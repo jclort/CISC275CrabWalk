@@ -16,10 +16,10 @@ public class SavedGame implements Serializable {
    	int yloc;
    	boolean ifquiz;
    	boolean ifwin;
-   	//Quiz quiz;      
-	/*Serializing the 
-	*parts of the game needed to save the game: the timer, object list, 
-	*powerup, score, lives, player location and quiz/win booleans
+   	/**
+	* Constructor for SavedGame. Saves all current data.
+	* @param view The view that we are looking at
+	* param timerCtr The current counter for the timer
 	*/
 	
 	public SavedGame(View view, int timerCtr) { 
@@ -34,8 +34,4 @@ public class SavedGame implements Serializable {
    		this.ifwin = view.ifwin;
    		//this.quiz = View.quiz;
 	}  
-	/*
-	*@param timerCtr the saved games timer
-	*
-	*/
 }
