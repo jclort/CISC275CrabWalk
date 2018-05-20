@@ -26,7 +26,10 @@ public class Quiz implements Serializable{
 	//public BufferedImage getCheck() {
 	//	return check;
 	//}
-
+	/**
+	* Gives us the pic for the quiz
+	* @param num The number of the quiz that is presently being used
+	**/
 	public BufferedImage getPic(int num) {
 	       	switch(num) {
 			case 1: return q1;
@@ -36,7 +39,10 @@ public class Quiz implements Serializable{
 		default: return q1;
 	       }
 	}
-
+	/**
+	* Gives us the answer for the quiz that is being used
+	* @param num The number of the quiz that we are using
+	**/
 	public int getAnswer(int num) {
 		switch(num) {
 			case 1: return q1Answer;
@@ -46,14 +52,19 @@ public class Quiz implements Serializable{
 		default: return q1Answer;
 		}
 	}		
-
+	/**
+	* Responsible for changing what the next quiz will be
+	**/
 	public int getQuiz() {
 		if ((quiz+1) % 4 == 0) {
 			quiz = 1;
 		}
 		return (quiz++%4);
 	}
-
+	/**
+	* Creates an image out of the given quiz
+	* @param fname The name of the quiz file that we are using
+	**/
 	private BufferedImage createImage(String fname) {
 		BufferedImage bufferedImage;
 
