@@ -34,4 +34,8 @@ public class SavedGame implements Serializable {
    		this.ifwin = view.ifwin;
    		//this.quiz = View.quiz;
 	}  
+	/*
+	*@param timerCtr the saved games timer
+	*
+	*/
 }
